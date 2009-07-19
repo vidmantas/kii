@@ -20,7 +20,7 @@ class Page < ActiveRecord::Base
   
   attr_writer :current_revision_id
   def current_revision_id
-    new_record? ? nil : (@current_revision_id ||= revisions.current.id)
+    @current_revision_id ||= revisions.current.id
   end
   
   private
