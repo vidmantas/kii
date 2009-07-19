@@ -31,7 +31,12 @@ module Kii
     
     def preparse_linked_pages
       permalinks = []
+      # First, the actual permalinks
       @html.scan(PAGE_LINK_REGEX) {|match| permalinks << CGI.unescape(match[0]).to_permalink }
+      # Then, we add the capitalized version, to allow linking to both [[home]] and [[Home]].
+      permalinks += permalinks.map {|permalink| permalink.upcase_first_letter }
+      permalinks.uniq!
+      
       @linked_pages = Page.all(:conditions => {:permalink => permalinks})
     end
     
@@ -41,7 +46,9 @@ module Kii
     
     def page_link(link_text, permalink)
       options = {}
-      page = @linked_pages.detect {|p| p.permalink == permalink.to_permalink }
+      # First, look for an exact match. If none is found, look for the upcased version.
+      page = @linked_pages.detect {|page| page.permalink == permalink.to_permalink } ||
+        @linked_pages.detect {|page| page.permalink == permalink.to_permalink.upcase_first_letter }
       
       if page
         options[:class] = "pagelink exists"

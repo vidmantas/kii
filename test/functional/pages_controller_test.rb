@@ -165,8 +165,12 @@ class PagesControllerTest < ActionController::TestCase
     get :show, :id => pages(:bloated).to_param
     assert_response :success
     
-    assert_select "a.pagelink:not(.void)", "Sandbox"
-    assert_select "a.pagelink:not(.void)", "sandbox"
+    assert_select "a.pagelink.exists", "Sandbox"
+    assert_select "a.pagelink.exists", "sandbox"
+
+    assert_select "a.pagelink.exists", "iPhone"
+    assert_select "a.pagelink.void", "IPhone"
+    assert_select "a.pagelink.exists", "IPHONE"
   end
 
   test "stale edits" do

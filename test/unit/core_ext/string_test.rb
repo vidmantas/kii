@@ -9,4 +9,10 @@ class StringTest < ActiveSupport::TestCase
   test "from_permalink" do
     assert_equal "Øystein Sunde & Bananene", "Øystein_Sunde_&_Bananene".from_permalink
   end
+  
+  test "upcase first letter" do
+    assert_equal "Foo", "foo".upcase_first_letter
+    assert_equal "FOO", "fOO".upcase_first_letter
+    assert_equal "Foo bar", "foo bar".upcase_first_letter
+  end
 end

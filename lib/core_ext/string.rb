@@ -3,7 +3,7 @@ class String
   URL_ENCODE_CHARACTERS = [[" ", "_"]]
   
   def to_permalink
-    copy = "#{self[0..0].upcase}#{self[1..-1]}" # String#capitalize won't work here.
+    copy = self.dup
     URL_ENCODE_CHARACTERS.each {|source, target| copy.gsub!(source, target) }
     copy
   end
@@ -12,5 +12,9 @@ class String
     copy = self.dup
     URL_ENCODE_CHARACTERS.each {|target, source| copy.gsub!(source, target) }
     copy
+  end
+  
+  def upcase_first_letter
+    "#{self[0..0].upcase}#{self[1..-1]}"
   end
 end

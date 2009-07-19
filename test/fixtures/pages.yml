@@ -11,3 +11,11 @@ sandbox:
 bloated:
   title: Bloated
   permalink: Bloated
+  
+iphone:
+  title: iPhone
+  permalink: iPhone
+
+IPHONE:
+  title: IPHONE
+  permalink: IPHONE
