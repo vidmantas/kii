@@ -8,6 +8,10 @@
   font-size:15px;
 }
 
+.header_fonts {
+  font-family: "Lucida Grande", Arial, sans-serif;
+}
+
 body {
   margin:0;
   .main_fonts;
@@ -31,7 +35,7 @@ h1, h2, h3, h4, h5, h6, p{
 }
 
 h1, h2, h3, h4, h5, h6{
-  font-family: "Lucida Grande", Arial, sans-serif;
+  .header_fonts;
 }
 
 h1 {
@@ -55,7 +59,8 @@ h3 {
 @main_width: 800px;
 @sidebar_width: 150px;
 @main_spacing: 10px;
-@double_main_spacing: @main_spacing * 2;
+@real_padding: @main_spacing * 2; /* The padding uses @main_spacing, but is twice as long since it's on both sides of the dom object */
+@content_width: @main_width - @sidebar_width - @real_padding - @main_spacing; /* @main_spacing refers to the spacing between the content block and sidebar block */
 
 #main {
   margin: 1em auto;
@@ -70,12 +75,12 @@ h3 {
   
   #sidebar {
     float: left;
-    width: @sidebar_width - @double_main_spacing;
+    width: @sidebar_width - @real_padding;
     margin-left: @main_spacing;
     font-size:.8em;
 
     .sidebar_block {
-      margin-bottom:1em;
+      margin-bottom:@main_spacing;
     }
     
     #search_form {
@@ -91,10 +96,10 @@ h3 {
   
   #content {
     float: left;
-    width: @main_width - @sidebar_width - @double_main_spacing - @main_spacing; /* paddings - sidebar margin */ 
+    width: @content_width;
     
     #footer {
-      margin-top:2em;
+      margin-top:@main_spacing * 2;
       display:block;
       font-size:.8em;
       color:@gray_text;
@@ -129,14 +134,19 @@ ul.simple{
   background-color: @void_page_color;
 }
 
+#page_submit_buttons {
+  float:right;
+}
+
 #page_form {
   textarea {
     margin:0px;
     padding:0px;
+    margin-bottom:@main_spacing;
     border:1px solid #ccc;
     width:100%;
-    overflow:auto;
     .main_fonts;
+    overflow:auto;
   }
   
   input[type=text] {
@@ -148,9 +158,10 @@ ul.simple{
   overflow:hidden;
   
   border-bottom:2px solid #999;
-  margin-bottom:10px;
+  margin-bottom:@main_spacing;
   
   .tab {
+    .header_fonts;
     float:left;
     width:100px;
     padding:5px;
@@ -198,6 +209,19 @@ ul.simple{
   }
 }
 
+/* Left/right columns */
+
+div.left_column {
+  float:left;
+  width: @content_width / 2 - 5px;
+  margin-right:@main_spacing;
+}
+
+div.right_column {
+  float:left;
+  width: @content_width / 2 - 5px;
+}
+
 /* Forms */
 
 form {
@@ -210,8 +234,15 @@ form {
 
 label {
   display:block;
+  font-weight:bold;
+  .header_fonts;
+  font-size:.9em;
 }
 
 label.inline {
   display:inline;
 }
+
+/* Utils */
+
+.clear { clear:both; }

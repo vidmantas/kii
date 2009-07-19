@@ -2,26 +2,38 @@
   <%= javascript_include_tag template_script("page_form") %>
 <% end %>
 
-<div id="page_form_tabs">
-  <div id="show_form" class="tab">Edit</div>
-  <div id="show_preview" class="tab">Preview</div>
-</div>
-
 <% form_for(@page, :html => {:id => "page_form"}) do |f| %>
-  <%= f.hidden_field :title %>
-  <%= f.hidden_field :current_revision_id unless f.object.new_record? %>
+  <div id="page_form_tabs">
+    <div id="show_form" class="tab">Edit</div>
+    <div id="show_preview" class="tab">Preview</div>
+    
+    <div id="page_submit_buttons">
+      <%= f.submit "Preview", :name => "preview" %>
+      <%= f.submit "Save" %>
+    </div>
+  </div>
 
-  <% f.fields_for "revision_attributes", @revision do |r| %>
-    <%= r.text_area :body  %>
-    <p><%= r.text_field :message %></p>
-  <% end %>
+  <div id="page_fields">
+    <%= f.hidden_field :title %>
+    <%= f.hidden_field :current_revision_id unless f.object.new_record? %>
 
-  <%= f.submit "Preview", :name => "preview" %>
-  <%= f.submit "Save" %>
+    <% f.fields_for "revision_attributes", @revision do |r| %>
+      <%= r.text_area :body %>
+      
+      <div class="left_column">
+        <label>Categories</label>
+        <p>Not implemented yet.</p>
+      </div>
+      <div class="right_column">
+        <%= r.label :message, "Log message" %>
+        <%= r.text_field :message, :id => "log_message" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div id="page_preview">
+    <div id="page_preview_loading">Loading preview...</div>
+    <div id="page_preview_error">There was an error loading the preview.</div>
+    <div id="page_preview_content"></div>
+  </div>
 <% end %>
-
-<div id="page_preview">
-  <div id="page_preview_loading">Loading preview...</div>
-  <div id="page_preview_error">There was an error loading the preview.</div>
-  <div id="page_preview_content"></div>
-</div>

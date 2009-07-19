@@ -14,7 +14,7 @@ $(function(){
   
   // The show form tab
   $("#show_form").click(function(){
-    $("#page_form").show();
+    $("#page_fields").show();
     $("#page_preview").hide();
   })
   
@@ -25,7 +25,7 @@ $(function(){
     $("#page_preview_error").hide();
     
     
-    $("#page_form").hide();
+    $("#page_fields").hide();
     $("#page_preview").show();
     
     var data = {}
