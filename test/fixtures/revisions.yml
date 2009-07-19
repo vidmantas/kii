@@ -22,3 +22,11 @@ bloated_a:
     [[Sandbox]] and [[sandbox]].
     
     [[iPhone]], [[IPhone]] and [[IPHONE]].
+    
+iphone_a:
+  page: iphone
+  body: iPhone ftw.
+  
+IPHONE_a:
+  page: IPHONE
+  body: What is this?

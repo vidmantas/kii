@@ -18,8 +18,12 @@ class PagesController < ApplicationController
     if @page
       render
     else
-      @page = Page.new(:title => params[:id].from_permalink)
-      render :action => "404"
+      if Page.count(:conditions => {:permalink => params[:id].upcase_first_letter}) != 0
+        redirect_to page_path(params[:id].upcase_first_letter)
+      else
+        @page = Page.new(:title => params[:id].from_permalink)
+        render :action => "404"
+      end
     end
   end
   

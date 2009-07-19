@@ -154,6 +154,14 @@ class PagesControllerTest < ActionController::TestCase
     assert_redirected_to new_page_path("Not so pretty either".to_permalink)
   end
   
+  test "redirect to upcased version if downcased version does not exist" do
+    get :show, :id => pages(:iphone).to_param
+    assert_response :success, "Upcased artile does not exist, so no redirect here."
+    
+    get :show, :id => pages(:home).to_param.downcase
+    assert_redirected_to page_path(pages(:home)), "Upcased article exist, redirect."
+  end
+  
   test "without write access" do
     Kii::CONFIG[:public_write] = false
     assert_raises(ApplicationController::LacksWriteAccess) {
