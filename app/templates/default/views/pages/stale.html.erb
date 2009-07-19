@@ -7,6 +7,6 @@
 <%= render :partial => "form" %>
 
 <h2>Changes made in current revision</h2>
-<div id="conflicting_edit">
+<div id="conflicting_edit" class="diff">
   <%= Kii::Differ.diff(render_body(@previous_revision.body), render_body(@current_revision.body)) %>
 </div>
