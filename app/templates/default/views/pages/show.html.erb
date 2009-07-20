@@ -1,8 +1,8 @@
 <% page_title h(@page.title) %>
 <div id="page_meta">
-  <%= link_to "Delete", confirm_destroy_page_path(@page) if admin? %>
   <%= link_to "Edit", edit_page_path(@page) if write_access? %>
   <%= link_to "Revisions", page_revisions_path(@page) %>
+  <%= link_to "Delete", confirm_destroy_page_path(@page) if admin? %>
   <%= last_updated_at(@page) %>
 </div>
 
