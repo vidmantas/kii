@@ -194,6 +194,8 @@ class PagesControllerTest < ActionController::TestCase
     get :show, :id => pages(:bloated).to_param
     assert_response :success
     
+    assert_select "a.pagelink.exists", "Existing page"
+    
     assert_select "a.pagelink.exists", "Sandbox"
     assert_select "a.pagelink.exists", "sandbox"
 
