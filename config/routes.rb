@@ -18,7 +18,6 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => "pages" do |m|
     m.all_pages "all_pages", :path_prefix => "_", :action => "index"
     
-    m.page ":id", :action => "show",            :conditions => {:method => :get}
     m.new_page "new/:id", :action => "new",  :conditions => {:method => :get}
     m.edit_page ":id/edit", :action => "edit",  :conditions => {:method => :get}
     
@@ -37,4 +36,8 @@ ActionController::Routing::Routes.draw do |map|
     m.confirm_destroy_page_revision "revisions/:id/confirm_destroy", :action => "confirm_destroy", :conditions => {:method => :get}
     m.connect "revisions/:id", :action => "destroy", :conditions => {:method => :delete}
   end  
+  
+  # At the lowest priority, we have the catch all page route. It has to be at the bottom because of
+  # the :requirements regex.
+  map.page ":id", :controller => "pages", :action => "show", :conditions => {:method => :get}, :requirements => {:id => /.+/}
 end
