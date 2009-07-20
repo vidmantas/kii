@@ -1,0 +1,8 @@
+<% page_title "Reverting &ldquo;#{h @page.title}&rdquo; \##{@revision.revision_number}" %>
+<div id="page_meta">
+  <%= link_to "Back", page_revision_path(@page, @revision) %>
+</div>
+
+<p>This is a one-way operation that will remove revision #<%= @revision.revision_number %> completely, and all the revisions after it.</p>
+
+<%= button_to "Revert!", page_revision_path(@page, @revision), :method => :delete %>

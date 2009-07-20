@@ -18,6 +18,20 @@ sandbox_b:
   remote_ip: 0.0.0.0
   referrer: /
   
+sandbox_c:
+  page: sandbox
+  body: One last update.
+  revision_number: 3
+  remote_ip: 0.0.0.0
+  referrer: /
+  
+sandbox_d:
+  page: sandbox
+  body: Not the last one after all
+  revision_number: 4
+  remote_ip: 0.0.0.0
+  referrer: /
+  
 bloated_a:
   page: bloated
   remote_ip: 0.0.0.0

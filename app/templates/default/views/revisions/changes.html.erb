@@ -1,8 +1,8 @@
-<% page_title "Changes for &ldquo;#{link_to h(@page.title), page_path(@page)}&rdquo; between \##{@previous_revision.revision_number} and \##{@current_revision.revision_number}" %>
+<% page_title "Changes made in &ldquo;#{link_to h(@page.title), page_path(@page)}&rdquo; \##{@revision.revision_number} " %>
 <div id="page_meta">
-  <%= link_to "Back to list", page_revisions_path(@page) %>
+  <%= render :partial => "revision_meta" %>
 </div>
 
 <div class="diff">
-  <%= Kii::Differ.diff(render_body(@previous_revision.body), render_body(@current_revision.body)) %>
+  <%= Kii::Differ.diff(render_body(@previous_revision.body), render_body(@revision.body)) %>
 </div>

@@ -3,6 +3,7 @@ class Revision < ActiveRecord::Base
   belongs_to :user
   
   before_create :increment_revision_number
+  after_destroy :destroy_consecutive_revisions
   attr_readonly :body
   
   validates_presence_of :body, :remote_ip, :referrer
@@ -25,5 +26,9 @@ class Revision < ActiveRecord::Base
     previous_revision = current
     self.revision_number = previous_revision.try(:revision_number)
     increment(:revision_number)
+  end
+  
+  def destroy_consecutive_revisions
+    self.class.delete_all(["revision_number > ?", self.revision_number])
   end
 end
