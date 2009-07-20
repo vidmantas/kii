@@ -7,8 +7,8 @@ $(function(){
   $("#page_form_tabs div:first").addClass("active");
   
   // Handiling active tab color
-  $("#page_form_tabs div").click(function(){
-    $("#page_form_tabs div").removeClass("active");
+  $("#page_form_tabs div.tab").click(function(){
+    $("#page_form_tabs div.tab").removeClass("active");
     $(this).addClass("active");
   });
   
