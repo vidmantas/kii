@@ -12,7 +12,7 @@ module ApplicationHelper
   end
   
   def revision_author_stamp(revision)
-    revision.user_id ? link_to(revision.user.login, user_path(revision.user)) : revision.remote_ip
+    revision.user_id ? link_to(h(revision.user.login), user_path(revision.user)) : revision.remote_ip
   end
   
   def template_script(script)
