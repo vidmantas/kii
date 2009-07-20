@@ -12,6 +12,10 @@ module ApplicationHelper
   end
   
   def revision_author_stamp(revision)
-    revision.user_id ? link_to(h(revision.user.login), user_path(revision.user)) : revision.remote_ip
+    if revision.user_id
+      link_to h(revision.user.login), user_path(revision.user)
+    else
+      link_to revision.remote_ip, ip_path(revision.remote_ip)
+    end
   end
 end
