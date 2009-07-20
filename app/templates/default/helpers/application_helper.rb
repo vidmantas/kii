@@ -1,9 +1,9 @@
 module ApplicationHelper
   def last_updated_at(page)
-    %{Last updated #{page_timestamp(page.updated_at)}}
+    %{Last updated #{datetimestamp(page.updated_at)}}
   end
   
-  def page_timestamp(time)
+  def datetimestamp(time)
     "#{datestamp(time)}, #{timestamp(time)}"
   end
   
