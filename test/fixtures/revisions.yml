@@ -1,19 +1,28 @@
 home_a:
   page: home
   body: Hello, world.
+  remote_ip: 0.0.0.0
+  referrer: /
   
 sandbox_a:
   page: sandbox
   body: This is the sandbox.
   revision_number: 1
+  remote_ip: 0.0.0.0
+  referrer: /
 
 sandbox_b:
   page: sandbox
   body: This is the updated sandbox.
   revision_number: 2
+  remote_ip: 0.0.0.0
+  referrer: /
   
 bloated_a:
   page: bloated
+  remote_ip: 0.0.0.0
+  referrer: /
+  user: admin
   body: |
     This page has a lot of stuff in it. Its purpose is to cause a test to fail if there are any errors in `Kii::Markup`.
     
@@ -26,7 +35,11 @@ bloated_a:
 iphone_a:
   page: iphone
   body: iPhone ftw.
+  remote_ip: 0.0.0.0
+  referrer: /
   
 IPHONE_a:
   page: IPHONE
   body: What is this?
+  remote_ip: 0.0.0.0
+  referrer: /

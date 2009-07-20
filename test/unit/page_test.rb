@@ -6,11 +6,11 @@ class PageTest < ActiveSupport::TestCase
   end
   
   test "won't create without body" do
-    page = new_page(:revision_attributes => {:body => nil})
+    page = new_page(:revision_attributes => {:body => nil, :remote_ip => "0.0.0.0", :referrer => "/"})
     assert !page.valid?
   end
   
-  test "won't update without body" do
+  test "won't update without valid revision data" do
     page = create_page
     page.revision_attributes = {:body => nil}
     assert !page.valid?
@@ -20,11 +20,11 @@ class PageTest < ActiveSupport::TestCase
     page = create_page
     assert_equal 1, page.revisions.last.revision_number
     
-    page.revision_attributes = {:body => "updated"}
+    page.revision_attributes = {:body => "updated", :remote_ip => "0.0.0.0", :referrer => "/"}
     page.save
     assert_equal 2, page.revisions.last.revision_number
     
-    page.revision_attributes = {:body => "updated, again!"}
+    page.revision_attributes = {:body => "updated, again!", :remote_ip => "0.0.0.0", :referrer => "/"}
     page.current_revision_id = page.revisions.last.id
     page.save
     assert_equal 3, page.revisions.last.revision_number
@@ -42,14 +42,14 @@ class PageTest < ActiveSupport::TestCase
     page = pages(:home)
     was_updated_at = page.updated_at
 
-    page.revision_attributes = {:body => "Yep!"}
-    page.save
+    page.revision_attributes = {:body => "Yep!", :remote_ip => "0.0.0.0", :referrer => "/"}
+    assert page.save
     
     assert_not_equal was_updated_at, page.updated_at
   end
   
   def new_page(attrs = {})
-    Page.new(attrs.reverse_merge!(:title => "A new page!", :revision_attributes => {:body => "ai"}))
+    Page.new(attrs.reverse_merge!(:title => "A new page!", :revision_attributes => {:body => "ai", :remote_ip => "0.0.0.0", :referrer => "/"}))
   end
   
   def create_page(attrs = {})

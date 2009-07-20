@@ -5,7 +5,7 @@ class Revision < ActiveRecord::Base
   before_create :increment_revision_number
   attr_readonly :body
   
-  validates_presence_of :body
+  validates_presence_of :body, :remote_ip, :referrer
   
   named_scope :ordered, :order => "revision_number DESC"
   named_scope :with_user, :include => [:user]

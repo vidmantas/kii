@@ -11,7 +11,13 @@ namespace :kii do
     end
     
     say "Creating home page"
-    Page.create!(:title => Kii::CONFIG[:home_page].titleize, :revision_attributes => {:body => File.read("#{Rails.root}/lib/kii/default_homepage")})
+    Page.create!({
+      :title => Kii::CONFIG[:home_page].titleize,
+      :revision_attributes => {
+        :body => File.read("#{Rails.root}/lib/kii/default_homepage"),
+        :remote_ip => "0.0.0.0"
+      }
+    })
   end
   
   task :pre_install do
