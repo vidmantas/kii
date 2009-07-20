@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  has_many :revisions do
+  has_many :revisions, :dependent => :delete_all do
     def current
       ordered.first
     end
@@ -21,6 +21,18 @@ class Page < ActiveRecord::Base
   attr_writer :current_revision_id
   def current_revision_id
     @current_revision_id ||= revisions.current.id
+  end
+  
+  def soft_destroy
+    ActiveRecord::Base.transaction do
+      latest_revision = revisions.current.clone
+      revisions.clear
+      latest_revision.revision_number = 1
+      latest_revision.send(:create_without_callbacks)
+      
+      self.deleted = true
+      self.send(:update_without_callbacks)
+    end
   end
   
   private
@@ -46,6 +58,6 @@ class Page < ActiveRecord::Base
   end
   
   def build_revision
-    revisions.build(revision_attributes)
+    r = revisions.build(revision_attributes)
   end
 end

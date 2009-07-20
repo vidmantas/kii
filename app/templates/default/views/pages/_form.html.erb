@@ -37,3 +37,13 @@
     <div id="page_preview_content"></div>
   </div>
 <% end %>
+
+<div class="clear"></div>
+
+<% if logged_in? %>
+  <h2>Destroy the page</h2>
+
+  <p>By clicking the button below, you destroy this page. The most recent revision of the page is stored, but all the history before that is removed in a one way operation.</p>
+
+  <%= button_to "Destroy the page", page_path(@page), :method => :delete, :id => "destroy_page_button" %>
+<% end %>

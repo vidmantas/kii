@@ -57,4 +57,10 @@ $(function(){
   
   // We don't want the none-JS preview button.
   $("#page_form input[type=submit][name=preview]").hide();
+  
+  //////////////////////////////
+  // Destroy page button
+  $("#destroy_page_button").click(function(){
+    if (!confirm("Are you sure?")) { return false }
+  })
 });

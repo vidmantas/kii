@@ -48,6 +48,16 @@ class PageTest < ActiveSupport::TestCase
     assert_not_equal was_updated_at, page.updated_at
   end
   
+  test "soft destroy" do
+    page = pages(:sandbox)
+    assert page.revisions.count > 1 # testing fixtures ftl.. Oh well.
+    
+    page.soft_destroy
+    assert_equal 1, page.revisions.count
+    assert_equal 1, page.revisions.current.revision_number
+    assert page.deleted?
+  end
+  
   def new_page(attrs = {})
     Page.new(attrs.reverse_merge!(:title => "A new page!", :revision_attributes => {:body => "ai", :remote_ip => "0.0.0.0", :referrer => "/"}))
   end

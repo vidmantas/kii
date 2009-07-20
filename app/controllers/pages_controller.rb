@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_filter :require_write_access, :except => [:index, :show]
+  before_filter :require_login, :only => [:destroy]
   before_filter :ensure_pretty_permalink, :only => [:show, :new]
   
   rescue_from ActiveRecord::StaleObjectError, :with => :handle_stale_page
@@ -16,7 +17,11 @@ class PagesController < ApplicationController
     @page = Page.find_by_permalink(params[:id])
     
     if @page
-      render
+      if @page.deleted?
+        render :action => "deleted"
+      else
+        render
+      end
     else
       if Page.count(:conditions => {:permalink => params[:id].upcase_first_letter}) != 0
         redirect_to page_path(params[:id].upcase_first_letter)
@@ -60,6 +65,12 @@ class PagesController < ApplicationController
       @page.save
       redirect_to page_path(@page)
     end
+  end
+  
+  def destroy
+    @page = Page.find_by_permalink!(params[:id])
+    @page.soft_destroy
+    redirect_to page_path(@page)
   end
   
   private

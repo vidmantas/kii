@@ -28,6 +28,13 @@ class PagesControllerTest < ActionController::TestCase
     assert_template "pages/404"
   end
   
+  test "showing deleted page" do
+    pages(:sandbox).soft_destroy
+    get :show, :id => pages(:sandbox).to_param
+    assert_response :success
+    assert_template "pages/deleted"
+  end
+  
   test "new" do
     get :new, :id => "New Page".to_permalink
     assert_response :success
@@ -144,6 +151,13 @@ class PagesControllerTest < ActionController::TestCase
     
     assert_response :success
     assert_template nil
+  end
+  
+  test "destroying" do
+    UserSession.create(users(:admin))
+    delete :destroy, :id => pages(:sandbox).to_param
+    assert_redirected_to page_path(pages(:sandbox))
+    assert pages(:sandbox).reload.deleted?
   end
   
   test "pretty permalinks" do

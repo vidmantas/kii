@@ -25,6 +25,8 @@ ActionController::Routing::Routes.draw do |map|
     m.pages "", :action => "create",            :conditions => {:method => :post}
 
     m.connect ":id", :action => "update", :conditions => {:method => :put}
+    
+    m.connect ":id", :action => "destroy", :conditions => {:method => :delete}
   end
   
   map.with_options :controller => "revisions", :path_prefix => ":page_id" do |m|
