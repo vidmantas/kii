@@ -1,5 +1,5 @@
 class RevisionsController < ApplicationController
-  before_filter :require_login, :only => [:confirm_revert, :revert]
+  before_filter :require_admin, :only => [:confirm_revert, :revert]
   
   def index
     @page = Page.find_by_permalink!(params[:page_id])

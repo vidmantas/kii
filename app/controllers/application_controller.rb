@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
     current_user.is_a?(User)
   end
   
+  def admin?
+    logged_in? && current_user.admin?
+  end
+  
   def write_access?
     Kii::CONFIG[:public_write] || logged_in?
   end
@@ -33,5 +37,9 @@ class ApplicationController < ActionController::Base
     redirect_to new_session_path unless logged_in?
   end
   
-  helper_method :current_user, :logged_in?, :write_access?, :registration_enabled?
+  def require_admin
+    redirect_to new_session_path unless admin?
+  end
+  
+  helper_method :current_user, :logged_in?, :admin?, :write_access?, :registration_enabled?
 end

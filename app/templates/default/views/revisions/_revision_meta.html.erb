@@ -1,6 +1,6 @@
 <span>As of <%= datetimestamp(@revision.created_at) %></span>
 
-<%= link_to "Revert", confirm_destroy_page_revision_path(@page, @revision) if logged_in? %>
+<%= link_to "Revert", confirm_destroy_page_revision_path(@page, @revision) if admin? %>
 <%= link_to "Back to list", page_revisions_path(@page) %>
 
 |
