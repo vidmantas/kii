@@ -29,6 +29,6 @@ class Revision < ActiveRecord::Base
   end
   
   def destroy_consecutive_revisions
-    self.class.delete_all(["revision_number > ?", self.revision_number])
+    self.class.delete_all(["revision_number > ? AND page_id = ?", self.revision_number, self.page_id])
   end
 end
