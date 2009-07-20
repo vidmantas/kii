@@ -1,4 +1,4 @@
-<% page_title @page.title %>
+<% page_title h(@page.title) %>
 <div id="page_meta">
   <%= link_to "Edit", edit_page_path(@page) if write_access? %>
   <%= link_to "Revisions", page_revisions_path(@page) %>

@@ -1,4 +1,4 @@
-<% page_title "Changes for &ldquo;#{link_to @page.title, page_path(@page)}&rdquo; between \##{@previous_revision.revision_number} and \##{@current_revision.revision_number}" %>
+<% page_title "Changes for &ldquo;#{link_to h(@page.title), page_path(@page)}&rdquo; between \##{@previous_revision.revision_number} and \##{@current_revision.revision_number}" %>
 <div id="page_meta">
   <%= link_to "Back to list", page_revisions_path(@page) %>
 </div>
