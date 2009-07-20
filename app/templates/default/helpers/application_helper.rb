@@ -7,14 +7,6 @@ module ApplicationHelper
     %{#{time.strftime("%B %d %Y, %H:%M")}}
   end
   
-  def revision_link(page, revision)
-    link_to page_timestamp(revision.created_at), page_revision_path(page, revision)
-  end
-  
-  def revision_author_stamp(revision)
-    revision.user_id ? link_to(h(revision.user.login), user_path(revision.user)) : revision.remote_ip
-  end
-  
   def template_script(script)
     "/templates/#{Kii::CONFIG[:template]}/javascripts/#{script}"
   end
