@@ -1,7 +1,14 @@
 <% page_title "User &ldquo;#{h @user.login}&rdquo;" %>
-<div id="page_meta">&nbsp;</div>
+<div id="page_meta">
+  Member since <%= datestamp(@user.created_at) %>
+</div>
 
-<p>Member since <%= datestamp(@user.created_at) %></p>
+<% unless @user.profile_text.blank? %>
+  <div id="user_profile_text">
+    <%= render_body(@user.profile_text) %>
+  </div>
+  <hr />
+<% end %>
 
 <div class="left_column">  
   <h3>Created these pages</h3>
