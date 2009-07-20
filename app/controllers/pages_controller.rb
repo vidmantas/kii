@@ -10,7 +10,7 @@ class PagesController < ApplicationController
   end
   
   def index
-    @pages = Page.find(:all, :order => "title")
+    @pages = Page.find(:all, :order => "title", :conditions => {:deleted => false})
   end
   
   def show
