@@ -25,11 +25,14 @@ class Page < ActiveRecord::Base
   
   def soft_destroy
     ActiveRecord::Base.transaction do
+      # Remove all revisions, create a copy of the most recent revision and
+      # store it as revision 1
       latest_revision = revisions.current.clone
       revisions.clear
       latest_revision.revision_number = 1
       latest_revision.send(:create_without_callbacks)
       
+      # Set to deleted without running callbacks or validations
       self.deleted = true
       self.send(:update_without_callbacks)
     end
