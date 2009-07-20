@@ -26,6 +26,7 @@ ActionController::Routing::Routes.draw do |map|
 
     m.connect ":id", :action => "update", :conditions => {:method => :put}
     
+    m.confirm_destroy_page ":id/confirm_destroy", :action => "confirm_destroy", :conditions => {:method => :get}
     m.connect ":id", :action => "destroy", :conditions => {:method => :delete}
   end
   

@@ -1,0 +1,8 @@
+<% page_title "Confirm removal of &ldquo;#{h(@page.title)}&rdquo;" %>
+<div id="page_meta">
+  <%= link_to "Back to page", page_path(@page) %>
+</div>
+
+<p>By clicking the button below, you destroy this page. The most recent revision of the page is stored, but all the history before that is removed in a one way operation.</p>
+
+<%= button_to "Destroy the page", page_path(@page), :method => :delete %>

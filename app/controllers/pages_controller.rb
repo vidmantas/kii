@@ -67,6 +67,10 @@ class PagesController < ApplicationController
     end
   end
   
+  def confirm_destroy
+    @page = Page.find_by_permalink!(params[:id])
+  end
+  
   def destroy
     @page = Page.find_by_permalink!(params[:id])
     @page.soft_destroy

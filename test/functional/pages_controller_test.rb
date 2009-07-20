@@ -153,6 +153,13 @@ class PagesControllerTest < ActionController::TestCase
     assert_template nil
   end
   
+  test "confirm destroy" do
+    UserSession.create(users(:admin))
+    
+    get :confirm_destroy, :id => pages(:sandbox).to_param
+    assert_response :success
+  end
+  
   test "destroying" do
     UserSession.create(users(:admin))
     delete :destroy, :id => pages(:sandbox).to_param
