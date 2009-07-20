@@ -15,8 +15,8 @@
   <tbody>
     <% @revisions.each do |revision| %>
       <tr>
-        <td><%= revision.revision_number %></td>
-        <td><%= revision_link(@page, revision) %></td>
+        <td><%= link_to "##{revision.revision_number}", page_revision_path(@page, revision) %></td>
+        <td><%= datetimestamp(revision.created_at) %></td>
         <td><%= revision.message %></td>
         <td><%= revision_author_stamp(revision) %></td>
         <td><%= link_to "Changes", page_revision_changes_path(@page, revision) %></td>

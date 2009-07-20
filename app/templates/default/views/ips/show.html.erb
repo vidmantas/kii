@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>#</th>
       <th>Date</th>
       <th>Page</th>
       <th></th>
@@ -12,7 +13,8 @@
   <tbody>
     <% @revisions.each do |revision| %>
       <tr>
-        <td><%= revision_link(revision.page, revision) %></td>
+        <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
+        <td><%= datetimestamp(revision.created_at) %></td>
         <td><%= link_to h(revision.page.title), page_path(revision.page) %></td>
         <td><%= link_to "Changes", page_revision_changes_path(revision.page, revision) %></td>
       </tr>
