@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find_by_login!(params[:id])
+    @created_pages = @user.created_pages
   end
   
   def new

@@ -1,4 +1,19 @@
 <% page_title "User &ldquo;#{h @user.login}&rdquo;" %>
 <div id="page_meta">&nbsp;</div>
 
-<p>This is a user. We should show something informative here, such as revisions.</p>
+<p>Member since <%= datestamp(@user.created_at) %></p>
+
+<div class="left_column">  
+  <h3>Created these pages</h3>
+  
+  <ul>
+    <% @created_pages.each do |page| %>
+      <li><%= link_to h(page.title), page_path(page) %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="right_column">
+  <h3>Recent activities</h3>
+  <p>Not implemented yet.</p>
+</div>

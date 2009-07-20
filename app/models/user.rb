@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
   def to_param
     login
   end
+  
+  def created_pages
+    revisions.ordered.all(:conditions => {:revision_number => 1}, :include => :page).map {|r| r.page }
+  end
 end

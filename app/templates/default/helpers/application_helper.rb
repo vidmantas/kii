@@ -4,7 +4,17 @@ module ApplicationHelper
   end
   
   def page_timestamp(time)
-    %{#{time.strftime("%B %d %Y, %H:%M")}}
+    "#{datestamp(time)}, #{timestamp(time)}"
+  end
+  
+  # July 12 2009
+  def datestamp(time)
+    time.strftime("%B %d %Y")
+  end
+  
+  # 23:15
+  def timestamp(time)
+    time.strftime("%H:%M")
   end
   
   def template_script(script)
