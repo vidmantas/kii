@@ -54,6 +54,15 @@ class PageTest < ActiveSupport::TestCase
     assert page.errors.on("title")
   end
   
+  test "save without changes doesn't create revisions" do
+    
+    assert_no_difference("Revision.count") do
+      page = pages(:sandbox)
+      page.revision_attributes = {:body => page.revisions.current.body, :remote_ip => "0.0.0.0", :referrer => "/"}
+      page.save
+    end
+  end
+  
   test "soft destroy" do
     page = pages(:sandbox)
     assert page.revisions.count > 1 # testing fixtures ftl.. Oh well.

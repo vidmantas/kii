@@ -153,6 +153,16 @@ class PagesControllerTest < ActionController::TestCase
     assert_template nil
   end
   
+  test "updating with no changes" do
+    assert_no_difference("Revision.count") do
+      post :update, :id => pages(:sandbox).to_param, :page => {
+        :revision_attributes => {:body => pages(:sandbox).revisions.current.body}
+      }
+      
+      assert_redirected_to page_path(pages(:sandbox))
+    end
+  end
+  
   test "confirm destroy" do
     UserSession.create(users(:admin))
     

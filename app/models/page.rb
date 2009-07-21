@@ -1,4 +1,5 @@
 class Page < ActiveRecord::Base
+  class NoChangesError < RuntimeError; end
   RESTRICTED_NAMES = ["_"]
   
   has_many :revisions, :dependent => :delete_all do
@@ -14,6 +15,7 @@ class Page < ActiveRecord::Base
   validates_presence_of :title, :revision_attributes
   validates_associated :revisions
   validate :avoid_restricted_names
+  validate_on_update :disallow_unchanged_updates
   
   attr_accessor :revision_attributes
   
@@ -63,8 +65,14 @@ class Page < ActiveRecord::Base
     end
   end
   
+  def disallow_unchanged_updates
+    if @new_revision.body == revisions.current.body
+      errors.add_to_base("No changes were made")
+    end
+  end
+  
   def build_revision
-    r = revisions.build(revision_attributes)
+    @new_revision = revisions.build(revision_attributes)
   end
   
   def avoid_restricted_names
