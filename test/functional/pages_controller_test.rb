@@ -28,6 +28,17 @@ class PagesControllerTest < ActionController::TestCase
     assert_template "pages/404"
   end
   
+  test "showing downcased none existing page" do
+    get :show, :id => "does not exist".to_permalink
+    assert_response :success
+    assert_template "pages/404"
+    
+    # It suggests both versions
+    assert_select "a", "does not exist"
+    assert_select "a", "Does not exist"
+  end
+  
+  
   test "showing deleted page" do
     pages(:sandbox).soft_destroy
     get :show, :id => pages(:sandbox).to_param

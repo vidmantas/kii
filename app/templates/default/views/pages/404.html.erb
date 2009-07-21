@@ -1,10 +1,13 @@
 <% page_title h(@page.title) %>
 <div id="page_meta">&nbsp;</div>
 
-<p>
-  Article not found.
+<p>Article not found.</p>
 
-  <% if write_access? %>
-    <%= link_to "Create it", new_page_path(params[:id]) %>!
+
+<% if write_access? %>
+  <% if @page.title != @page.title.upcase_first_letter %>
+    <p>Create <%= link_to @page.title.upcase_first_letter, new_page_path(@page.title.upcase_first_letter.to_permalink) %>.</p>
   <% end %>
-</p>
+
+  <p>Create <%= link_to @page.title, new_page_path(@page.title.to_permalink) %>.</p>
+<% end %>
