@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
   LacksWriteAccess = Class.new(RuntimeError)
   
-  # To avoid encoding issues on page names such as '/Øystein' on ruby 1.9
+  # Making sure everything in params is UTF-8 on Ruby 1.9
   if String.method_defined?(:force_encoding)
-    before_filter {|c| c.params.each {|k, v| v.force_encoding("UTF-8") if v.is_a?(String) }}
+    before_filter {|c| c.send(:convert_to_utf_8, c.params) }
   end
   
   protect_from_forgery
@@ -42,4 +42,15 @@ class ApplicationController < ActionController::Base
   end
   
   helper_method :current_user, :logged_in?, :admin?, :write_access?, :registration_enabled?
+  
+  def convert_to_utf_8(target)
+    case target
+    when String
+      target.force_encoding("UTF-8")
+    when Hash
+      target.each {|k, v| convert_to_utf_8(v) }
+    when Array
+      target.each {|k, v| convert_to_utf_8(v) }
+    end
+  end
 end
