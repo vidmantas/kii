@@ -1,4 +1,6 @@
 class Page < ActiveRecord::Base
+  RESTRICTED_NAMES = ["_"]
+  
   has_many :revisions, :dependent => :delete_all do
     def current
       ordered.first
@@ -11,6 +13,7 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :title, :revision_attributes
   validates_associated :revisions
+  validate :avoid_restricted_names
   
   attr_accessor :revision_attributes
   
@@ -62,5 +65,9 @@ class Page < ActiveRecord::Base
   
   def build_revision
     r = revisions.build(revision_attributes)
+  end
+  
+  def avoid_restricted_names
+    errors.add("title", "is restricted") if RESTRICTED_NAMES.include?(title)
   end
 end

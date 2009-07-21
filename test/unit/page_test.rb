@@ -48,6 +48,12 @@ class PageTest < ActiveSupport::TestCase
     assert_not_equal was_updated_at, page.updated_at
   end
   
+  test "restricted names" do
+    page = new_page(:title => "_")
+    assert !page.valid?
+    assert page.errors.on("title")
+  end
+  
   test "soft destroy" do
     page = pages(:sandbox)
     assert page.revisions.count > 1 # testing fixtures ftl.. Oh well.
