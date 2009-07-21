@@ -1,4 +1,4 @@
-<% page_title "Changes made in &ldquo;#{link_to h(@page.title), page_path(@page)}&rdquo; \##{@revision.revision_number} " %>
+<% page_title "Changes made in &ldquo;#{page_link(@page)}&rdquo; \##{@revision.revision_number} " %>
 <div id="page_meta">
   <%= render :partial => "revision_meta" %>
 </div>

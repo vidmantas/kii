@@ -37,30 +37,21 @@ module Kii
       permalinks += permalinks.map {|permalink| permalink.upcase_first_letter }
       permalinks.uniq!
       
-      @linked_pages = Page.all(:conditions => {:permalink => permalinks})
+      @linked_pages = Page.all(:conditions => {:permalink => permalinks, :deleted => false})
     end
     
     def create_page_links
-      @html.gsub!(PAGE_LINK_REGEX) { page_link(($~[2] || $~[1]), CGI.unescape($~[1])) }
-    end
-    
-    def page_link(link_text, permalink)
-      options = {}
-      # First, look for an exact match. If none is found, look for the upcased version.
-      page = @linked_pages.detect {|page| page.permalink == permalink.to_permalink } ||
-        @linked_pages.detect {|page| page.permalink == permalink.to_permalink.upcase_first_letter }
-      
-      if page
-        options[:class] = "pagelink exists"
-        options[:href] = "/" + page.permalink
-      else
-        options[:class] = "pagelink void"
-        options[:href] = "/" + permalink.to_permalink
-      end
-      
-      options[:href].force_encoding("UTF-8") if options[:href].respond_to?(:force_encoding)
-
-      @helper.content_tag(:a, link_text, options)
+      @html.gsub!(PAGE_LINK_REGEX) {
+        link_text = ($~[2] || $~[1])
+        permalink = CGI.unescape($~[1])
+        
+        page = @linked_pages.detect {|lp| lp.permalink == permalink.to_permalink } ||
+          @linked_pages.detect {|lp| lp.permalink == permalink.to_permalink.upcase_first_letter } ||
+          Page.new(:title => link_text, :deleted => true, :permalink => permalink)
+          
+        
+        @helper.page_link(page, link_text)
+      }
     end
   end
 end
