@@ -20,7 +20,7 @@
         <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
         <td><%= datetimestamp(revision.created_at) %></td>
         <td><%= page_link(revision.page) %></td>
-        <td><%= revision_author_stamp(revision) %></td>
+        <td><%= revision_author_link(revision) %></td>
         <td><%= link_to "Changes", page_revision_changes_path(revision.page, revision) %></td>
       </tr>
     <% end %>

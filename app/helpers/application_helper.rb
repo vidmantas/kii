@@ -26,7 +26,7 @@ module ApplicationHelper
     link_to(title || h(page.title), page_path(page), options)
   end
 
-  def revision_author_stamp(revision)
+  def revision_author_link(revision)
     if revision.user_id
       link_to h(revision.user.login), user_path(revision.user)
     else
