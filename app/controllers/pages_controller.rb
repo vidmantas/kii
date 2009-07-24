@@ -37,8 +37,7 @@ class PagesController < ApplicationController
   end
   
   def create
-    @page = Page.new(params[:page])
-    append_request_metadata_to_page
+    @page = Page.new(page_params_with_request_metadata)
     
     if used_preview_button?
       preview
@@ -56,12 +55,11 @@ class PagesController < ApplicationController
   
   def update
     @page = Page.find_by_permalink!(params[:id])
-    @page.attributes = params[:page]
+    @page.attributes = page_params_with_request_metadata
     
     if used_preview_button?
       preview
     else
-      append_request_metadata_to_page
       @page.save
       redirect_to page_path(@page)
     end
@@ -102,12 +100,14 @@ class PagesController < ApplicationController
     end
   end
 
-  def append_request_metadata_to_page
-    @page.revision_attributes.merge!({
+  def page_params_with_request_metadata
+    params[:page][:revision_attributes].merge!({
       :remote_ip => request.remote_ip,
       :referrer => request.referrer,
       :user_id => current_user.try(:id)
     })
+    
+    return params[:page]
   end
   
   def handle_stale_page
