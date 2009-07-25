@@ -1,0 +1,20 @@
+<% page_title "New discussion in &ldquo;#{page_link(@page)}&rdquo;" %>
+<div id="page_meta">
+  <%= link_to "Discussions", page_discussions_path(@page) %>
+</div>
+
+<% form_for([@page, @discussion]) do |f| %>
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </p>
+  
+  <% f.fields_for "discussion_entry_attributes", @discussion.new_discussion_entry do |d| %>
+    <p>
+      <%= d.label :body %>
+      <%= d.text_area :body %>
+    </p>
+  <% end %>
+  
+  <%= f.submit "Create discussion" %>
+<% end %>

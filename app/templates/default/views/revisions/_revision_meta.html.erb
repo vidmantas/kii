@@ -1,10 +1,10 @@
 <span>
-  By <%= revision_author_link(@revision) %>,
+  By <%= author_link(@revision) %>,
   <%= datetimestamp(@revision.created_at) %>
 </span>
 
-<%= link_to "Revert", confirm_destroy_page_revision_path(@page, @revision) if admin? %>
-<%= link_to "Back to list", page_revisions_path(@page) %>
+<%= link_to "Revert", page_confirm_destroy_revision_path(@page, @revision) if admin? %>
+<%= link_to "Revisions", page_revisions_path(@page) %>
 
 |
 

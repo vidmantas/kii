@@ -26,11 +26,12 @@ module ApplicationHelper
     link_to(title || h(page.title), page_path(page), options)
   end
 
-  def revision_author_link(revision)
-    if revision.user_id
-      link_to h(revision.user.login), user_path(revision.user)
+  # The active_record_instance has to have a user_id, belongs_to :user and a remote_ip column.
+  def author_link(active_record_instance)
+    if active_record_instance.user_id
+      link_to h(active_record_instance.user.login), user_path(active_record_instance.user)
     else
-      link_to revision.remote_ip, ip_path(revision.remote_ip)
+      link_to active_record_instance.remote_ip, ip_path(active_record_instance.remote_ip)
     end
   end
 end

@@ -1,0 +1,11 @@
+<% page_title "Discussions for &ldquo;#{page_link(@page)}&rdquo;" %>
+<div id="page_meta">
+  <%= link_to "New discussion", new_page_discussion_path(@page) %>
+</div>
+
+<% @discussions.each do |discussion| %>
+  <div class="discussion">
+    <h2><%= link_to discussion.title, page_discussion_path(@page, discussion) %></h2>
+    <p>Last updated <%= datetimestamp(discussion.updated_at) %> by <%= author_link(discussion.latest_discussion_entry) %></p>
+  </div>
+<% end %>

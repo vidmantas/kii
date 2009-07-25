@@ -1,7 +1,8 @@
 class Page < ActiveRecord::Base
   class NoChangesError < RuntimeError; end
   RESTRICTED_NAMES = ["_"]
-  
+
+  has_many :discussions
   has_many :revisions, :dependent => :delete_all do
     def current
       ordered.first
