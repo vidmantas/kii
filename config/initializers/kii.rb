@@ -10,4 +10,4 @@ Dir["#{Rails.root}/lib/core_ext/*.rb"].each {|e| require e }
 
 
 # We want a span
-ActionView::Base.field_error_proc = proc {|f| %{<span class="field_with_errors">#{f}</span>} }
+ActionView::Base.field_error_proc = proc {|html_tag, instance| %{<span class="field_with_errors">#{html_tag}</span>} }
