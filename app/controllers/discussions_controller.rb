@@ -7,7 +7,7 @@ class DiscussionsController < ApplicationController
   def show
     @page = Page.find_by_permalink!(params[:page_id])
     @discussion = @page.discussions.find(params[:id])
-    @discussion_entries = @discussion.discussion_entries.all(:include => [:user])
+    @discussion_entries = @discussion.discussion_entries.all(:include => [:user], :order => "created_at ASC")
     
     @discussion_entry = DiscussionEntry.new
   end
