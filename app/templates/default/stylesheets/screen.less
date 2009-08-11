@@ -70,6 +70,14 @@ pre {
 @real_padding: @main_spacing * 2; /* The padding uses @main_spacing, but is twice as long since it's on both sides of the dom object */
 @content_width: @main_width - @sidebar_width - @real_padding - @main_spacing; /* @main_spacing refers to the spacing between the content block and sidebar block */
 
+#dev_mode_warning {
+  text-align:center;
+  background: #390;
+  color:#fff;
+  font-size:1.2em;
+  line-height:2em;
+}
+
 #main {
   margin: 1em auto;
   width: @main_width + 4px; /* 4 1px borders */

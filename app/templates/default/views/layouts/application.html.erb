@@ -11,6 +11,8 @@
   <title><%= strip_tags(@page_title) %> - <%= Kii::CONFIG[:site_name] %></title>
 </head>
 <body>
+  <%= content_tag(:div, "Development Mode", :id => "dev_mode_warning") if Rails.env == "development" %>
+  
   <div id="main">
     <div id="content">
       <h1><%= @page_title %></h1>
