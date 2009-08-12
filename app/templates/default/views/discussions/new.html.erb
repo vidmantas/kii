@@ -4,6 +4,8 @@
 </div>
 
 <% form_for([@page, @discussion]) do |f| %>
+  <%= f.honeypot %>
+
   <p>
     <%= f.label :title %>
     <%= f.text_field :title %>

@@ -4,3 +4,6 @@
 [submodule "vendor/plugins/authlogic"]
 	path = vendor/plugins/authlogic
 	url = git://github.com/binarylogic/authlogic.git
+[submodule "vendor/plugins/rails_honeypot"]
+	path = vendor/plugins/rails_honeypot
+	url = git://github.com/augustl/rails_honeypot.git
