@@ -1,1 +1,1 @@
-LessForRails::STYLESHEET_PATHS << "#{CURRENT_TEMPLATE.path}/stylesheets"
+LessForRails.paths << "#{CURRENT_TEMPLATE.path}/stylesheets"
