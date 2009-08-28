@@ -1,0 +1,161 @@
+---
+- title: Basic paragraphs
+  in: |
+    The first paragraph.
+  
+  
+    The second paragraph.
+  
+    The third and last paragraph.
+  out: |
+    <p>The first paragraph.</p>
+    <p>The second paragraph.</p>
+    <p>The third and last paragraph.</p>
+
+
+
+- title: Linebreaks
+  in: |
+    The first paragraph.
+    Still the first paragraph.
+    
+    The second paragraph.
+  out: |
+    <p>The first paragraph.
+    <br/>Still the first paragraph.</p>
+    <p>The second paragraph.</p>
+
+
+
+- title: Muchos linebreaks
+  in: |
+    Foo
+    Bar
+    Baz
+    Maz
+    
+    And the end.
+  out: |
+    <p>Foo
+    <br/>Bar
+    <br/>Baz
+    <br/>Maz</p>
+    <p>And the end.</p>
+
+
+
+- title: Bold and italic
+  in: |
+    Foo, ''bar'', '''baz''' and '''''all the way'''''.
+    
+    Cat's hat's rat's fat's bat's mat's soda's.
+  out: |
+    <p>Foo, <em>bar</em>, <strong>baz</strong> and <em><strong>all the way</strong></em>.</p>
+    <p>Cat's hat's rat's fat's bat's mat's soda's.</p>
+- title: Headers
+  in: |
+    = First header =
+    
+    The paragraph is here.
+    
+    == Second header ==
+    
+    Another paragraph.
+  out: |
+    <h1>First header</h1>
+    <p>The paragraph is here.</p>
+    <h2>Second header</h2>
+    <p>Another paragraph.</p>
+
+
+
+- title: Ordered lists
+  in: |
+    I am a paragraph.
+    
+    * But this
+    * Is an ordered
+    * List
+  out: |
+    <p>I am a paragraph.</p>
+    <ul><li>But this</li><li>Is an ordered</li><li>List</li></ul>
+
+
+
+- title: Numbered lists
+  in: |
+    # Here is
+    # Some kind of
+    # Numbered list
+  out: |
+    <ol><li>Here is</li><li>Some kind of</li><li>Numbered list</li></ol>
+
+
+
+- title: Nested lists
+  in: |
+    * This list is
+    * A nested list
+    ** Here's a sub level
+    ** More sub levels
+    *** And here's another
+    ** Back to 2nd level
+    * Back to basics
+  out: |
+    <ul><li>This list is</li><li>A nested list<ul><li>Here's a sub level</li><li>More sub levels<ul><li>And here's another</li></ul></li><li>Back to 2nd level</li></ul></li><li>Back to basics</li></ul>
+
+
+
+- title: Nested numbered lists
+  in: |
+    # Foo
+    ## Bar
+    # Baz
+  out: |
+    <ol><li>Foo<ol><li>Bar</li></ol></li><li>Baz</li></ol>
+
+
+
+- title: Skipping list steps
+  in: |
+    * Foo
+    ** Bar
+    *** Baz
+    * Maz
+  out: |
+    <ul><li>Foo<ul><li>Bar<ul><li>Baz</li></ul></li></ul></li><li>Maz</li></ul>
+
+
+
+- title: Lists and paragraphs
+  in: |
+    Welcome.
+  
+    * Foo
+    ** Bar
+    *** Ugh
+    ** Aw
+    * Baz
+    
+    And now, the end.
+  out: |
+    <p>Welcome.</p>
+    <ul><li>Foo<ul><li>Bar<ul><li>Ugh</li></ul></li><li>Aw</li></ul></li><li>Baz</li></ul>
+    <p>And now, the end.</p>
+
+
+
+- title: Optional space on lists
+  in: |
+    *foo
+    * bar
+  out: |
+    <ul><li>foo</li><li>bar</li></ul>
+
+
+
+- title: Escaping HTML
+  in: |
+    <script>All your base</script>
+  out: |
+    <p>&lt;script&gt;All your base&lt;/script&gt;</p>

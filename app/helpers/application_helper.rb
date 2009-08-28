@@ -1,6 +1,6 @@
 module ApplicationHelper
   def render_body(body)
-    Kii::Markup.new(body, self).to_html
+    Kii::Markup.new(body).to_html
   end
 
   def page_title(title)

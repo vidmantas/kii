@@ -1,25 +1,19 @@
 module Kii
   # Mostly using the wikitext gem. Post-parsing to get those red links.
   class Markup
-    PARSER = Wikitext::Parser.new
-    # We look for this prefix in the post parsing, so that we can separate page links from
-    # other <a> tags. 
-    PARSER.internal_link_prefix = "internal_prefix"
-    
-    PAGE_LINK_REGEX = %r{<a href="#{PARSER.internal_link_prefix}(.*?)">(.*?)</a>}
-    
-    def initialize(markup, helper)
-      @markup, @helper = markup, helper
+    attr_reader :page_links
+    def initialize(markup)
+      @markup = CGI.escapeHTML(markup)
     end
     
     def to_html
       return @html if defined?(@html)
-      
-      parse_markup
-      preparse_linked_pages
-      create_page_links
-            
+      @html = @markup.split(/(\r\n){2,}|\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
       return @html
+    end
+    
+    def preparse
+      @page_links = @markup.scan(/\[\[(.*?)\]\]/).map {|p| PageLink.new(p[0]) }
     end
     
     private
