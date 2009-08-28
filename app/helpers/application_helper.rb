@@ -1,7 +1,8 @@
 module ApplicationHelper
   def render_body(body)
     Kii::Markup.new(body).to_html({
-      :page_link => proc {|page, title| page_link(page, title) }
+      :page_link => proc {|page, title| page_link(page, title) },
+      :post_process => proc {|html| auto_link(html) }
     })
   end
 

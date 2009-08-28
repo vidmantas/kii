@@ -25,6 +25,10 @@ module Kii
         options[:page_link] ? options[:page_link].call(page, title) : page.permalink
       }
       
+      if options[:post_process]
+        @html = options[:post_process].call(@html)
+      end
+      
       return @html
     end
     
