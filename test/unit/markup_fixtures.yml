@@ -127,6 +127,16 @@
 
 
 
+- title: Premature list termination
+  in: |
+    * Foo
+    ** Bar
+  out: |
+    <ul><li>Foo<ul><li>Bar</li></ul></li></ul>
+
+
+
+
 - title: Lists and paragraphs
   in: |
     Welcome.

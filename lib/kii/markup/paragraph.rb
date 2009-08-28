@@ -39,7 +39,9 @@ module Kii
             previous_nesting_level = nesting_level
           }
           
-          list_output.join + "</li></#{list_type}>"
+          tail = Array.new(previous_nesting_level).map { "</li></#{list_type}>" }
+          
+          list_output.join + tail.join
         else
           @p.gsub!("\n", "\n<br/>")
           "<p>" + @p + "</p>"
