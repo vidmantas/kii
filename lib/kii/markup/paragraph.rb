@@ -13,7 +13,7 @@ module Kii
         
         case @p
         when /^=/
-          level = @p.count("=") / 2
+          level = (@p.count("=") / 2) + 1 # Starting on h2
           @p.gsub!(/^[= ]+|[= ]+$/, "")
           "<h#{level}>" + @p + "</h#{level}>"
         when /^(\*|\#)/
