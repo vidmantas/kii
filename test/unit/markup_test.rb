@@ -12,7 +12,28 @@ class MarkupTest < ActiveSupport::TestCase
   test "preparsing page links" do
     @markup = Kii::Markup.new("[[a few]] foo bar [[page links]]")
     @markup.preparse
-    assert_equal 2, @markup.page_links.length
-    assert_equal ["a few", "page links"], @markup.page_links.map(&:contents)
+    assert @markup.linked_pages.empty?
+    
+    p = Page.create!(:title => "a few", :revision_attributes => {:body => "Something!", :remote_ip => "0.0.0.0", :referrer => "/"})
+    @markup.preparse
+    assert_equal [p], @markup.linked_pages
+  end
+  
+  test "handling page links" do
+    @markup = Kii::Markup.new("[[a few]] foo bar [[page links]]")
+    html = @markup.to_html :page_link => proc {|page, title| page.new_record? }
+    assert_equal html, "<p>true foo bar true</p>"
+  end
+  
+  test "custom titles" do
+    @markup = Kii::Markup.new("[[link|Custom title]]")
+    html = @markup.to_html :page_link => proc {|page, title| title }
+    assert_equal html, "<p>Custom title</p>"
+  end
+  
+  test "lowercased too" do
+    @markup = Kii::Markup.new("[[can I be lowercased]]")
+    html = @markup.to_html :page_link => proc {|page, title| page.title }
+    assert_equal html, "<p>can I be lowercased</p>"
   end
 end
