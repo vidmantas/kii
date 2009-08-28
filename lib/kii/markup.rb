@@ -24,8 +24,8 @@ module Kii
         
         options[:page_link] ? options[:page_link].call(page, title) : page.permalink
       }
+      
       return @html
-      scan_for_page_links
     end
     
     def preparse
