@@ -62,9 +62,9 @@
     
     Another paragraph.
   out: |
-    <h1>First header</h1>
+    <h2>First header</h2>
     <p>The paragraph is here.</p>
-    <h2>Second header</h2>
+    <h3>Second header</h3>
     <p>Another paragraph.</p>
 
 
