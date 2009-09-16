@@ -169,3 +169,10 @@
     <script>All your base</script>
   out: |
     <p>&lt;script&gt;All your base&lt;/script&gt;</p>
+    
+
+- title: Regular a-links with titles
+  in: |
+    Here's [http://google.com/ a link].
+  out: |
+    <p>Here's <a href="http://google.com/" class="ext">a link</a>.</p>
