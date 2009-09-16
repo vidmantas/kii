@@ -37,4 +37,46 @@ module ApplicationHelper
       link_to active_record_instance.remote_ip, ip_path(active_record_instance.remote_ip)
     end
   end
+  
+  # See the activity log and page revisions.
+  def grouped_revision_log(revisions, columns, &block)
+    first = revisions.first.created_at
+    last = revisions.last.created_at
+    
+    if first.day != last.day && first.month == last.month
+      resolution = "day"
+      header_format = "%B %d %Y"
+      row_format =  proc {|t| t.strftime("%H:%M") }
+    elsif first.month != last.month
+      resolution = "month"
+      header_format = "%B %Y"
+      row_format = proc {|t| t.strftime("%d").to_i.ordinalize + t.strftime(", %H:%M") }
+    else
+      resolution = "year"
+      header_format = "%Y"
+      row_format = proc {|t| t.strftime("%B ") + t.strftime("%d").to_i.ordinalize + t.strftime(", %H:%M") }
+    end
+    
+    grouped_revisions = revisions.group_by {|r| r.created_at.send("at_beginning_of_#{resolution}") }
+    
+    output = content_tag(:table, :id => "grouped_revision_log") {
+      content_tag(:thead) {
+        content_tag(:tr) {
+          columns.map {|c| content_tag(:th, c )}
+        }
+      }
+      
+      content_tag(:tbody) {
+        grouped_revisions.map {|date, revisions|
+          content_tag(:tr, :class => "group_header") { content_tag(:td, date.strftime(header_format), :colspan => columns.length) } +
+          revisions.map {|revision|
+            timestamp = row_format.call(revision.created_at)
+            content_tag(:tr, capture(revision,  timestamp, &block))
+          }.join
+        }
+      }
+    }
+    
+    concat(output)
+  end
 end

@@ -1,26 +1,10 @@
 <% page_title "Revisions for &ldquo;#{page_link(@page)}&rdquo;" %>
 <div id="page_meta">&nbsp;</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Date</th>
-      <th>Message</th>
-      <th>By</th>
-      <th></th>
-    </tr>
-  </thead>
-  
-  <tbody>
-    <% @revisions.each do |revision| %>
-      <tr>
-        <td><%= link_to "##{revision.revision_number}", page_revision_path(@page, revision) %></td>
-        <td><%= datetimestamp(revision.created_at) %></td>
-        <td><%= revision.message %></td>
-        <td><%= author_link(revision) %></td>
-        <td><%= link_to "Changes", page_revision_changes_path(@page, revision) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% grouped_revision_log(@revisions, ["#", "Date", "Message", "By", ""]) do |revision, timestamp| %>
+  <td><%= link_to "##{revision.revision_number}", page_revision_path(@page, revision) %></td>
+  <td><%= timestamp %></td>
+  <td><%= revision.message %></td>
+  <td><%= author_link(revision) %></td>
+  <td><%= link_to "Changes", page_revision_changes_path(@page, revision) %></td>
+<% end %>
