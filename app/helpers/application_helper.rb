@@ -64,11 +64,13 @@ module ApplicationHelper
         content_tag(:tr) {
           columns.map {|c| content_tag(:th, c )}
         }
-      }
+      } +
       
       content_tag(:tbody) {
         grouped_revisions.map {|date, revisions|
-          content_tag(:tr, :class => "group_header") { content_tag(:td, date.strftime(header_format), :colspan => columns.length) } +
+          content_tag(:tr, :class => "group_header") {
+            content_tag(:td, date.strftime(header_format), :colspan => columns.length)
+          } +
           revisions.map {|revision|
             timestamp = row_format.call(revision.created_at)
             content_tag(:tr, capture(revision,  timestamp, &block))
