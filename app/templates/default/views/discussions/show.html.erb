@@ -1,9 +1,8 @@
-<% page_title h(@discussion.title) %>
-<div id="page_meta">
+<% page_title h(@discussion.title) do %>
   Page: <%= page_link(@page) %>
   |
   <%= link_to "Discussions",  page_discussions_path(@page) %>
-</div>
+<% end %>
 
 <% @discussion_entries.each do |discussion_entry| %>
   <div class="discussion_entry">

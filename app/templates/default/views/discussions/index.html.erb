@@ -1,7 +1,6 @@
-<% page_title "Discussions for &ldquo;#{page_link(@page)}&rdquo;" %>
-<div id="page_meta">
+<% page_title "Discussions for &ldquo;#{page_link(@page)}&rdquo;" do %>
   <%= link_to "New discussion", new_page_discussion_path(@page) %>
-</div>
+<% end %>
 
 <% @discussions.each do |discussion| %>
   <div class="discussion">

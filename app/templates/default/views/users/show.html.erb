@@ -1,7 +1,6 @@
-<% page_title "User &ldquo;#{h @user.login}&rdquo;" %>
-<div id="page_meta">
+<% page_title "User &ldquo;#{h @user.login}&rdquo;" do %>
   Member since <%= datestamp(@user.created_at) %>
-</div>
+<% end %>
 
 <% unless @user.profile_text.blank? %>
   <div id="user_profile_text">

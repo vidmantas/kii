@@ -6,8 +6,10 @@ module ApplicationHelper
     })
   end
 
-  def page_title(title)
+  def page_title(title, &block)
     @page_title = title
+    meta = content_tag(:div, block_given? ? capture(&block) : "&nbsp;", :id => "page_meta")
+    concat(meta)
   end
 
   # Redlinks or bluelinks to a page. Since the parser allows [[page title||Custom title]],

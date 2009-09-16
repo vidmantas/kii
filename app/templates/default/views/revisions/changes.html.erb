@@ -1,7 +1,6 @@
-<% page_title "Changes made in &ldquo;#{page_link(@page)}&rdquo; \##{@revision.revision_number} " %>
-<div id="page_meta">
+<% page_title "Changes made in &ldquo;#{page_link(@page)}&rdquo; \##{@revision.revision_number} " do %>
   <%= render :partial => "revision_meta" %>
-</div>
+<% end %>
 
 <div class="diff">
   <%= Kii::Differ.diff(render_body(@previous_revision.body), render_body(@revision.body)) %>

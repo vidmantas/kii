@@ -1,5 +1,4 @@
 <% page_title "Revisions for &ldquo;#{page_link(@page)}&rdquo;" %>
-<div id="page_meta">&nbsp;</div>
 
 <% grouped_revision_log(@revisions, ["#", "Date", "Message", "By", ""]) do |revision, timestamp| %>
   <td><%= link_to "##{revision.revision_number}", page_revision_path(@page, revision) %></td>

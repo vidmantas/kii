@@ -1,7 +1,6 @@
-<% page_title "New discussion in &ldquo;#{page_link(@page)}&rdquo;" %>
-<div id="page_meta">
+<% page_title "New discussion in &ldquo;#{page_link(@page)}&rdquo;" do %>
   <%= link_to "Discussions", page_discussions_path(@page) %>
-</div>
+<% end %>
 
 <% form_for([@page, @discussion]) do |f| %>
   <%= f.honeypot %>
