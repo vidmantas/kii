@@ -1,23 +1,8 @@
 <% page_title "IP log for #{@ip}" %>
 
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Date</th>
-      <th>Page</th>
-      <th></th>
-    </tr>
-  </thead>
-  
-  <tbody>
-    <% @revisions.each do |revision| %>
-      <tr>
-        <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
-        <td><%= datetimestamp(revision.created_at) %></td>
-        <td><%= page_link(revision.page) %></td>
-        <td><%= link_to "Changes", page_revision_changes_path(revision.page, revision) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% grouped_revision_log(@revisions, ["#", "Date", "Page", ""]) do |revision, timestamp| %>
+  <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
+  <td><%= timestamp %></td>
+  <td><%= page_link(revision.page) %></td>
+  <td><%= link_to "Changes", page_revision_changes_path(revision.page, revision) %></td>
+<% end %>

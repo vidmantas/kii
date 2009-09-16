@@ -21,6 +21,17 @@
 </div>
 
 <div class="right_column">
-  <h3>Recent activities</h3>
-  <p>Not implemented yet.</p>
+  <h3>Very useful information</h3>
+  <p>Discussions, perhaps?</p>
 </div>
+
+<div class="clear"></div>
+
+<h2>20 most recent revisions</h2>
+
+<% grouped_revision_log(@revisions, ["#", "Date", "Page", ""]) do |revision, timestamp| %>
+  <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
+  <td><%= timestamp %></td>
+  <td><%= page_link(revision.page) %></td>
+  <td><%= link_to "Changes", page_revision_changes_path(revision.page, revision) %></td>
+<% end %>

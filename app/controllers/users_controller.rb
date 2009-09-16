@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_login!(params[:id])
     @created_pages = @user.created_pages
+    @revisions = @user.revisions.find(:all, :limit => 20, :order => "created_at DESC")
   end
   
   def new
