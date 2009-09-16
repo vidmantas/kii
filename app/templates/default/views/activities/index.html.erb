@@ -3,7 +3,7 @@
 
 <p>Showing the 50 latest revisions.</p>
 
-<table>
+<table id="activity_log">
   <thead>
     <tr>
       <th>#</th>
@@ -15,14 +15,19 @@
   </thead>
   
   <tbody>
-    <% @revisions.each do |revision| %>
-      <tr>
-        <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
-        <td><%= datetimestamp(revision.created_at) %></td>
-        <td><%= page_link(revision.page) %></td>
-        <td><%= author_link(revision) %></td>
-        <td><%= link_to "Changes", page_revision_changes_path(revision.page, revision) %></td>
+    <% @revisions.each do |group_type, group_date, revisions| %>
+      <tr class="group_header">
+        <td colspan="5"><%= render_group_header(group_type, group_date) %></td>
       </tr>
+      <% revisions.each do |revision| %>
+        <tr>
+          <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
+          <td><%= render_activity_timestamp(group_type, revision.created_at) %></td>
+          <td><%= page_link(revision.page) %></td>
+          <td><%= author_link(revision) %></td>
+          <td><%= link_to "Changes", page_revision_changes_path(revision.page, revision) %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
