@@ -43,11 +43,11 @@ module ApplicationHelper
     first = revisions.first.created_at
     last = revisions.last.created_at
     
-    if first.day != last.day && first.month == last.month
+    if first.month == last.month && first.year == last.year
       resolution = "day"
       header_format = "%B %d %Y"
       row_format =  proc {|t| t.strftime("%H:%M") }
-    elsif first.month != last.month
+    elsif first.month != last.month && first.year == last.year
       resolution = "month"
       header_format = "%B %Y"
       row_format = proc {|t| t.strftime("%d").to_i.ordinalize + t.strftime(", %H:%M") }
