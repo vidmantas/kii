@@ -176,3 +176,15 @@
     Here's [http://google.com/ a link].
   out: |
     <p>Here's <a href="http://google.com/" class="ext">a link</a>.</p>
+    
+- title: Code snippets
+  in: |
+    Code snippets `inside(:fancy, "quotes")`.
+  out: |
+    <p>Code snippets <code>inside(:fancy, &quot;quotes&quot;)</code>.</p>
+    
+- title: HTML in code snippets
+  in: |
+    Should tolerate `<p>HTML</p>`.
+  out: |
+    <p>Should tolerate <code>&lt;p&gt;HTML&lt;/p&gt;</code>.</p>
