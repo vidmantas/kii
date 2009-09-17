@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
     m.logout 'logout', :controller => "sessions", :action => "destroy"
     m.resources :users
     m.resources :ips, :only => [:show], :requirements => {:id => /.+/} # allowing dots in the :id.
-    map.resources :discussions
+    m.resources :discussions
     
     m.resources :activities, :only => [:index]
   end

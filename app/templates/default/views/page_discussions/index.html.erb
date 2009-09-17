@@ -5,6 +5,9 @@
 <% @discussions.each do |discussion| %>
   <div class="discussion">
     <h2><%= link_to discussion.title, page_discussion_path(@page, discussion) %></h2>
-    <p>Last updated <%= datetimestamp(discussion.updated_at) %> by <%= author_link(discussion.latest_discussion_entry) %></p>
+    <p>
+      <%= author_link(discussion.latest_discussion_entry) %>
+      <%= clever_timestamp(discussion.updated_at) %>
+    </p>
   </div>
 <% end %>

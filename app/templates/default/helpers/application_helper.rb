@@ -3,6 +3,14 @@ module ApplicationHelper
     %{Last updated #{datetimestamp(page.updated_at)}}
   end
   
+  def clever_timestamp(time)
+    if time.today?
+      "#{time_ago_in_words(time)} ago"
+    else
+      datetimestamp(time)
+    end
+  end
+  
   def datetimestamp(time)
     "#{datestamp(time)}, #{timestamp(time)}"
   end

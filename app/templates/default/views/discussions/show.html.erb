@@ -1,0 +1,7 @@
+<% page_title h(@discussion.title) do %>
+  <%= link_to "Back", discussions_path %>
+  <% if @page %>
+    |
+    Page: <%= page_link(@page) %>
+  <% end %>
+<% end %>
