@@ -12,7 +12,7 @@
       <h2><%= link_to discussion.title, discussion_path(discussion) %></h2>
       <p>
         <%= author_link(discussion.latest_discussion_entry) %>
-        <%= clever_timestamp(discussion.updated_at) %>
+        <%= clever_timestamp(discussion.latest_discussion_entry.created_at) %>
       </p>
     </div>
   <% end %>
