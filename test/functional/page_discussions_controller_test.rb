@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DiscussionsControllerTest < ActionController::TestCase
+class PageDiscussionsControllerTest < ActionController::TestCase
   test "index" do
     get :index, :page_id => pages(:sandbox).to_param
     assert_response :success

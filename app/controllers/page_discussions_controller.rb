@@ -1,4 +1,4 @@
-class DiscussionsController < ApplicationController
+class PageDiscussionsController < ApplicationController
   def index
     @page = Page.find_by_permalink!(params[:page_id])
     @discussions = @page.discussions.all(:include => {:latest_discussion_entry => :user}, :order => "updated_at DESC")
