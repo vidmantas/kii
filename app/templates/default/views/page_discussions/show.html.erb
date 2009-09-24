@@ -20,6 +20,8 @@
 <h2>Add comment</h2>
 
 <% form_for([@page, @discussion]) do |f| %>
+  <%= f.honeypot %>
+
   <% f.fields_for "discussion_entry_attributes", @discussion.new_discussion_entry do |d| %>
     <%= d.text_area :body %>
   <% end %>
