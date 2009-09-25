@@ -18,9 +18,14 @@ class Page < ActiveRecord::Base
   validate :avoid_restricted_names
   validate_on_update :disallow_unchanged_updates
   
-  named_scope :created_by, lambda {|user| {
+  named_scope :by_user, lambda {|user| {
     :joins => :revisions, :group => "id",
     :conditions => ["revisions.revision_number = ? AND revisions.user_id = ?", 1, user.id]
+  }}
+  
+  named_scope :by_ip, lambda {|ip| {
+    :joins => :revisions, :group => "id",
+    :conditions => ["revisions.revision_number = ? AND revisions.user_id IS ? AND revisions.remote_ip = ?", 1, nil, ip]
   }}
   
   attr_accessor :revision_attributes

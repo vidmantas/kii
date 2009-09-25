@@ -1,5 +1,26 @@
 <% page_title "IP log for #{@ip}" %>
 
+<div class="left_column">  
+  <h3>Created pages</h3>
+  
+  <ul>
+    <% @created_pages.each do |page| %>
+      <li><%= page_link(page) %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="right_column">
+  <h3>Talked in discussions</h3>
+  <ul>
+    <% @discussions.each do |discussion| %>
+      <li><%= polymorphic_discussion_link discussion %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="clear"></div>
+
 <% grouped_revision_log(@revisions, ["#", "Date", "Page", ""]) do |revision, timestamp| %>
   <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
   <td><%= timestamp %></td>

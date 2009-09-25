@@ -5,6 +5,6 @@ class IpsControllerTest < ActionController::TestCase
     get :show, :id => "0.0.0.0"
     assert_response :success
     assert !assigns(:revisions).blank?
-    assert_equal Revision.count(:conditions => {:remote_ip => "0.0.0.0"}), assigns(:revisions).length
+    assert_equal Revision.count(:conditions => {:remote_ip => "0.0.0.0", :user_id => nil}), assigns(:revisions).length
   end
 end

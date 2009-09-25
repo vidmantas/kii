@@ -11,6 +11,6 @@ class User < ActiveRecord::Base
   end
   
   def created_pages
-    Page.created_by(self)
+    Page.by_user(self)
   end
 end
