@@ -19,12 +19,14 @@ class Page < ActiveRecord::Base
   validate_on_update :disallow_unchanged_updates
   
   named_scope :by_user, lambda {|user| {
-    :joins => :revisions, :group => "pages.id",
+    :joins => :revisions, :group => "pages.id, #{columns_with_table_name}",
+    :select => "#{columns_with_table_name}",
     :conditions => ["revisions.revision_number = ? AND revisions.user_id = ?", 1, user.id]
   }}
   
   named_scope :by_ip, lambda {|ip| {
-    :joins => :revisions, :group => "pages.id",
+    :joins => :revisions, :group => "pages.id, #{columns_with_table_name}",
+    :select => "#{columns_with_table_name}",
     :conditions => ["revisions.revision_number = ? AND revisions.user_id IS ? AND revisions.remote_ip = ?", 1, nil, ip]
   }}
   

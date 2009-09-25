@@ -5,6 +5,8 @@ class Discussion < ActiveRecord::Base
   # Using this instead of a named scope so that it can be refered to in find(:all, :include => ..).
   has_one :latest_discussion_entry, :class_name => "DiscussionEntry", :foreign_key => "discussion_id", :order => "created_at DESC"
   
+  named_scope :grouped_by_entries, :joins => :discussion_entries, :include => :page, :group => "discussions.id, #{columns_with_table_name}"
+  
   validates_presence_of :title, :page_id
 
   attr_accessor :discussion_entry_attributes
