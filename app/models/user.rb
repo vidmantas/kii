@@ -11,6 +11,6 @@ class User < ActiveRecord::Base
   end
   
   def created_pages
-    revisions.ordered.all(:conditions => {:revision_number => 1}, :include => :page).map {|r| r.page }
+    Page.created_by(self)
   end
 end

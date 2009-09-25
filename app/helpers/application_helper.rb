@@ -85,4 +85,8 @@ module ApplicationHelper
     
     concat(output)
   end
+  
+  def polymorphic_discussion_link(discussion)
+    link_to discussion.title, (discussion.page_id ? page_discussion_path(discussion.page, discussion) : discussion_path(discussion))
+  end
 end

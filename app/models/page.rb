@@ -2,7 +2,7 @@ class Page < ActiveRecord::Base
   class NoChangesError < RuntimeError; end
   RESTRICTED_NAMES = ["_"]
 
-  has_many :discussions
+  has_many :discussions, :dependent => :destroy
   has_many :revisions, :dependent => :delete_all do
     def current
       ordered.first
@@ -17,6 +17,11 @@ class Page < ActiveRecord::Base
   validates_associated :revisions
   validate :avoid_restricted_names
   validate_on_update :disallow_unchanged_updates
+  
+  named_scope :created_by, lambda {|user| {
+    :joins => :revisions, :group => "id",
+    :conditions => ["revisions.revision_number = ? AND revisions.user_id = ?", 1, user.id]
+  }}
   
   attr_accessor :revision_attributes
   
