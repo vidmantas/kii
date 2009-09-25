@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class DiscussionsControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  test "get index" do
+    get :index
+    assert_response :success
   end
 end
