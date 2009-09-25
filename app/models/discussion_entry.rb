@@ -4,7 +4,7 @@ class DiscussionEntry < ActiveRecord::Base
   
   before_create :cache_at_revision
   
-  validates_presence_of :body
+  validates_presence_of :body, :referrer, :remote_ip
   
   private
   
