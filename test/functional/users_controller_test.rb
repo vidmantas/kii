@@ -14,4 +14,10 @@ class UsersControllerTest < ActionController::TestCase
     get :show, :id => @user.to_param
     assert_select "#user_profile_text"
   end
+  
+  test "show user without revisions" do
+    Page.destroy_all
+    get :show, :id => @user.to_param
+    assert_response :success
+  end
 end

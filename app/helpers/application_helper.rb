@@ -42,6 +42,8 @@ module ApplicationHelper
   
   # See the activity log and page revisions.
   def grouped_revision_log(revisions, columns, &block)
+    return if revisions.empty?
+    
     first = revisions.first.created_at
     last = revisions.last.created_at
     
