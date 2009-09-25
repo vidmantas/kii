@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_login!(params[:id])
     @created_pages = @user.created_pages.all(:limit => 20)
-    @revisions = @user.revisions.find(:all, :limit => 20, :order => "created_at DESC", :include => [:page, :user])
+    @revisions = @user.revisions.find(:all, :order => "created_at DESC", :include => [:page, :user], :limit => 20)
     @discussions = Discussion.grouped_by_entries.all(:conditions => ["discussion_entries.user_id = ?", @user.id], :limit => 20)
   end
   
