@@ -15,7 +15,8 @@ namespace :kii do
       :title => Kii::CONFIG[:home_page].titleize,
       :revision_attributes => {
         :body => File.read("#{Rails.root}/lib/kii/default_homepage"),
-        :remote_ip => "0.0.0.0"
+        :remote_ip => "0.0.0.0",
+        :referrer => "/"
       }
     })
   end
