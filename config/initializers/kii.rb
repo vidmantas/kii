@@ -5,7 +5,7 @@ CURRENT_TEMPLATE.run_template_init_file
 
 
 # Core extensions
-Dir["#{Rails.root}/lib/core_ext/*.rb"].each {|e| require e }
+Dir["#{Rails.root}/lib/*_ext/*.rb"].each {|e| require e }
 
 
 
