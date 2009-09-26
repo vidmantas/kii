@@ -10,6 +10,7 @@ class Page < ActiveRecord::Base
   end
   
   before_save :create_permalink, :bump_timestamps
+  after_save :unset_current_revision_id
   before_validation :build_revision
   before_validation_on_update :detect_stale_revision
   
@@ -90,5 +91,9 @@ class Page < ActiveRecord::Base
   
   def avoid_restricted_names
     errors.add("title", "is restricted") if RESTRICTED_NAMES.include?(title)
+  end
+  
+  def unset_current_revision_id
+    @current_revision_id = nil
   end
 end
