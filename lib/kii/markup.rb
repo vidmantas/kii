@@ -19,12 +19,10 @@ module Kii
         parse_page_links(text)
         parse_regular_links(text)
         parse_tokens(text)
+        text = @options[:post_process].call(text) if @options[:post_process]
+        
         text
       }
-      
-      if @options[:post_process]
-        @html = @options[:post_process].call(@html)
-      end
       
       return @html
     end
