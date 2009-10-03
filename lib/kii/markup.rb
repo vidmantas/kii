@@ -27,6 +27,8 @@ module Kii
       return @html
     end
     
+    # Finding all pages, fetching them from the DB, to avoid N+1 when parsing page links
+    # later on.
     def preparse
       page_link_permalinks = @markup.scan(PAGE_LINK_REGEXP).map {|p| p[0].split("|")[0].to_permalink }
       page_link_permalinks += page_link_permalinks.map {|permalink| permalink.upcase_first_letter } # Look for capitalized as well
@@ -36,23 +38,30 @@ module Kii
     
     private
     
+    # Yields all the text that is to be parsed. Returns the parsed string.
     def with_parseable_text(string)
       buffer = string.dup
       result = ''
 
+      # This will match everything we don't want to parse, which is <nowiki>
+      # tags and `code snippets`.
       while m = buffer.match(/&lt;nowiki&gt;(.*?)&lt;\/nowiki&gt;|`(.*?)`/i)
+        # Everything before the match should be parsed
         result << yield(m.pre_match)
         
-        if m[1]
+        # Adding the unparsed content to the results.
+        if m[1] # nowiki
           result << m[1]
-        elsif m[2]
+        elsif m[2] # code snippet
           result << inline_code_snippet(m[2])
         end
         
+        # Everything after the match has not been treated yet. It will be
+        # treated in the next iteration.
         buffer = m.post_match
       end
 
-      # Everything after the last token
+      # Everything after the last pass hasn't been parsed yet.
       result << yield(buffer)
       
       return result
