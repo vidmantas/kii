@@ -14,9 +14,13 @@ module Kii
       
       preparse
 
-      @html = @markup.split(/(\r\n){2,}|\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
-      parse_page_links
-      parse_regular_links
+      buffer = @markup.split(/(\r\n){2,}|\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
+      @html = with_parseable_text(buffer) {|text|
+        parse_page_links(text)
+        parse_regular_links(text)
+        parse_tokens(text)
+        text
+      }
       
       if @options[:post_process]
         @html = @options[:post_process].call(@html)
@@ -34,9 +38,31 @@ module Kii
     
     private
     
+    def with_parseable_text(string)
+      buffer = string.dup
+      result = ''
+
+      while m = buffer.match(/&lt;nowiki&gt;(.*?)&lt;\/nowiki&gt;|`(.*?)`/i)
+        result << yield(m.pre_match)
+        
+        if m[1]
+          result << m[1]
+        elsif m[2]
+          result << inline_code_snippet(m[2])
+        end
+        
+        buffer = m.post_match
+      end
+
+      # Everything after the last token
+      result << yield(buffer)
+      
+      return result
+    end
+    
     # [[Foo]] and [[Foo|Bar]]
-    def parse_page_links
-      @html.gsub!(PAGE_LINK_REGEXP) {
+    def parse_page_links(text)
+      text.gsub!(PAGE_LINK_REGEXP) {
         permalink, title = *$~[1].split("|")
         title = (title || permalink)
         
@@ -50,10 +76,19 @@ module Kii
     end
     
     # [http://google.com/ foo]
-    def parse_regular_links
-      @html.gsub!(/\[{1}([^ ]+) (.*?)\]{1}/) {
+    def parse_regular_links(text)
+      text.gsub!(/\[{1}([^ ]+) (.*?)\]{1}/) {
         %{<a href="#{$~[1]}" class="ext">#{$~[2]}</a>}
       }
+    end
+    
+    def parse_tokens(text)
+      text.gsub!(/'{3}([^']+)'{3}/, "<strong>\\1</strong>")
+      text.gsub!(/'{2}([^']+)'{2}/, "<em>\\1</em>")
+    end
+    
+    def inline_code_snippet(text)
+      %{<code>#{text}</code>}
     end
   end
 end

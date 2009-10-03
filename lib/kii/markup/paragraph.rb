@@ -8,10 +8,6 @@ module Kii
       end
       
       def to_html
-        @p.gsub!(/'{3}([^']+)'{3}/, "<strong>\\1</strong>")
-        @p.gsub!(/'{2}([^']+)'{2}/, "<em>\\1</em>")
-        @p.gsub!(/`([^`]+)`/, "<code>\\1</code>")
-        
         case @p
         when /^=/
           level = (@p.count("=") / 2) + 1 # Starting on h2
