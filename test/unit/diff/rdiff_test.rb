@@ -2,24 +2,18 @@ require 'test_helper'
 
 class RdiffTest < ActiveSupport::TestCase
   Core = Kii::Diff::Rdiff::Core
-  LCS = Kii::Diff::Rdiff::LCS
   
   S1 = "now is      the time for all good#{
       } men to come to the aid of their"
   S2 = "is now the right time for all #{
         }to come to their senses?"
 
-  # run a given test both with and without token mapping,
-  # ..and for both the Core and optimizing wrapper LCS
+  # run a given test both with and without token mapping.
   # It only takes an expected diff as the matrix that is produced
   # ..will vary as the optimizing wrapper evolves
-
-  def lcsrun form, symbols1, symbols2, answer
-    [true, false].product([Core, LCS]).each do |x|
-      useHash, wrapperClass = x
-      assert_equal (wrapperClass.send form, symbols1, symbols2, useHash
-                   ).diff, answer, "lcsrun #{wrapperClass.inspect
-                                    } #{useHash}"
+  def lcsrun(form, symbols1, symbols2, answer)
+    [true, false].each do |use_hash|
+      assert_equal Core.send(form, symbols1, symbols2, use_hash).diff, answer, "lcsrun #{use_hash}"
     end
   end
 
@@ -44,7 +38,7 @@ class RdiffTest < ActiveSupport::TestCase
                ["+ ", "their "],
                ["+ ", "senses?"]]
 
-    lcsrun :WordsSaveWS, S1, S2, expected
+    lcsrun :word_save_ws, S1, S2, expected
   end
   def test_space_discarding_split
     expected =[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -64,8 +58,8 @@ class RdiffTest < ActiveSupport::TestCase
                [0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 8, 8],
                [0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 9]]
 
-    assert_equal expected, (Core.WordsSqueezeWS S1, S2, true).c
-    assert_equal expected, (Core.WordsSqueezeWS S1, S2, false).c
+    assert_equal expected, (Core.word_squeeze_ws S1, S2, true).c
+    assert_equal expected, (Core.word_squeeze_ws S1, S2, false).c
   end
   def test_matrix
     expected = [ [0, 0, 0, 0, 0, 0, 0, 0],
@@ -94,7 +88,7 @@ class RdiffTest < ActiveSupport::TestCase
                  ["  ", "U"],
                  ["- ", "Z"] ]
 
-    lcsrun :Core, 'XMJYAUZ'.chars, 'MZJAWXU'.chars, expected
+    lcsrun :new, 'XMJYAUZ'.chars, 'MZJAWXU'.chars, expected
   end
   def test_diff_middle
     expected = [
@@ -117,7 +111,7 @@ class RdiffTest < ActiveSupport::TestCase
                  ["  ", "M"],
                  ["  ", "E"]]
 
-    lcsrun :Core, 'SAMEXMJYAUZSAME'.chars, 'SAMEMZJAWXUSAME'.chars, expected
+    lcsrun :new, 'SAMEXMJYAUZSAME'.chars, 'SAMEMZJAWXUSAME'.chars, expected
   end
   def test_diff_middle_first_last
     s1 = 'ASAMEXMJYAUZSAMEZ'.chars
@@ -145,7 +139,7 @@ class RdiffTest < ActiveSupport::TestCase
                  ["  ", "E"],
                  ["- ", "Z"],
                  ["+ ", "Y"]]
-    lcsrun :Core, s1, s2, expected
+    lcsrun :new, s1, s2, expected
   end
   def test_null_vs_string
     s1 = ''.chars
@@ -169,6 +163,6 @@ class RdiffTest < ActiveSupport::TestCase
                   ['+ ', 'E'],
                   ['+ ', 'Y']
                  ]
-    lcsrun :Core, s1, s2, expected
+    lcsrun :new, s1, s2, expected
   end
 end

@@ -2,10 +2,10 @@ module Kii
   module Diff
     class AgeVisualization
       class AVCore < Kii::Diff::Rdiff::Core
-        def el xy
+        def el(xy)
           xy.text
         end
-        def del code, xy
+        def del(code, xy)
           code == '- ' ? [] : [xy]
         end
       end
@@ -17,7 +17,7 @@ module Kii
           @text, @timestamp = text, timestamp
         end
 
-        def == rhs
+        def ==(rhs)
           @text == rhs.text and @timestamp == rhs.timestamp
         end
 
@@ -28,20 +28,20 @@ module Kii
         end
       end
 
-      attr_reader :revIn, :revOut
+      attr_reader :rev_in, :rev_out
 
       def initialize(revisions)
-        @revIn = revisions
+        @rev_in = revisions
       end
 
       def compute
         res = []
-        @revIn.map do |r|
+        @rev_in.map do |r|
           res = AVCore.new(res, r.split).diff
         end
         # res is now an [] of Revision by words, so merge adjacent equal timestamps
         merge = nil
-        newResult = []
+        new_result = []
         res.each do |r|
           if merge.nil?
             merge = r
@@ -49,13 +49,13 @@ module Kii
             if merge.timestamp == r.timestamp
               merge = Revision.new merge.text + r.text, r.timestamp
             else
-              newResult << merge
+              new_result << merge
               merge = r
             end
           end
         end
-        newResult << merge unless merge.nil?
-        @revOut = newResult
+        new_result << merge unless merge.nil?
+        @rev_out = new_result
       end
 
     end

@@ -1,14 +1,12 @@
 module Kii
   module Diff
     module Rdiff
-      @@optThreshold   = 10
-      @@equalThreshold =  3
-      
       class Core
         attr_reader :c, :diff
-        def initialize rx, ry, useHash=false
+        
+        def initialize(rx, ry, use_hash=false)
           rx, ry = rx.to_a, ry.to_a if rx.is_a? Enumerable
-          x, y = useHash ? [hash(rx), hash(ry)] : [rx, ry]
+          x, y = use_hash ? [hash(rx), hash(ry)] : [rx, ry]
           m, n = x.length, y.length 
           c = [aRow = ([0] * (n + 1)).freeze]
           for i in 0...m
@@ -21,10 +19,10 @@ module Kii
           @c, @x, @y, @rx, @ry = c.freeze, x, y, rx, ry
           @diff = (realdiff m-1, n-1).freeze
           @rx = @ry = @x = @y = nil
-          callFreeze
+          freeze
         end
 
-        def realdiff i, j
+        def realdiff(i, j)
           if i >= 0 and j >= 0 and (el @x[i]) == (el @y[j])
             (realdiff i-1, j-1) + (del '  ', @rx[i])
           elsif j >= 0 && (i == -1 || @c[i+1][j] >= @c[i][j+1])
@@ -36,38 +34,32 @@ module Kii
           end
         end
 
-        def el e
+        def el(e)
           e
         end
 
-        def del code, e
+        def del(code, e)
           [[code, (el e)]]
         end
 
-        def self.Core x, y, useHash=false
-          self.new x, y, useHash
+        def self.word_squeeze_ws(a, b, use_hash=false)
+          reify a, b, ' ', use_hash
         end
-        def self.WordsSqueezeWS a, b, useHash=false
-          reify a, b, ' ', useHash
-        end
-        def self.WordsSaveWS a, b, useHash=false
-          reify a, b, /(?=\b\w)/, useHash
+        
+        def self.word_save_ws(a, b, use_hash=false)
+          reify a, b, /(?=\b\w)/, use_hash
         end
 
         private
 
-        def hash a
+        def hash(a)
           a.map { |x| x.hash }
         end
-        def self.reify a, b, re, useHash
-          self.new a.split(re), b.split(re), useHash
-        end
-        def callFreeze
-          freeze
+        
+        def self.reify(a, b, re, use_hash)
+          self.new a.split(re), b.split(re), use_hash
         end
       end 
-      class LCS < Core
-      end
     end
   end
 end

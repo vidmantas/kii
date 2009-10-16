@@ -21,6 +21,6 @@ class AgeVisualizationTest < Test::Unit::TestCase
     
     visualizer = Kii::Diff::AgeVisualization.new(revisions)
     visualizer.compute
-    assert_equal expected, visualizer.revOut
+    assert_equal expected, visualizer.rev_out
   end
 end
