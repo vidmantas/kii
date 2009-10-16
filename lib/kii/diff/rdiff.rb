@@ -17,18 +17,18 @@ module Kii
             end
           end
           @c, @x, @y, @rx, @ry = c.freeze, x, y, rx, ry
-          @diff = (realdiff m-1, n-1).freeze
+          @diff = realdiff(m-1, n-1).freeze
           @rx = @ry = @x = @y = nil
           freeze
         end
 
         def realdiff(i, j)
-          if i >= 0 and j >= 0 and (el @x[i]) == (el @y[j])
-            (realdiff i-1, j-1) + (del '  ', @rx[i])
+          if i >= 0 and j >= 0 and el(@x[i]) == el(@y[j])
+            realdiff(i-1, j-1) + del('  ', @rx[i])
           elsif j >= 0 && (i == -1 || @c[i+1][j] >= @c[i][j+1])
-            (realdiff i, j-1) + (del '+ ', @ry[j])
+            realdiff(i, j-1) + del('+ ', @ry[j])
           elsif i >= 0 && (j == -1 || @c[i+1][j] < @c[i][j+1])
-            (realdiff i-1, j) + (del '- ', @rx[i])
+            realdiff(i-1, j) + del('- ', @rx[i])
           else
             []
           end
@@ -39,7 +39,7 @@ module Kii
         end
 
         def del(code, e)
-          [[code, (el e)]]
+          [[code, el(e)]]
         end
 
         def self.word_squeeze_ws(a, b, use_hash=false)
