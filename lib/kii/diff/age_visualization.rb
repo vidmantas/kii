@@ -24,7 +24,7 @@ module Kii
         # this factory method creates an array of 1-word nodes w/ white space
         def split
           # split into "words" but preserving white space
-          @text.split(/\b(?=\s)/).map { |w| self.class.new w, @timestamp }
+          @text.split(/(?=\s)/).map { |w| self.class.new w, @timestamp }
         end
       end
 
