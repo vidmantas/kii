@@ -21,6 +21,7 @@ ActionController::Routing::Routes.draw do |map|
       get.all_pages "all_pages", :path_prefix => "_", :action => "index"
       get.new_page "new/:id", :action => "new"
       get.edit_page ":id/edit", :action => "edit"
+      get.page_content_age ":id/content_age", :action => "content_age"
       get.confirm_destroy_page ":id/confirm_destroy", :action => "confirm_destroy"
     end
 
