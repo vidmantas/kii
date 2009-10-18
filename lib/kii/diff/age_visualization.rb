@@ -12,6 +12,7 @@ module Kii
 
       class Revision
         attr_reader :text, :timestamp
+        attr_accessor :age
 
         def initialize(text, timestamp)
           @text, @timestamp = text, timestamp
@@ -55,6 +56,16 @@ module Kii
           end
         end
         new_result << merge unless merge.nil?
+        
+        # tag the nodes with their age
+        first = @rev_in[0].timestamp
+        last = @rev_in[-1].timestamp
+        distance = last - first
+        
+        new_result.each do |res|
+          res.age = 100 - ((res.timestamp - first) / distance * 100).to_i
+        end
+        
         @rev_out = new_result
       end
 
