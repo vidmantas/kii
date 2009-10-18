@@ -10,6 +10,7 @@ sandbox_a:
   revision_number: 1
   remote_ip: 0.0.0.0
   referrer: /
+  created_at: <%= 3.days.ago.to_s(:db) %>
 
 sandbox_b:
   page: sandbox
@@ -17,6 +18,7 @@ sandbox_b:
   revision_number: 2
   remote_ip: 0.0.0.0
   referrer: /
+  created_at: <%= 2.days.ago.to_s(:db) %>
   
 sandbox_c:
   page: sandbox
@@ -24,6 +26,7 @@ sandbox_c:
   revision_number: 3
   remote_ip: 0.0.0.0
   referrer: /
+  created_at: <%= 1.day.ago.to_s(:db) %>
   
 sandbox_d:
   page: sandbox
@@ -31,6 +34,7 @@ sandbox_d:
   revision_number: 4
   remote_ip: 0.0.0.0
   referrer: /
+  created_at: <%= 2.hours.ago.to_s(:db) %>
   
 bloated_a:
   page: bloated
