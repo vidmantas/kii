@@ -17,8 +17,8 @@ ActionController::Routing::Routes.draw do |map|
   
   # Can't do map.resources here, since we want /foo, not /pages/foo.
   map.with_options :controller => "pages" do |m|
-    m.with_options :conditions => {:method => :get} do |get|
-      get.all_pages "all_pages", :path_prefix => "_", :action => "index"
+    m.with_options :conditions => {:method => :get}, :path_prefix => "_" do |get|
+      get.all_pages "all_pages", :action => "index"
       get.new_page "new/:id", :action => "new"
       get.edit_page ":id/edit", :action => "edit"
       get.page_content_age ":id/content_age", :action => "content_age"
