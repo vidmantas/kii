@@ -48,7 +48,7 @@ class AgeVisualizationTest < Test::Unit::TestCase
     @visualizer.revisions = [AVR.new("Hello World!", @two_days_ago)]
     @visualizer.compute
     node = @visualizer.nodes[0]
-    assert_equal 100, node.age
+    assert_equal 0, node.age
     assert_equal @two_days_ago, node.timestamp
   end
 end

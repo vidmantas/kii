@@ -1,0 +1,20 @@
+# The data here is not at all real. We need it present to make the test env run properly though.
+home:
+  data: !binary |
+    <%= Base64.encode64 Marshal.dump([["foo", Time.now.to_f]]) %>
+  
+sandbox:
+  data: !binary |
+    <%= Base64.encode64 Marshal.dump([["foo", Time.now.to_f]]) %>
+  
+bloated:
+  data: !binary |
+    <%= Base64.encode64 Marshal.dump([["foo", Time.now.to_f]]) %>
+  
+iphone:
+  data: !binary |
+    <%= Base64.encode64 Marshal.dump([["foo", Time.now.to_f]]) %>
+  
+IPHONE:
+  data: !binary |
+    <%= Base64.encode64 Marshal.dump([["foo", Time.now.to_f]]) %>

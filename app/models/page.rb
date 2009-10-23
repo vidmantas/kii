@@ -8,9 +8,12 @@ class Page < ActiveRecord::Base
       ordered.first
     end
   end
+  belongs_to :page_content_age_diff
   
   before_save :create_permalink, :bump_timestamps
   after_save :unset_current_revision_id
+  after_create :create_page_content_age_diff
+  after_update :update_page_content_age_diff
   before_validation :build_revision
   before_validation_on_update :detect_stale_revision
   
@@ -95,5 +98,22 @@ class Page < ActiveRecord::Base
   
   def unset_current_revision_id
     @current_revision_id = nil
+  end
+  
+  def create_page_content_age_diff
+    visualizer = Kii::Diff::AgeVisualization.new
+    visualizer.revisions = [Kii::Diff::AgeVisualization::Revision.new(@new_revision.body, @new_revision.created_at)]
+    visualizer.create_diff_from_revisions
+    
+    self.page_content_age_diff = PageContentAgeDiff.create!(:data_as_objects => visualizer.diff)
+    self.send(:update_without_callbacks)
+  end
+  
+  def update_page_content_age_diff
+    obj = self.page_content_age_diff
+    visualizer = Kii::Diff::AgeVisualization.new
+    visualizer.create_diff_manually(obj.data_as_objects, Kii::Diff::AgeVisualization::Revision.new(@new_revision.body, @new_revision.created_at))
+    
+    obj.update_attribute(:data_as_objects, visualizer.diff)
   end
 end

@@ -34,11 +34,12 @@ class PagesController < ApplicationController
   
   def content_age
     @page = Page.find_by_permalink(params[:id])
+    @revision = @page.revisions.current
     
-    revisions = @page.revisions.all(:order => "revision_number ASC").map {|r| Kii::Diff::AgeVisualization::Revision.new(r.body, r.created_at)  }
     visualizer = Kii::Diff::AgeVisualization.new
-    visualizer.revisions = revisions
-    visualizer.compute
+    visualizer.diff = @page.page_content_age_diff.data_as_objects
+    visualizer.create_nodes
+    visualizer.tag_age
     @nodes = visualizer.nodes
   end
   

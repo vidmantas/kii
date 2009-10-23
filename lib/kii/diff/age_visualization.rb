@@ -1,9 +1,8 @@
 module Kii
   module Diff
     class AgeVisualization
-      attr_accessor :revisions
+      attr_accessor :revisions, :diff
       attr_reader :nodes
-      attr_writer :diff
       
       def compute
         create_diff_from_revisions
@@ -16,6 +15,10 @@ module Kii
         @revisions.each do |revision|
           @diff = AVCore.new(@diff, revision.split).diff
         end
+      end
+      
+      def create_diff_manually(diff, revision)
+        @diff = AVCore.new(diff, revision.split).diff
       end
       
       # Merges items in the diff with adjectant timestamps.
@@ -39,12 +42,13 @@ module Kii
       
       def tag_age
         if @nodes.length == 1
-          nodes[0].age = 100
+          @nodes[0].age = 0
           return
         end
         
-        first = @revisions[0].timestamp
-        last = @revisions[-1].timestamp
+        sorted = @nodes.sort_by {|n| n.timestamp }
+        first = sorted[0].timestamp
+        last = sorted[-1].timestamp
         distance = last - first
         
         @nodes.each do |node|

@@ -73,6 +73,22 @@ class PageTest < ActiveSupport::TestCase
     assert page.deleted?
   end
   
+  test "creating content age diff" do
+    page = new_page
+    assert_difference("PageContentAgeDiff.count") do
+      page.save
+    end
+  end
+  
+  test "updating content age diff" do
+    page = create_page
+    assert_equal ["ai"], page.page_content_age_diff.data_as_objects.map(&:text)
+    page.revision_attributes = {:body => "ai wtf", :remote_ip => "0.0.0.0", :referrer => "/"}
+    assert page.save
+    page.page_content_age_diff.reload
+    assert_equal ["ai", " wtf"], page.page_content_age_diff.data_as_objects.map(&:text)
+  end
+  
   def new_page(attrs = {})
     Page.new(attrs.reverse_merge!(:title => "A new page!", :revision_attributes => {:body => "ai", :remote_ip => "0.0.0.0", :referrer => "/"}))
   end
