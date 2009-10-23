@@ -36,9 +36,10 @@ class PagesController < ApplicationController
     @page = Page.find_by_permalink(params[:id])
     
     revisions = @page.revisions.all(:order => "revision_number ASC").map {|r| Kii::Diff::AgeVisualization::Revision.new(r.body, r.created_at)  }
-    visualizer = Kii::Diff::AgeVisualization.new(revisions)
+    visualizer = Kii::Diff::AgeVisualization.new
+    visualizer.revisions = revisions
     visualizer.compute
-    @nodes = visualizer.rev_out
+    @nodes = visualizer.nodes
   end
   
   def new

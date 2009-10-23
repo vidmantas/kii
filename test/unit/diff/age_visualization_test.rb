@@ -22,9 +22,10 @@ class AgeVisualizationTest < Test::Unit::TestCase
       AVR.new("This is some pretty old text.", @now)
     ]
     
-    visualizer = Kii::Diff::AgeVisualization.new(revisions)
+    visualizer = Kii::Diff::AgeVisualization.new
+    visualizer.revisions = revisions
     visualizer.compute
-    assert_equal expected, visualizer.rev_out
+    assert_equal expected, visualizer.nodes
   end
   
   def test_newlines
@@ -38,8 +39,9 @@ class AgeVisualizationTest < Test::Unit::TestCase
       AVR.new("\nThis rocks.", @now)
     ]
     
-    visualizer = Kii::Diff::AgeVisualization.new(revisions)
+    visualizer = Kii::Diff::AgeVisualization.new
+    visualizer.revisions = revisions
     visualizer.compute
-    assert_equal expected, visualizer.rev_out
+    assert_equal expected, visualizer.nodes
   end
 end
