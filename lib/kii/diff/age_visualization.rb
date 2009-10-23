@@ -38,6 +38,11 @@ module Kii
       end
       
       def tag_age
+        if @nodes.length == 1
+          nodes[0].age = 100
+          return
+        end
+        
         first = @revisions[0].timestamp
         last = @revisions[-1].timestamp
         distance = last - first

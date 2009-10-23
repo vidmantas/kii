@@ -7,6 +7,7 @@ class AgeVisualizationTest < Test::Unit::TestCase
     @one_day_ago = 1.day.ago
     @two_days_ago = 2.days.ago
     @now = Time.now
+    @visualizer = Kii::Diff::AgeVisualization.new
   end
   
   def test_basic_object_tree
@@ -22,10 +23,9 @@ class AgeVisualizationTest < Test::Unit::TestCase
       AVR.new("This is some pretty old text.", @now)
     ]
     
-    visualizer = Kii::Diff::AgeVisualization.new
-    visualizer.revisions = revisions
-    visualizer.compute
-    assert_equal expected, visualizer.nodes
+    @visualizer.revisions = revisions
+    @visualizer.compute
+    assert_equal expected, @visualizer.nodes
   end
   
   def test_newlines
@@ -39,9 +39,16 @@ class AgeVisualizationTest < Test::Unit::TestCase
       AVR.new("\nThis rocks.", @now)
     ]
     
-    visualizer = Kii::Diff::AgeVisualization.new
-    visualizer.revisions = revisions
-    visualizer.compute
-    assert_equal expected, visualizer.nodes
+    @visualizer.revisions = revisions
+    @visualizer.compute
+    assert_equal expected, @visualizer.nodes
+  end
+  
+  def test_one_revision
+    @visualizer.revisions = [AVR.new("Hello World!", @two_days_ago)]
+    @visualizer.compute
+    node = @visualizer.nodes[0]
+    assert_equal 100, node.age
+    assert_equal @two_days_ago, node.timestamp
   end
 end
