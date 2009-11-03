@@ -32,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # Since we don't have a map.resources for pages (see above), we route page
   # sub controllers manually as well.
-  map.with_options :path_prefix => ":page_id", :name_prefix => "page_" do |page|
+  map.with_options :path_prefix => "_/:page_id", :name_prefix => "page_" do |page|
     page.with_options :controller => "revisions" do |r|
       r.with_options :conditions => {:method => :get} do |get|
         get.revisions "revisions", :action => "index"
