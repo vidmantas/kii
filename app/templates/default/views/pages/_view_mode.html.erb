@@ -1,0 +1,11 @@
+<% content_for(:sidebar) do %>
+  <div class="sidebar_box">
+    <h3>View mode</h3>
+    
+    <ul class="simple">
+      <li><%= link_to_unless_current "Plain", page_path(@page) %></li>
+      <li><%= link_to_unless_current "Changes", page_changes_path(@page) %></li>
+      <li><%= link_to_unless_current "Content age", page_content_age_path(@page) %></li>
+    </ul>
+  </div>
+<% end %>

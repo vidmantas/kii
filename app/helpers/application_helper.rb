@@ -6,8 +6,8 @@ module ApplicationHelper
     })
   end
 
-  def page_title(title, &block)
-    @page_title = title
+  def page_title(*titles, &block)
+    @page_title = titles.join(" / ")
     meta = content_tag(:div, block_given? ? capture(&block) : "&nbsp;", :id => "page_meta")
     concat(meta)
   end

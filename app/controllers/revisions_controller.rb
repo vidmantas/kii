@@ -4,17 +4,12 @@ class RevisionsController < ApplicationController
   def index
     @page = Page.find_by_permalink!(params[:page_id])
     @revisions = @page.revisions.ordered.with_user
+    @revision = @revisions[0]
   end
   
   def show
     @page = Page.find_by_permalink!(params[:page_id])
     @revision = @page.revisions.find_by_revision_number!(params[:id])
-  end
-  
-  def changes
-    @page = Page.find_by_permalink!(params[:page_id])
-    @revision = @page.revisions.find_by_revision_number!(params[:id])
-    @previous_revision = @page.revisions.find_by_revision_number!(@revision.revision_number - 1)
   end
   
   def confirm_destroy

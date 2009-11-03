@@ -21,6 +21,7 @@ ActionController::Routing::Routes.draw do |map|
       get.all_pages "all_pages", :action => "index"
       get.new_page "new/:id", :action => "new"
       get.edit_page ":id/edit", :action => "edit"
+      get.page_changes ":id/changes", :action => "changes"
       get.page_content_age ":id/content_age", :action => "content_age"
       get.confirm_destroy_page ":id/confirm_destroy", :action => "confirm_destroy"
     end
@@ -38,7 +39,6 @@ ActionController::Routing::Routes.draw do |map|
       r.with_options :conditions => {:method => :get} do |get|
         get.revisions "revisions", :action => "index"
         get.revision "revisions/:id", :action => "show"
-        get.revision_changes "revisions/:id/changes", :action => "changes"
         get.confirm_destroy_revision "revisions/:id/confirm_destroy", :action => "confirm_destroy"
       end
       

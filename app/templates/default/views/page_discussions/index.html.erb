@@ -1,6 +1,8 @@
-<% page_title "Discussions for &ldquo;#{page_link(@page)}&rdquo;" do %>
+<% page_title page_link(@page), "Discussions" do %>
   <%= link_to "New discussion", new_page_discussion_path(@page) %>
 <% end %>
+
+<%= render :partial => "pages/page_actions" %>
 
 <% @discussions.each do |discussion| %>
   <div class="discussion">

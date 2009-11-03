@@ -1,6 +1,4 @@
-<% page_title "New discussion in &ldquo;#{page_link(@page)}&rdquo;" do %>
-  <%= link_to "Discussions", page_discussions_path(@page) %>
-<% end %>
+<% page_title page_link(@page), link_to("Discussions", page_discussions_path(@page)), "New" %>
 
 <% form_for([@page, @discussion]) do |f| %>
   <%= f.honeypot %>
