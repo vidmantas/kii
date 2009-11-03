@@ -20,7 +20,6 @@ class PagesController < ApplicationController
       if @page.deleted?
         render :action => "deleted"
       else
-        @is_viewing_page = true
         @revision = @page.revisions.current
         render
       end
@@ -32,25 +31,6 @@ class PagesController < ApplicationController
         render :action => "404"
       end
     end
-  end
-  
-  def changes
-    @page = Page.find_by_permalink!(params[:id])
-    @is_viewing_page = true
-    @revision = @page.revisions.current
-    @previous_revision = @page.revisions.find_by_revision_number!(@revision.revision_number - 1)
-  end
-  
-  def content_age
-    @page = Page.find_by_permalink(params[:id])
-    @is_viewing_page = true
-    @revision = @page.revisions.current
-    
-    visualizer = Kii::Diff::AgeVisualization.new
-    visualizer.diff = @page.page_content_age_diff.data_as_objects
-    visualizer.create_nodes
-    visualizer.tag_age
-    @nodes = visualizer.nodes
   end
   
   def new

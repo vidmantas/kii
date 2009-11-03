@@ -46,12 +46,6 @@ class PagesControllerTest < ActionController::TestCase
     assert_template "pages/deleted"
   end
   
-  test "content age visualization" do
-    get :content_age, :id => pages(:sandbox).to_param
-    assert_response :success
-    assert_template "pages/content_age"
-  end
-  
   test "new" do
     get :new, :id => "New Page".to_permalink
     assert_response :success

@@ -1,0 +1,5 @@
+<% page_title h(@page.title) %>
+<% render :partial => "pages/page_actions" %>
+<% render :partial => "pages/view_mode" %>
+
+<p><em>Content age is only available for the <%= link_to "newest revision", page_revision_content_age_path(@page, @page.revisions.current) %>.</em></p>

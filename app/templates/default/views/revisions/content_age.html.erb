@@ -1,6 +1,6 @@
 <% page_title h(@page.title) %>
-<%= render :partial => "page_actions" %>
-<%= render :partial => "view_mode" %>
+<%= render :partial => "pages/page_actions" %>
+<%= render :partial => "pages/view_mode" %>
 
 <style type="text/css">
   <% @nodes.map(&:age).uniq.reject {|age| age == 0 }.each do |age| %>

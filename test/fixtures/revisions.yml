@@ -41,6 +41,7 @@ bloated_a:
   remote_ip: 0.0.0.0
   referrer: /
   user: admin
+  revision_number: 1
   body: |
     This page has a lot of stuff in it. Its purpose is to cause a test to fail if there are any errors in `Kii::Markup`.
     
@@ -54,10 +55,12 @@ iphone_a:
   page: iphone
   body: iPhone ftw.
   remote_ip: 0.0.0.0
+  revision_number: 1
   referrer: /
   
 IPHONE_a:
   page: IPHONE
   body: What is this?
   remote_ip: 0.0.0.0
+  revision_number: 1
   referrer: /

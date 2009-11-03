@@ -1,7 +1,0 @@
-<% page_title h(@page.title) %>
-<%= render :partial => "page_actions" %>
-<%= render :partial => "view_mode" %>
-
-<div class="diff">
-  <%= Kii::Diff::HTML.diff(render_body(@previous_revision.body), render_body(@revision.body)) %>
-</div>
