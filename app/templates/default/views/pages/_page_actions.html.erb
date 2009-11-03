@@ -13,7 +13,7 @@
       </ul>
     </div>
     
-    <% if params[:revision] %>
+    <% if !@revision.last? %>
       <ul class="simple">
         <li>By <strong><%= author_link(@revision) %></strong></li>
         
