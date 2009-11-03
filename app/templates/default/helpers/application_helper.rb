@@ -1,8 +1,4 @@
 module ApplicationHelper
-  def last_updated_at(page)
-    %{Last updated #{datetimestamp(page.updated_at)}}
-  end
-  
   def clever_timestamp(time)
     if time.today?
       "#{shorter_time_ago_in_words(time)} ago"
@@ -17,7 +13,7 @@ module ApplicationHelper
   
   # July 12 2009
   def datestamp(time)
-    time.strftime("%B %d %Y")
+    time.strftime("%b. %d %Y")
   end
   
   # 23:15

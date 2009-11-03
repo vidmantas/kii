@@ -25,43 +25,47 @@
     </div>
     
     <div id="sidebar">
-      <div class="sidebar_block">
-        <ul class="simple">
-          <li><%= link_to "Home", page_path(Kii::CONFIG[:home_page]) %></li>
-        </ul>
-      </div>
+      <div class="sidebar_box">
+        <div class="sidebar_block">
+          <ul class="simple">
+            <li><%= link_to "Home", page_path(Kii::CONFIG[:home_page]) %></li>
+          </ul>
+        </div>
       
-      <div class="sidebar_block">
-        <ul class="simple">
-          <li><%= link_to "All pages", all_pages_path %></li>
-          <li><%= link_to "Discussions", discussions_path %></li>
-          <li><%= link_to "Activity log", activities_path %></li>
-        </ul>
-      </div>
+        <div class="sidebar_block">
+          <ul class="simple">
+            <li><%= link_to "All pages", all_pages_path %></li>
+            <li><%= link_to "Discussions", discussions_path %></li>
+            <li><%= link_to "Activity log", activities_path %></li>
+          </ul>
+        </div>
       
-      <div class="sidebar_block">
-        <% form_tag search_path, :method => :get, :id => "search_form" do %>
-          <strong>Search</strong>
-          <%= text_field_tag :q %>
-          <button type="submit">Go</button>
-        <% end %>
-      </div>
-      
-      <div class="sidebar_block">
-        <ul class="simple">
-          <% if logged_in? %>
-            <li><%= link_to h(current_user.login), user_path(current_user) %></li>
-            <li><%= link_to "Edit profile", edit_profile_path %></li>
-            <li><%= link_to "Log out", logout_path %></li>
-          <% else %>
-            <li><%= link_to "Login", new_session_path %></li>
-            
-            <% if Kii::CONFIG[:public_registration] %>
-              <li><%= link_to "Register", new_user_path %></li>
-            <% end %>
+        <div class="sidebar_block">
+          <% form_tag search_path, :method => :get, :id => "search_form" do %>
+            <strong>Search</strong>
+            <%= text_field_tag :q %>
+            <button type="submit">Go</button>
           <% end %>
-        </ul>
+        </div>
+      
+        <div class="sidebar_block">
+          <ul class="simple">
+            <% if logged_in? %>
+              <li><%= link_to h(current_user.login), user_path(current_user) %></li>
+              <li><%= link_to "Edit profile", edit_profile_path %></li>
+              <li><%= link_to "Log out", logout_path %></li>
+            <% else %>
+              <li><%= link_to "Login", new_session_path %></li>
+            
+              <% if Kii::CONFIG[:public_registration] %>
+                <li><%= link_to "Register", new_user_path %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
       </div>
+      
+      <%= yield(:sidebar) %>
     </div>
   </div>
 </body>

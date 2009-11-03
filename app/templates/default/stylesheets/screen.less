@@ -89,7 +89,7 @@ pre {
   width: @main_width + 4px; /* 4 1px borders */
   overflow:hidden;
   
-  #sidebar, #content {
+  .sidebar_box, #content {
     padding: @main_spacing;
     border:1px solid #ccc;
     background:#fff;
@@ -97,12 +97,21 @@ pre {
   
   #sidebar {
     float: left;
-    width: @sidebar_width - @real_padding;
     margin-left: @main_spacing;
     font-size:.8em;
-
-    .sidebar_block {
+    
+    .sidebar_box {
+      width: @sidebar_width - @real_padding;
       margin-bottom:@main_spacing;
+      
+      .sidebar_block {
+        margin-bottom:@main_spacing;
+      }
+      
+      h3 {
+        font-size:1em;
+        margin-bottom:0;
+      }
     }
     
     #search_form {

@@ -20,6 +20,7 @@ class PagesController < ApplicationController
       if @page.deleted?
         render :action => "deleted"
       else
+        @revision = @page.revisions.current
         render
       end
     else
