@@ -89,4 +89,8 @@ module ApplicationHelper
   def polymorphic_discussion_link(discussion)
     link_to discussion.title, (discussion.page_id ? page_discussion_path(discussion.page, discussion) : discussion_path(discussion))
   end
+  
+  def viewing_revision_in_plain_mode?
+    current_page?(page_revision_path(@page, @revision)) || current_page?(page_path(@page))
+  end
 end

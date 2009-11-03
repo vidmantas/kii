@@ -3,8 +3,7 @@
     <h3>View mode</h3>
     
     <ul class="simple">
-      <li><%= link_to_unless (current_page?(page_revision_path(@page, @revision)) || current_page?(page_path(@page))),
-        "Plain", page_revision_path(@page, @revision) %></li>
+      <li><%= link_to_unless viewing_revision_in_plain_mode?, "Plain", page_revision_path(@page, @revision) %></li>
       <li><%= link_to_unless_current "Changes", page_revision_changes_path(@page, @revision) %></li>
       <li><%= link_to_unless_current "Content age", page_revision_content_age_path(@page, @revision) %></li>
     </ul>
