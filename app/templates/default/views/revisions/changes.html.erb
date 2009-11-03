@@ -1,4 +1,4 @@
-<% page_title h(@page.title), link_to("##{@revision.revision_number}", page_revision_path(@page, @revision)), "Changes" %>
+<% page_title page_link(@page), link_to("##{@revision.revision_number}", page_revision_path(@page, @revision)), "Changes" %>
 <%= render :partial => "pages/page_actions" %>
 <%= render :partial => "pages/view_mode" %>
 
