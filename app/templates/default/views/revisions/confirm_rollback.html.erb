@@ -1,4 +1,4 @@
-<% page_title "Rolling back to &ldquo;#{h @page.title}&rdquo; \##{@revision.revision_number}" do %>
+<% page_title "Rolling back &ldquo;#{page_link(@page)}&rdquo; to revision \##{@revision.revision_number}" do %>
   <%= link_to "Back", page_revision_path(@page, @revision) %>
 <% end %>
 
