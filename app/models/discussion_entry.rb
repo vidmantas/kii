@@ -1,5 +1,5 @@
 class DiscussionEntry < ActiveRecord::Base
-  belongs_to :discussion
+  belongs_to :discussion, :counter_cache => true
   belongs_to :user
   
   before_create :cache_at_revision
