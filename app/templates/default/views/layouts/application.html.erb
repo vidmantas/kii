@@ -8,6 +8,7 @@
     <%= @content_for_scripts %>
   <% end -%>
   <%= stylesheet_link_tag "screen" %>
+  <%= stylesheet_link_tag Kii::CONFIG[:site_css] if Kii::CONFIG[:site_css] %>
   <title><%= strip_tags(@page_title) %> - <%= Kii::CONFIG[:site_name] %></title>
 </head>
 <body>
