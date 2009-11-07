@@ -46,7 +46,11 @@ module ApplicationHelper
     first = records.first[timestamp_column]
     last = records.last[timestamp_column]
     
-    if first.month == last.month && first.year == last.year
+    if first.day == last.day && first.month == last.month && first.year == last.year
+      resolution = "hour"
+      header_format = "%H:%M"
+      row_format = proc {|t| t.strftime("%H:%M") }
+    elsif first.month == last.month && first.year == last.year
       resolution = "day"
       header_format = "%B %d %Y"
       row_format =  proc {|t| t.strftime("%H:%M") }
