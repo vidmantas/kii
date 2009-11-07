@@ -8,6 +8,10 @@ class Discussion < ActiveRecord::Base
   named_scope :grouped_by_entries, :joins => :discussion_entries, :include => :page, :group => "discussions.id, #{columns_with_table_name}"
   named_scope :by_user, lambda {|user| {:conditions => ["discussion_entries.user_id = ?", user.id]} }
   named_scope :by_ip, lambda {|ip| {:conditions => ["discussion_entries.user_id IS ? AND discussion_entries.remote_ip = ?", nil, ip]} }
+  named_scope :with_page, :include => :page
+  named_scope :with_latest_discussion_entry, :include => {:latest_discussion_entry => :user}
+  named_scope :ignore_deleted, :conditions => ["pages.deleted != ?", true]
+  named_scope :ordered, :order => "#{quoted_table_name}.updated_at DESC"
   
   validates_presence_of :title, :page_id
 

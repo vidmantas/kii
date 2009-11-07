@@ -1,7 +1,7 @@
 class DiscussionsController < ApplicationController
   def index
     @page = Page.find_by_permalink!(params[:page_id])
-    @discussions = @page.discussions.all(:include => {:latest_discussion_entry => :user}, :order => "updated_at DESC")
+    @discussions = @page.discussions.with_latest_discussion_entry.ordered.with_page.ignore_deleted
     @revision = @page.revisions.current
   end
   
