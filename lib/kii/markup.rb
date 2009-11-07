@@ -1,9 +1,6 @@
 module Kii
   # Mostly using the wikitext gem. Post-parsing to get those red links.
   class Markup
-    PAGE_LINK_REGEXP = /\[\[(.*?)\]\]/
-    attr_reader :linked_pages
-    
     def initialize(markup)
       @markup = CGI.escapeHTML(markup)
     end
@@ -12,11 +9,12 @@ module Kii
       return @html if defined?(@html)
       @options = options
       
-      preparse
-
+      # Prepare page link parsing
+      page_link_preprocessor = Kii::PageLinkPreprocessor.new(@markup, @options[:page_link])
+      
       buffer = @markup.split(/(\r\n){2,}|\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
       @html = with_parseable_text(buffer) {|text|
-        parse_page_links(text)
+        page_link_preprocessor.parse(text)
         parse_regular_links(text)
         parse_tokens(text)
         text = @options[:post_process].call(text) if @options[:post_process]
@@ -25,15 +23,6 @@ module Kii
       }
       
       return @html
-    end
-    
-    # Finding all pages, fetching them from the DB, to avoid N+1 when parsing page links
-    # later on.
-    def preparse
-      page_link_permalinks = @markup.scan(PAGE_LINK_REGEXP).map {|p| p[0].split("|")[0].to_permalink }
-      page_link_permalinks += page_link_permalinks.map {|permalink| permalink.upcase_first_letter } # Look for capitalized as well
-      page_link_permalinks.uniq!
-      @linked_pages = Page.all(:conditions => {:permalink => page_link_permalinks})
     end
     
     private
@@ -65,21 +54,6 @@ module Kii
       result << yield(buffer)
       
       return result
-    end
-    
-    # [[Foo]] and [[Foo|Bar]]
-    def parse_page_links(text)
-      text.gsub!(PAGE_LINK_REGEXP) {
-        permalink, title = *$~[1].split("|")
-        title = (title || permalink)
-        
-        # Uncapitalized version, capitalized version, or does not exist (Page.new).
-        page = @linked_pages.detect {|lp| lp.permalink == permalink.to_permalink } ||
-          @linked_pages.detect {|lp| lp.permalink == permalink.to_permalink.upcase_first_letter } ||
-          Page.new(:title => title, :deleted => true, :permalink => permalink)
-        
-        @options[:page_link] ? @options[:page_link].call(page, title) : page.permalink
-      }
     end
     
     # [http://google.com/ foo]

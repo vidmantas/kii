@@ -9,16 +9,6 @@ class MarkupTest < ActiveSupport::TestCase
     end
   end
   
-  test "preparsing page links" do
-    @markup = Kii::Markup.new("[[a few]] foo bar [[page links]]")
-    @markup.preparse
-    assert @markup.linked_pages.empty?
-    
-    p = Page.create!(:title => "a few", :revision_attributes => {:body => "Something!", :remote_ip => "0.0.0.0", :referrer => "/"})
-    @markup.preparse
-    assert_equal [p], @markup.linked_pages
-  end
-  
   test "handling page links" do
     @markup = Kii::Markup.new("[[a few]] foo bar [[page links]]")
     html = @markup.to_html :page_link => proc {|page, title| page.new_record? }
