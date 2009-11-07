@@ -1,0 +1,10 @@
+<% content_for(:sidebar) do %>
+  <div class="sidebar_box">
+    <h3>Log for</h3>
+    
+    <ul class="simple">
+      <li><%= link_to_unless_current "Activities", revisions_activities_path %></li>
+      <li><%= link_to_unless_current "Discussions", discussions_activities_path %></li>
+    </ul>
+  </div>
+<% end %>
