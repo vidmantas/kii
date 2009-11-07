@@ -4,24 +4,13 @@
 
 <%= render :partial => "pages/page_actions" %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Updated</th>
-      <th>Replies</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @discussions.each do |discussion| %>
-      <tr>
-        <td><%= link_to discussion.title, page_discussion_path(@page, discussion) %></td>
-        <td>
-          <%= author_link(discussion.latest_discussion_entry) %>
-          <%= clever_timestamp(discussion.updated_at) %>
-        </td>
-        <td><%= discussion.discussion_entries_count %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% grouped_record_log(@discussions, ["Title", "Updated", "Replies"], :updated_at) do |discussion, timestamp| %>
+  <td>
+    <%= link_to discussion.title, page_discussion_path(discussion.page, discussion) %>
+  </td>
+  <td>
+    <%= author_link(discussion.latest_discussion_entry) %>
+    <%= clever_timestamp(discussion.updated_at) %>
+  </td>
+  <td><%= discussion.discussion_entries_count %></td>
+<% end %>
