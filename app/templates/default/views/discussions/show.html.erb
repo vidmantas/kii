@@ -3,7 +3,7 @@
 <% @discussion_entries.each do |discussion_entry| %>
   <div class="discussion_entry">
     <div class="discussion_entry_header">
-      By <%= author_link(discussion_entry) %> on <%= datestamp(discussion_entry.created_at) %>
+      By <%= author_link(discussion_entry) %> on <%= datetimestamp(discussion_entry.created_at) %>
       (Revision <%= link_to "##{discussion_entry.at_revision}", page_revision_path(@page, discussion_entry.at_revision)  %>)
     </div>
     
