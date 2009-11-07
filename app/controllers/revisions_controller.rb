@@ -19,7 +19,7 @@ class RevisionsController < ApplicationController
   def changes
     @page = Page.find_by_permalink!(params[:page_id])
     @revision = @page.revisions.find_by_revision_number!(params[:id])
-    @previous_revision = @page.revisions.find_by_revision_number!(@revision.revision_number - 1)
+    @previous_revision_body = @page.revisions.find_by_revision_number(@revision.revision_number - 1).try(:body) || ""
   end
   
   def content_age
