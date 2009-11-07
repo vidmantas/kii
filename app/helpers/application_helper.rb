@@ -40,12 +40,11 @@ module ApplicationHelper
     end
   end
   
-  # See the activity log and page revisions.
-  def grouped_revision_log(revisions, columns, &block)
-    return if revisions.empty?
+  def grouped_record_log(records, columns, timestamp_column = :created_at, &block)
+    return if records.empty?
     
-    first = revisions.first.created_at
-    last = revisions.last.created_at
+    first = records.first[timestamp_column]
+    last = records.last[timestamp_column]
     
     if first.month == last.month && first.year == last.year
       resolution = "day"
@@ -61,9 +60,9 @@ module ApplicationHelper
       row_format = proc {|t| t.strftime("%B ") + t.strftime("%d").to_i.ordinalize + t.strftime(", %H:%M") }
     end
     
-    grouped_revisions = revisions.group_by {|r| r.created_at.send("at_beginning_of_#{resolution}") }
+    grouped_records = records.group_by {|r| r[timestamp_column].send("at_beginning_of_#{resolution}") }
     
-    output = content_tag(:table, :id => "grouped_revision_log") {
+    output = content_tag(:table, :id => "grouped_record_log") {
       content_tag(:thead) {
         content_tag(:tr) {
           columns.map {|c| content_tag(:th, c )}
@@ -71,13 +70,13 @@ module ApplicationHelper
       } +
       
       content_tag(:tbody) {
-        grouped_revisions.map {|date, revisions|
+        grouped_records.map {|date, records|
           content_tag(:tr, :class => "group_header") {
             content_tag(:td, date.strftime(header_format), :colspan => columns.length)
           } +
-          revisions.map {|revision|
-            timestamp = row_format.call(revision.created_at)
-            content_tag(:tr, capture(revision,  timestamp, &block))
+          records.map {|record|
+            timestamp = row_format.call(record[timestamp_column])
+            content_tag(:tr, capture(record,  timestamp, &block))
           }.join
         }
       }

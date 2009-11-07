@@ -1,7 +1,7 @@
 <% page_title page_link(@page), "Revisions" %>
 <%= render :partial => "pages/page_actions" %>
 
-<% grouped_revision_log(@revisions, ["#", "Date", "Message", "By", ""]) do |revision, timestamp| %>
+<% grouped_record_log(@revisions, ["#", "Date", "Message", "By", ""]) do |revision, timestamp| %>
   <td><%= link_to "##{revision.revision_number}", page_revision_path(@page, revision) %></td>
   <td><%= timestamp %></td>
   <td><%= revision.message %></td>

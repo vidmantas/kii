@@ -21,7 +21,7 @@
 
 <div class="clear"></div>
 
-<% grouped_revision_log(@revisions, ["#", "Date", "Page", ""]) do |revision, timestamp| %>
+<% grouped_record_log(@revisions, ["#", "Date", "Page", ""]) do |revision, timestamp| %>
   <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
   <td><%= timestamp %></td>
   <td><%= page_link(revision.page) %></td>

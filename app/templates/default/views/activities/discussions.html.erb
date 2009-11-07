@@ -3,7 +3,7 @@
 
 <p>Showing the 50 latest discussion entries.</p>
 
-<% grouped_revision_log(@discussions, ["Title", "Updated", "Replies"]) do |discussion, timestamp| %>
+<% grouped_record_log(@discussions, ["Title", "Updated", "Replies"]) do |discussion, timestamp| %>
   <td>
     <%= page_link(discussion.page) %>
     /
