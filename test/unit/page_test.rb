@@ -65,9 +65,15 @@ class PageTest < ActiveSupport::TestCase
   
   test "soft destroy" do
     page = pages(:sandbox)
-    assert page.revisions.count > 1 # testing fixtures ftl.. Oh well.
+    # testing fixtures ftl.. Oh well.
+    assert page.revisions.count > 1
+    assert page.discussions.count > 0
+    old_discussion_count = page.discussions.count
     
-    page.soft_destroy
+    assert_difference("Discussion.count", -old_discussion_count) do
+      page.soft_destroy
+    end
+    
     assert_equal 1, page.revisions.count
     assert_equal 1, page.revisions.current.revision_number
     assert page.deleted?

@@ -54,6 +54,9 @@ class Page < ActiveRecord::Base
       latest_revision.revision_number = 1
       latest_revision.send(:create_without_callbacks)
       
+      # Remove discussions
+      discussions.destroy_all
+      
       # Set to deleted without running callbacks or validations
       self.deleted = true
       self.send(:update_without_callbacks)

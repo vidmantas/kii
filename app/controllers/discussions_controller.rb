@@ -1,7 +1,7 @@
 class DiscussionsController < ApplicationController
   def index
     @page = Page.find_by_permalink!(params[:page_id])
-    @discussions = @page.discussions.with_latest_discussion_entry.ordered.with_page.ignore_deleted
+    @discussions = @page.discussions.with_latest_discussion_entry.ordered
     @revision = @page.revisions.current
   end
   

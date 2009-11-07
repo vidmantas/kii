@@ -8,6 +8,6 @@ class ActivitiesController < ApplicationController
   end
   
   def discussions
-    @discussions = Discussion.with_page.with_latest_discussion_entry.ignore_deleted.ordered.all(:limit => 50)
+    @discussions = Discussion.with_page.with_latest_discussion_entry.ordered.all(:limit => 50)
   end
 end

@@ -1,6 +1,6 @@
 class Discussion < ActiveRecord::Base
   belongs_to :page
-  has_many :discussion_entries
+  has_many :discussion_entries, :dependent => :destroy
   
   # Using this instead of a named scope so that it can be refered to in find(:all, :include => ..).
   has_one :latest_discussion_entry, :class_name => "DiscussionEntry", :foreign_key => "discussion_id", :order => "created_at DESC"
@@ -10,7 +10,6 @@ class Discussion < ActiveRecord::Base
   named_scope :by_ip, lambda {|ip| {:conditions => ["discussion_entries.user_id IS ? AND discussion_entries.remote_ip = ?", nil, ip]} }
   named_scope :with_page, :include => :page
   named_scope :with_latest_discussion_entry, :include => {:latest_discussion_entry => :user}
-  named_scope :ignore_deleted, :conditions => ["pages.deleted != ?", true]
   named_scope :ordered, :order => "#{quoted_table_name}.updated_at DESC"
   
   validates_presence_of :title, :page_id
