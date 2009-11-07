@@ -17,6 +17,10 @@ class Discussion < ActiveRecord::Base
   before_save :bump_timestamps
   validate :require_valid_discussion_entry
   
+  def replies_count
+    discussion_entries_count - 1
+  end
+  
   private
   
   def build_discussion_entry
