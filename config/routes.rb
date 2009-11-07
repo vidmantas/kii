@@ -39,10 +39,10 @@ ActionController::Routing::Routes.draw do |map|
         get.revision "revisions/:id", :action => "show"
         get.revision_changes "revisions/:id/changes", :action => "changes"
         get.revision_content_age "revisions/:id/content_age", :action => "content_age"
-        get.confirm_destroy_revision "revisions/:id/confirm_destroy", :action => "confirm_destroy"
+        get.confirm_rollback_revision "revisions/:id/confirm_rollback", :action => "confirm_rollback"
       end
       
-      r.connect "revisions/:id", :action => "destroy", :conditions => {:method => :delete}
+      r.rollback_revision "revisions/:id/rollback", :action => "rollback", :conditions => {:method => :post}
     end
     
     page.with_options :controller => "page_discussions" do |d|

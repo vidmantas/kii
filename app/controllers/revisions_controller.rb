@@ -38,17 +38,17 @@ class RevisionsController < ApplicationController
     @nodes = visualizer.nodes
   end
   
-  def confirm_destroy
+  def confirm_rollback
     @page = Page.find_by_permalink!(params[:page_id])
     @revision = @page.revisions.find_by_revision_number!(params[:id])
   end
   
-  def destroy
+  def rollback
     @page = Page.find_by_permalink!(params[:page_id])
     @revision = @page.revisions.find_by_revision_number!(params[:id])
-    @revision.destroy
+    @page.rollback_to(@revision)
     
-    flash[:success] = "Revision \##{@revision.revision_number} was successfully reverted"
+    flash[:success] = "Successfully rolled page back to revision \##{@revision.revision_number}"
     redirect_to page_path(@page)
   end
 end

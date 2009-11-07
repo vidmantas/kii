@@ -89,6 +89,12 @@ class PageTest < ActiveSupport::TestCase
     assert_equal ["ai", " wtf"], page.page_content_age_diff.data_as_objects.map(&:text)
   end
   
+  test "rollback to" do
+    assert_difference("Revision.count", -2) do
+      pages(:sandbox).rollback_to(revisions(:sandbox_b))
+    end
+  end
+  
   def new_page(attrs = {})
     Page.new(attrs.reverse_merge!(:title => "A new page!", :revision_attributes => {:body => "ai", :remote_ip => "0.0.0.0", :referrer => "/"}))
   end

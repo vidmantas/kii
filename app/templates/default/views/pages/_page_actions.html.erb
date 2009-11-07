@@ -18,7 +18,7 @@
         <li>By <strong><%= author_link(@revision) %></strong></li>
         
         <% if admin? %>
-          <li><%= link_to "Revert", page_confirm_destroy_revision_path(@page, @revision) %></li>
+          <li><%= link_to "Rollback", page_confirm_rollback_revision_path(@page, @revision) %></li>
         <% end %>
       </ul>
     <% else %>

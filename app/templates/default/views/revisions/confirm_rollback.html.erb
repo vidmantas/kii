@@ -1,0 +1,7 @@
+<% page_title "Rolling back to &ldquo;#{h @page.title}&rdquo; \##{@revision.revision_number}" do %>
+  <%= link_to "Back", page_revision_path(@page, @revision) %>
+<% end %>
+
+<p>This is a one-way operation that will remove all revisions created after revision #<%= @revision.revision_number %></p>
+
+<%= button_to "Rollback!", page_rollback_revision_path(@page, @revision), :method => :post %>

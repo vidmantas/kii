@@ -60,6 +60,10 @@ class Page < ActiveRecord::Base
     end
   end
   
+  def rollback_to(revision)
+    Revision.delete_all(["revision_number > ? AND page_id = ?", revision.revision_number, self.id])
+  end
+  
   private
   
   def create_permalink
