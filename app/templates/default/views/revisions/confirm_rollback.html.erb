@@ -1,6 +1,4 @@
-<% page_title "Rolling back &ldquo;#{page_link(@page)}&rdquo; to revision \##{@revision.revision_number}" do %>
-  <%= link_to "Back", page_revision_path(@page, @revision) %>
-<% end %>
+<% page_title page_link(@page), link_to("\##{@revision.revision_number}", page_revision_path(@page, @revision)), "Rollback" %>
 
 <p>This is a one-way operation that will remove all revisions created after revision #<%= @revision.revision_number %></p>
 
