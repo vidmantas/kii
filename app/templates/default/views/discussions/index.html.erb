@@ -1,35 +1,15 @@
-<% page_title "Discussions" %>
+<% page_title page_link(@page), "Discussions" do %>
+  <%= link_to "New discussion", new_page_discussion_path(@page) %>
+<% end %>
 
+<%= render :partial => "pages/page_actions" %>
 
-<div class="left_column">  
-  <h3>
-    General
-    <small><%= link_to "New", new_discussion_path %></small>
-  </h3>
-  
-  <% @general_discussions.each do |discussion| %>
-    <div class="discussion">
-      <h2><%= link_to discussion.title, discussion_path(discussion) %></h2>
-      <p>
-        <%= author_link(discussion.latest_discussion_entry) %>
-        <%= clever_timestamp(discussion.latest_discussion_entry.created_at) %>
-      </p>
-    </div>
-  <% end %>
-</div>
-
-<div class="right_column">
-  <h3>Page related</h3>
-  
-  <% @page_discussions.each do |discussion| %>
-    <div class="discussion">
-      <h2><%= link_to discussion.title, page_discussion_path(discussion.page, discussion) %></h2>
-      <p>
-        <%= author_link(discussion.latest_discussion_entry) %>
-        <%= clever_timestamp(discussion.latest_discussion_entry.created_at) %>
-      </p>
-    </div>
-  <% end %>
-</div>
-
-<div class="clear"></div>
+<% @discussions.each do |discussion| %>
+  <div class="discussion">
+    <h2><%= link_to discussion.title, page_discussion_path(@page, discussion) %></h2>
+    <p>
+      <%= author_link(discussion.latest_discussion_entry) %>
+      <%= clever_timestamp(discussion.updated_at) %>
+    </p>
+  </div>
+<% end %>

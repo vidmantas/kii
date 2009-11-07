@@ -10,7 +10,6 @@ ActionController::Routing::Routes.draw do |map|
     m.logout 'logout', :controller => "sessions", :action => "destroy"
     m.resources :users
     m.resources :ips, :only => [:show], :requirements => {:id => /.+/} # allowing dots in the :id.
-    m.resources :discussions
     
     m.resources :activities, :only => [:index]
   end
@@ -45,7 +44,7 @@ ActionController::Routing::Routes.draw do |map|
       r.rollback_revision "revisions/:id/rollback", :action => "rollback", :conditions => {:method => :post}
     end
     
-    page.with_options :controller => "page_discussions" do |d|
+    page.with_options :controller => "discussions" do |d|
       d.with_options :conditions => {:method => :get} do |get|
         get.discussions "discussions", :action => "index"
         get.discussion "discussions/new", :action => "new", :name_prefix => "new_page_"
