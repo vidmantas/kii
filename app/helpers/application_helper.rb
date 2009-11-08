@@ -94,8 +94,4 @@ module ApplicationHelper
   def flashes
     flash.map {|type, msg| content_tag(:div, msg, :class => "flash", :id => "flash_#{type}")}
   end
-  
-  def polymorphic_discussion_link(discussion)
-    link_to discussion.title, (discussion.page_id ? page_discussion_path(discussion.page, discussion) : discussion_path(discussion))
-  end
 end
