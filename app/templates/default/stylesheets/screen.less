@@ -128,8 +128,11 @@ pre {
 
 #main {
   #content {
-    width:598px;
+    width:600px;
     float:left;
+  }
+  
+  #content_inner {
     background:#fff;
     border:1px solid #ccc;
   }
@@ -168,6 +171,16 @@ pre {
       }
     }
   }
+  
+  #footer {
+    color:#999;
+    margin-top:@base_margin;
+    font-size:.85em;
+    
+    a {
+      color:#777;
+    }
+  }
 }
 
 /* Page stuff */
@@ -176,6 +189,7 @@ pre {
   text-align:right;
   font-size:.8em;
   margin-bottom:.8em;
+  color:#999;
   
   span {
     color:@gray_text;

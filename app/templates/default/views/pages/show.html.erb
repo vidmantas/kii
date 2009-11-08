@@ -1,4 +1,7 @@
-<% page_title h(@page.title) %>
+<% page_title h(@page.title) do %>
+  Updated: <%= datetimestamp(@page.updated_at) %>
+<% end %>
+
 <%= render :partial => "navigation" %>
 
 <%= render_body(@revision.body) %>

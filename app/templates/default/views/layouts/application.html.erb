@@ -40,13 +40,19 @@
     </div>
 
     <div id="main">
-      <div id="content" class="<%= 'without_sidebar' unless sidebar_visible? %>"><div class="spacing">
-        <h1><%= @page_title %></h1>
-        <%= flashes %>
-        <%= yield %>
+      <div id="content" class="<%= 'without_sidebar' unless sidebar_visible? %>">
+        <div id="content_inner"><div class="spacing">
+          <h1><%= @page_title %></h1>
+          <%= flashes %>
+          <%= yield %>
       
-        <div class="clear"></div>
-      </div></div>
+          <div class="clear"></div>
+        </div></div>
+        
+        <div id="footer">
+          Powered by <a href="http://kiiproject.org/">Kii</a>.
+        </div>
+      </div>
     
       <% if sidebar_visible? %>
         <div id="sidebar">
