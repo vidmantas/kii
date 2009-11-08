@@ -19,7 +19,7 @@ body {
   margin:0;
   font-size:15px;
   .main_font;
-  background-color:#eee;
+  background-color:#f7f7f7;
 }
 
 a {
@@ -128,9 +128,10 @@ pre {
 
 #main {
   #content {
-    width:600px;
+    width:598px;
     float:left;
     background:#fff;
+    border:1px solid #ccc;
   }
   
   #content.without_sidebar {
@@ -152,12 +153,18 @@ pre {
     }
     
     #tabs {
+      position:relative;
+      left:-1px;
+      
       li {
-        padding:.3em @base_margin;
+        padding:5px @base_margin;
       }
       
       li.current {
         background:#fff;
+        border:1px solid #ccc;
+        padding:4px @base_margin;
+        border-left-width:0;
       }
     }
   }
