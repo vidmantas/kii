@@ -14,7 +14,7 @@
   <h3>Talked in discussions</h3>
   <ul>
     <% @discussions.each do |discussion| %>
-      <li><%= polymorphic_discussion_link discussion %></li>
+      <li><%= link_to discussion.title, page_discussion_path(discussion.page, discussion) %></li>
     <% end %>
   </ul>
 </div>
