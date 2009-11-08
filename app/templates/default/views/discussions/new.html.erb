@@ -1,4 +1,5 @@
 <% page_title page_link(@page), link_to("Discussions", page_discussions_path(@page)), "New" %>
+<% render :partial => "pages/navigation" %>
 
 <% form_for([@page, @discussion]) do |f| %>
   <%= f.honeypot %>

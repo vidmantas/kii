@@ -1,21 +1,25 @@
 @gray_text: #999;
 @link_color: #447799;
 @header_border_color: #ccc;
-@void_page_color: #900;
 
-.main_fonts {
-  font-family: Georgia, serif;
-  font-size:15px;
+.sans_serif_font {
+  font-family: "Lucida Grande", Arial, sans-serif;
 }
 
-.header_fonts {
-  font-family: "Lucida Grande", Arial, sans-serif;
+.serif_font {
+  font-family: Georgia, serif;
+}
+
+.main_font {
+  .serif_font;
+  font-size:15px;
 }
 
 body {
   margin:0;
-  .main_fonts;
-  background-color:#F9F9F9;
+  font-size:15px;
+  .main_font;
+  background-color:#eee;
 }
 
 a {
@@ -24,8 +28,7 @@ a {
 }
 
 a:hover{
-  color:#fff;
-  background-color:@link_color;
+  text-decoration:underline;
 }
 
 h1, h2, h3, h4, h5, h6, p{
@@ -36,7 +39,7 @@ h1, h2, h3, h4, h5, h6, p{
 }
 
 h1, h2, h3, h4, h5, h6{
-  .header_fonts;
+  .sans_serif_font;
   
   small {
     font-size:.6em;
@@ -70,120 +73,137 @@ pre {
 
 /* Main grid */
 
-@main_width: 800px;
-@sidebar_width: 150px;
-@main_spacing: 10px;
-@real_padding: @main_spacing * 2; /* The padding uses @main_spacing, but is twice as long since it's on both sides of the dom object */
-@content_width: @main_width - @sidebar_width - @real_padding - @main_spacing; /* @main_spacing refers to the spacing between the content block and sidebar block */
+@base_margin: 10px;
+
+.spacing {
+  margin:@base_margin;
+}
 
 #dev_mode_warning {
+  position:fixed;
+  top:0px;
+  left:20px;
   text-align:center;
   background: #390;
   color:#fff;
-  font-size:1.2em;
-  line-height:2em;
+  padding:.5em;
+  padding-top:2em;
+}
+
+#wrapper {
+  margin:0 auto;
+  width:750px;
+}
+
+#header {
+  #main_menu {
+    .sans_serif_font;
+    font-size:.8em;
+    float:right;
+    margin:@base_margin 0;
+    
+    ul {
+      float:left;
+      margin-left:2em;
+      
+      li {
+        float:left;
+        margin-left:.5em;
+        padding-left:.5em;
+        border-left:1px solid #ccc;
+      }
+      
+      li.first {
+        margin-left:0;
+        padding-left:0;
+        border:none;
+      }
+    }
+    
+    ul.first {
+      margin-left:0;
+    }
+  }
 }
 
 #main {
-  margin: 1em auto;
-  width: @main_width + 4px; /* 4 1px borders */
-  overflow:hidden;
-  
-  .sidebar_box, #content {
-    padding: @main_spacing;
-    border:1px solid #ccc;
+  #content {
+    width:600px;
+    float:left;
     background:#fff;
   }
   
-  #sidebar {
-    float: left;
-    margin-left: @main_spacing;
-    font-size:.8em;
-    
-    .sidebar_box {
-      width: @sidebar_width - @real_padding;
-      margin-bottom:@main_spacing;
-      
-      .sidebar_block {
-        margin-bottom:@main_spacing;
-      }
-      
-      h3 {
-        font-size:1em;
-      }
-    }
-    
-    #search_form {
-      input {
-        width:@sidebar_width - 70px;
-      }
-      
-      button {
-        width:40px;
-      }
-    }
+  #content.without_sidebar {
+    width:750px;
   }
   
-  #content {
-    float: left;
-    width: @content_width;
+  #sidebar {
+    width:150px;
+    float:left;
+    .sans_serif_font;
+    font-size:.85em;
     
-    #footer {
-      margin-top:@main_spacing * 2;
-      display:block;
-      font-size:.8em;
-      color:@gray_text;
+    h3 {
+      font-size:1em;
+      font-weight:bold;
+      padding:0 @base_margin;
+      margin:0;
+      margin-top:.5em;
+    }
+    
+    #tabs {
+      li {
+        padding:.3em @base_margin;
+      }
+      
+      li.current {
+        background:#fff;
+      }
     }
   }
 }
 
-/* Lists */
-
-ul.simple{
-  margin:0;
-  padding:0;
-  list-style-type:none;
-}
-
-/* General page stuff */
+/* Page stuff */
 
 #page_meta {
   text-align:right;
   font-size:.8em;
   margin-bottom:.8em;
+  
   span {
     color:@gray_text;
   }
 }
 
-
 .pagelink.void {
-  color: @void_page_color;
+  color: #900;
 }
 
-.pagelink.void:hover {
-  color: #fff;
-  background-color: @void_page_color;
-}
 
-#page_submit_buttons {
-  float:right;
-}
-
-#page_form {
-  input[type=text] {
-    .main_fonts;
+.diff {
+  del {
+    background-color:#F6D5D8;
+    text-decoration:none;
   }
+  
+  ins {
+    text-decoration:none;
+    background-color:#B3FABD;
+  }
+}
+
+.content_age {
+  white-space:pre-wrap;
 }
 
 #page_form_tabs {
   overflow:hidden;
   
   border-bottom:2px solid #999;
-  margin-bottom:@main_spacing;
+  margin-bottom:@base_margin;
   
   .tab {
-    .header_fonts;
+    .sans_serif_font;
     float:left;
     width:100px;
     padding:5px;
@@ -199,6 +219,10 @@ ul.simple{
     cursor: default;
     background-color:#999;
   }
+}
+
+#page_submit_buttons {
+  float:right;
 }
 
 #page_preview{
@@ -219,24 +243,7 @@ ul.simple{
   padding:2em;
 }
 
-.diff {
-  del {
-    background-color:#F6D5D8;
-    text-decoration:none;
-  }
-  
-  ins {
-    text-decoration:none;
-    background-color:#B3FABD;
-  }
-}
-
-.content_age {
-  white-space:pre-wrap;
-}
-
 /* Discussions */
-
 .discussion_entry {
   margin-bottom:1em;
 }
@@ -249,31 +256,6 @@ ul.simple{
 
 .discussion_entry_body {
   padding:.5em 0;
-}
-
-/* Left/right columns */
-
-div.left_column {
-  float:left;
-  width: @content_width / 2 - 5px;
-  margin-right:@main_spacing;
-}
-
-div.right_column {
-  float:left;
-  width: @content_width / 2 - 5px;
-}
-
-/* Grouped revision logs */
-
-#grouped_record_log {
-  .group_header {
-    td {
-      font-weight:bold;
-      text-align:center;
-      background-color:#eee;
-    }
-  }
 }
 
 /* Forms */
@@ -289,7 +271,7 @@ form {
 label {
   display:block;
   font-weight:bold;
-  .header_fonts;
+  .sans_serif_font;
   font-size:.9em;
 }
 
@@ -300,11 +282,12 @@ label.inline {
 textarea {
   margin:0px;
   padding:0px;
-  margin-bottom:@main_spacing;
+  margin-bottom:@base_margin;
   border:1px solid #ccc;
   width:100%;
-  .main_fonts;
+  .main_font;
 }
+
 
 /* Tables */
 
@@ -318,6 +301,16 @@ table {
   }
 }
 
+#grouped_record_log {
+  .group_header {
+    td {
+      font-weight:bold;
+      text-align:center;
+      background-color:#eee;
+    }
+  }
+}
+
 /* Code/codeblocks */
 
 code {
@@ -326,7 +319,50 @@ code {
   padding:0 .3em;
 }
 
+/* Lists */
+
+ul.simple,
+ul.simple li {
+  margin:0;
+  padding:0;
+  list-style-type:none;
+}
+
+/* Flashes */
+
+.flash {
+  border-width:2px;
+  border-style:solid;
+  margin:@base_margin;
+  padding:@base_margin;
+}
+
+#flash_success {
+  border-color:#8CA082;
+  background-color:#ADC59F;
+}
+
+#flash_error {
+  border-color:#653432;
+  background-color:#AC5855;
+}
+
+/* Left/right columns */
+
+div.left_column {
+  float:left;
+  width:50%;
+}
+
+div.right_column {
+  float:left;
+  width: 50%;
+}
+
 /* Utils */
 
-.clear { clear:both; }
+.clear {
+  clear:both;
+}
+
 .attack_of_the_titans { display:none }

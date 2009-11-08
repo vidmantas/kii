@@ -21,6 +21,7 @@ ActionController::Routing::Routes.draw do |map|
       get.new_page "new/:id", :action => "new"
       get.edit_page ":id/edit", :action => "edit"
       get.confirm_destroy_page ":id/confirm_destroy", :action => "confirm_destroy"
+      get.page_content_age ":id/content_age", :action => "content_age"
     end
 
     m.pages "", :action => "create", :conditions => {:method => :post}
@@ -37,7 +38,6 @@ ActionController::Routing::Routes.draw do |map|
         get.revisions "revisions", :action => "index"
         get.revision "revisions/:id", :action => "show"
         get.revision_changes "revisions/:id/changes", :action => "changes"
-        get.revision_content_age "revisions/:id/content_age", :action => "content_age"
         get.confirm_rollback_revision "revisions/:id/confirm_rollback", :action => "confirm_rollback"
       end
       

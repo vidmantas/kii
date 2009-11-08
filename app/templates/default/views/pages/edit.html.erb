@@ -1,4 +1,5 @@
-<% page_title page_link(@page), "Editing" %>
-<%= render :partial => "page_actions" %>
+<% page_title page_link(@page), "Editing" do %>
+<% end %>
 
+<% render :partial => "navigation" %>
 <%= render :partial => "form" %>

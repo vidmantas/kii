@@ -2,7 +2,7 @@
   <%= link_to "New discussion", new_page_discussion_path(@page) %>
 <% end %>
 
-<%= render :partial => "pages/page_actions" %>
+<% render :partial => "pages/navigation" %>
 
 <% grouped_record_log(@discussions, ["Title", "Updated", "Replies"], :updated_at) do |discussion, timestamp| %>
   <td>

@@ -3,7 +3,7 @@
     <div class="sidebar_block">
       <ul class="simple">
         <li><%= datetimestamp(@page.updated_at) %></li>
-      
+
         <li>
           <%= link_to "&laquo;", page_revision_path(@page, @revision.revision_number - 1) unless @revision.first? %>
           Revision <strong>#<%= @revision.revision_number %></strong>
@@ -12,11 +12,11 @@
         <li><small><%= link_to_unless_current "All revisions", page_revisions_path(@page) %></small></li>
       </ul>
     </div>
-    
+
     <% if !@revision.last? %>
       <ul class="simple">
         <li>By <strong><%= author_link(@revision) %></strong></li>
-        
+
         <% if admin? %>
           <li><%= link_to "Rollback", page_confirm_rollback_revision_path(@page, @revision) %></li>
         <% end %>

@@ -77,6 +77,17 @@ class PagesController < ApplicationController
     redirect_to page_path(@page)
   end
   
+  def content_age
+    @page = Page.find_by_permalink!(params[:id])
+    @revision = @page.revisions.current
+    
+    visualizer = Kii::Diff::AgeVisualization.new
+    visualizer.diff = @page.page_content_age_diff.data_as_objects
+    visualizer.create_nodes
+    visualizer.tag_age
+    @nodes = visualizer.nodes
+  end
+  
   private
   
   def used_preview_button?

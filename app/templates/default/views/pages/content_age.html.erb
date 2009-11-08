@@ -1,6 +1,5 @@
-<% page_title page_link(@page), link_to("##{@revision.revision_number}", page_revision_path(@page, @revision)), "Content age" %>
-<%= render :partial => "pages/page_actions" %>
-<%= render :partial => "pages/view_mode" %>
+<% page_title page_link(@page), "Content age" %>
+<%= render :partial => "pages/navigation" %>
 
 <style type="text/css">
   <% @nodes.map(&:age).uniq.reject {|age| age == 0 }.each do |age| %>

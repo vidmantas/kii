@@ -1,10 +1,13 @@
 <% page_title page_link(@page), "Revisions" %>
-<%= render :partial => "pages/page_actions" %>
+<%= render :partial => "pages/navigation" %>
 
 <% grouped_record_log(@revisions, ["#", "Date", "Message", "By", ""]) do |revision, timestamp| %>
   <td><%= link_to "##{revision.revision_number}", page_revision_path(@page, revision) %></td>
   <td><%= timestamp %></td>
   <td><%= revision.message %></td>
   <td><%= author_link(revision) %></td>
-  <td><%= link_to "Changes", page_revision_changes_path(@page, revision) %></td>
+  <td>
+    <%= link_to "Changes", page_revision_changes_path(@page, revision) %>
+    <%= link_to "Rollback", page_confirm_rollback_revision_path(@page, revision) %>
+  </td>
 <% end %>

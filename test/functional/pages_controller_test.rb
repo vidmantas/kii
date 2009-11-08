@@ -234,4 +234,10 @@ class PagesControllerTest < ActionController::TestCase
     assert_response :success
     assert_template "pages/stale"
   end
+  
+  test "content age" do
+    get :content_age, :id => pages(:sandbox).to_param
+    assert_response :success
+    assert_template "pages/content_age"
+  end
 end

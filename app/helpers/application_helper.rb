@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include SidebarHelper
+  
   def render_body(body)
     Kii::Markup.new(body).to_html({
       :page_link => proc {|page, title| page_link(page, title) },
@@ -8,7 +10,7 @@ module ApplicationHelper
 
   def page_title(*titles, &block)
     @page_title = titles.join(" / ")
-    meta = content_tag(:div, block_given? ? capture(&block) : "&nbsp;", :id => "page_meta")
+    meta = content_tag(:div, block_given? ? capture(&block) : "", :id => "page_meta")
     concat(meta)
   end
 
@@ -89,11 +91,11 @@ module ApplicationHelper
     concat(output)
   end
   
-  def polymorphic_discussion_link(discussion)
-    link_to discussion.title, (discussion.page_id ? page_discussion_path(discussion.page, discussion) : discussion_path(discussion))
+  def flashes
+    flash.map {|type, msg| content_tag(:div, msg, :class => "flash", :id => "flash_#{type}")}
   end
   
-  def viewing_revision_in_plain_mode?
-    current_page?(page_revision_path(@page, @revision)) || current_page?(page_path(@page))
+  def polymorphic_discussion_link(discussion)
+    link_to discussion.title, (discussion.page_id ? page_discussion_path(discussion.page, discussion) : discussion_path(discussion))
   end
 end

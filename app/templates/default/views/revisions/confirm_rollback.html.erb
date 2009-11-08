@@ -1,4 +1,12 @@
-<% page_title page_link(@page), link_to("\##{@revision.revision_number}", page_revision_path(@page, @revision)), "Rollback" %>
+<% page_title page_link(@page),
+  link_to("Revisions", page_revisions_path(@page)),
+  link_to("\##{@revision.revision_number}",
+  page_revision_path(@page, @revision)),
+  "Rollback" do %>
+  <%= render :partial => "navigation" %>
+<% end %>
+
+<% render :partial => "pages/navigation" %>
 
 <p>This is a one-way operation that will remove all revisions created after revision #<%= @revision.revision_number %></p>
 
