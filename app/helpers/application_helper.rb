@@ -94,4 +94,8 @@ module ApplicationHelper
   def flashes
     flash.map {|type, msg| content_tag(:div, msg, :class => "flash", :id => "flash_#{type}")}
   end
+  
+  def logo_image
+    Kii::CONFIG[:site_logo] || "logo.png"
+  end
 end

@@ -15,3 +15,6 @@ template: default
 
 # The name of the custom CSS file. Resolves to public/stylesheets.
 # site_css: site.css
+
+# The name of the custom logo. Resolves to public/images
+# site_logo: "site_logo.png"
