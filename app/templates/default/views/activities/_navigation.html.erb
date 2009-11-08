@@ -1,6 +1,7 @@
 <% content_for(:sidebar) do %>
-  <%= tabs([
-    ["All revisions", revisions_activities_path],
-    ["Discussions", discussions_activities_path]
-  ]) %>
+  <ul id="tabs" class="simple">
+    <%= tab "All revisions", revisions_activities_path %>
+    <%= tab "Others revisions", others_revisions_activities_path(:id => current_user.id) if logged_in? %>
+    <%= tab "Discussions", discussions_activities_path %>
+  </ul>
 <% end %>

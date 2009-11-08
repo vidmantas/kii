@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
     m.resources :users
     m.resources :ips, :only => [:show], :requirements => {:id => /.+/} # allowing dots in the :id.
     
-    m.resources :activities, :only => [:index], :collection => {:revisions => :get, :discussions => :get}
+    m.resources :activities, :only => [:index], :collection => {:revisions => :get, :others_revisions => :get, :discussions => :get}
   end
   
   # Can't do map.resources here, since we want /foo, not /pages/foo.

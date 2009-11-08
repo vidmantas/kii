@@ -7,6 +7,11 @@
     <%= javascript_include_tag template_script("jquery") %>
     <%= @content_for_scripts %>
   <% end -%>
+  
+  <% if @rss %>
+    <link rel="alternate" type="application/rss+xml"  title="RSS" href="<%= @rss %>" />
+  <% end %>
+  
   <%= stylesheet_link_tag "screen" %>
   <%= stylesheet_link_tag Kii::CONFIG[:site_css] if Kii::CONFIG[:site_css] %>
   <title><%= strip_tags(@page_title) %> - <%= Kii::CONFIG[:site_name] %></title>

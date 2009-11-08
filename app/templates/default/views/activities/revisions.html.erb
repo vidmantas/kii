@@ -1,12 +1,5 @@
 <% page_title "Revisions activity log" %>
 <% render :partial => "navigation" %>
 
-<p>Showing the 50 latest revisions.</p>
-
-<% grouped_record_log(@revisions, ["#", "Date", "Page", "By", ""]) do |revision, timestamp| %>
-  <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
-  <td><%= timestamp %></td>
-  <td><%= page_link(revision.page) %></td>
-  <td><%= author_link(revision) %></td>
-  <td><%= link_to "Changes", page_revision_changes_path(revision.page, revision) %></td>
-<% end %>
+<p>Last 50 revisions.</p>
+<%= render :partial => "revisions" %>

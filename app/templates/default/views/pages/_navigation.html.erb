@@ -1,9 +1,9 @@
 <% content_for(:sidebar) do %>
-  <%= tabs([
-    ["Page", page_path(@page)],
-    ["Edit", edit_page_path(@page)],
-    ["Discussions", page_discussions_path(@page), (controller.controller_name == "discussions")],
-    ["Content age", page_content_age_path(@page)],
-    ["Revisions", page_revisions_path(@page), (controller.controller_name == "revisions")]
-  ]) %>
+  <ul id="tabs" class="simple">
+    <%= tab "Page", page_path(@page) %>
+    <%= tab "Edit", edit_page_path(@page) %>
+    <%= tab "Discussions", page_discussions_path(@page), controller.controller_name == "discussions" %>
+    <%= tab "Content age", page_content_age_path(@page) %>
+    <%= tab "Revisions", page_revisions_path(@page), controller.controller_name == "revisions" %>
+  </ul>
 <% end %>
