@@ -2,9 +2,8 @@ module Kii
   class PageLinkPreprocessor
     PAGE_LINK_REGEXP = /\[\[(.*?)\]\]/
     
-    def initialize(markup, page_link_proc = nil)
-      @markup = markup
-      @page_link_proc = page_link_proc
+    def initialize(markup, helper)
+      @markup, @helper = markup, helper
       
       page_link_permalinks = @markup.scan(PAGE_LINK_REGEXP).map {|p| p[0].split("|")[0].to_permalink }
       page_link_permalinks += page_link_permalinks.map {|permalink| permalink.upcase_first_letter } # Look for capitalized as well
@@ -22,7 +21,7 @@ module Kii
           @linked_pages.detect {|lp| lp.permalink == permalink.to_permalink.upcase_first_letter } ||
           Page.new(:title => title, :deleted => true, :permalink => permalink)
         
-        @page_link_proc ? @page_link_proc.call(page, title) : page.permalink
+        @helper.page_link(page, title)
       }
     end
   end
