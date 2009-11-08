@@ -13,6 +13,9 @@
   <% end %>
   
   <%= stylesheet_link_tag "screen" %>
+  <!--[if lt IE 8]>
+  <%= stylesheet_link_tag "ie7_and_below" %>
+  <![endif]-->
   <%= stylesheet_link_tag Kii::CONFIG[:site_css] if Kii::CONFIG[:site_css] %>
   <title><%= strip_tags(@page_title) %> - <%= Kii::CONFIG[:site_name] %></title>
 </head>
