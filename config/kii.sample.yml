@@ -13,6 +13,10 @@ site_name: Go, Kii!
 # The name of the template, matching a directory name in app/templates.
 template: default
 
+# Choose the markup language you want to use.
+# Available: default, redcloth
+markup: default
+
 # The name of the custom CSS file. Resolves to public/stylesheets.
 # site_css: site.css
 
