@@ -24,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
         get.new_page "new/:id", :action => "new"
         get.edit_page ":id/edit", :action => "edit"
         get.confirm_destroy_page ":id/confirm_destroy", :action => "confirm_destroy"
-        get.page_content_age ":id/content_age", :action => "content_age"
+        get.content_age_page ":id/content_age", :action => "content_age"
       end
       
       p.restore_page ":id", :action => "restore", :conditions => {:method => :post}
@@ -33,7 +33,6 @@ ActionController::Routing::Routes.draw do |map|
     m.pages "", :action => "create", :conditions => {:method => :post}
     m.connect ":id", :action => "update", :conditions => {:method => :put}
     m.connect ":id", :action => "destroy", :conditions => {:method => :delete}
-
   end
   
   map.with_options :path_prefix => "_/:page_id", :name_prefix => "page_" do |page|
