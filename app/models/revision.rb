@@ -16,7 +16,7 @@ class Revision < ActiveRecord::Base
   end
   
   def to_param
-    revision_number
+    revision_number.to_s
   end
   
   def first?
