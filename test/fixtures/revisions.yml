@@ -3,6 +3,7 @@ home_a:
   body: Hello, world.
   remote_ip: 0.0.0.0
   referrer: /
+  revision_number: 1
   
 sandbox_a:
   page: sandbox
