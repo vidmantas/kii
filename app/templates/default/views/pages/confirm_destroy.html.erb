@@ -1,6 +1,6 @@
 <% page_title page_link(@page), "Deleting" %>
 <%= render :partial => "navigation" %>
 
-<p>By clicking the button below, you destroy this page. The most recent revision of the page is stored, but all the history before that is removed in a one way operation.</p>
+<p>Will be restorable, but all revisions prior to the current revision is removed.</p>
 
 <%= button_to "Destroy the page", page_path(@page), :method => :delete %>
