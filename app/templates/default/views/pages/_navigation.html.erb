@@ -2,7 +2,7 @@
   <ul id="tabs" class="simple">
     <%= tab "Page", page_path(@page) %>
     <%= tab "Edit", edit_page_path(@page) %>
-    <%= tab "Delete", confirm_destroy_page_path(@page) if admin? %>
+    <%= tab "Delete", confirm_destroy_page_path(@page) if admin? && !@page.home_page? %>
     <%= tab "Discussions", page_discussions_path(@page), controller.controller_name == "discussions" %>
     <%= tab "Content age", page_content_age_path(@page) %>
     <%= tab "Revisions", page_revisions_path(@page), controller.controller_name == "revisions" %>

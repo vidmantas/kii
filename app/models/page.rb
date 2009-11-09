@@ -46,6 +46,8 @@ class Page < ActiveRecord::Base
   end
   
   def soft_destroy
+    return if home_page?
+    
     ActiveRecord::Base.transaction do
       # Remove all revisions, create a copy of the most recent revision and
       # store it as revision 1
@@ -65,6 +67,10 @@ class Page < ActiveRecord::Base
   
   def rollback_to(revision)
     Revision.delete_all(["revision_number > ? AND page_id = ?", revision.revision_number, self.id])
+  end
+  
+  def home_page?
+    self.title == Kii::CONFIG[:home_page]
   end
   
   private
