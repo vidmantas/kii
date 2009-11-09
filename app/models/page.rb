@@ -77,7 +77,7 @@ class Page < ActiveRecord::Base
   end
   
   def home_page?
-    self.title == Kii::CONFIG[:home_page]
+    self.permalink == Kii::CONFIG[:home_page]
   end
   
   private

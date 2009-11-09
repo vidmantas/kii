@@ -81,7 +81,7 @@ class PageTest < ActiveSupport::TestCase
   
   
   test "soft destroy home page" do
-    home_page = Page.find_by_title!(Kii::CONFIG[:home_page])
+    home_page = Page.find_by_permalink!(Kii::CONFIG[:home_page])
     home_page.soft_destroy
     home_page.reload
     assert !home_page.deleted?
