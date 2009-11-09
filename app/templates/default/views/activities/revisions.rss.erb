@@ -5,7 +5,7 @@
   <% @revisions.each do |revision| %>
     <item>
       <title><%= revision.page.title %> #<%= revision.revision_number %></title>
-      <link><%= page_revision_changes_url(revision.page, revision) %></link>
+      <link><%= changes_page_revision_url(revision.page, revision) %></link>
       <pubDate><%= revision.created_at.xmlschema %></pubDate>
     </item>
   <% end %>
