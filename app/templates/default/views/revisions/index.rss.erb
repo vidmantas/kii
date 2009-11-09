@@ -1,0 +1,12 @@
+<?xml version="1.0" ?> 
+<rss version="2.0">
+<channel>
+  <title><%= Kii::CONFIG[:site_name] %> revisions for <%= @page.title %></title>
+  <% @revisions.each do |revision| %>
+    <item>
+      <title><%= @page.title %> #<%= revision.revision_number %></title>
+      <link><%= changes_page_revision_url(@page, revision) %></link>
+      <pubDate><%= revision.created_at.xmlschema %></pubDate>
+    </item>
+  <% end %>
+</channel>

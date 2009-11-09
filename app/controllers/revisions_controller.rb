@@ -5,6 +5,8 @@ class RevisionsController < ApplicationController
     @page = Page.find_by_permalink!(params[:page_id])
     @revisions = @page.revisions.ordered.with_user
     @revision = @revisions[0]
+    
+    @rss = url_for(:format => "rss")
   end
   
   def show

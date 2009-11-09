@@ -6,6 +6,11 @@ class RevisionsControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  test "index rss" do
+    get :index, :page_id => pages(:sandbox).to_param, :format => "rss"
+    assert_response :success
+  end
+  
   test "show" do
     get :show, :page_id => pages(:sandbox).to_param, :id => revisions(:sandbox_b).to_param
     assert_response :success
