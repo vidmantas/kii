@@ -94,6 +94,24 @@ class PageTest < ActiveSupport::TestCase
     end
   end
   
+  test "restoring" do
+    page = pages(:sandbox)
+    page.soft_destroy
+    page.reload
+    
+    page.restore
+    page.reload
+    assert !page.deleted?
+    assert_equal 1, page.revisions.count
+  end
+  
+  test "restoring undeleted page" do
+    page = pages(:sandbox)
+    
+    page.expects(:update_without_callbacks).never
+    page.restore
+  end
+  
   test "updating content age diff" do
     page = create_page
     assert_equal ["ai"], page.page_content_age_diff.data_as_objects.map(&:text)

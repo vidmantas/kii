@@ -174,6 +174,16 @@ class PagesControllerTest < ActionController::TestCase
     end
   end
   
+  test "restore" do
+    pages(:sandbox).soft_destroy
+    assert pages(:sandbox).deleted?
+    
+    post :restore, :id => pages(:sandbox).to_param
+    assert_redirected_to page_path(pages(:sandbox))
+    pages(:sandbox).reload
+    assert !pages(:sandbox).deleted?
+  end
+  
   test "confirm destroy" do
     UserSession.create(users(:admin))
     

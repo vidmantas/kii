@@ -1,3 +1,6 @@
 <% page_title @page.title %>
 
 <p>This page was deleted <%= datetimestamp(@page.updated_at) %>.</p>
+
+<%= button_to "Restore", restore_page_path(@page) %>
+<%= button_to "Create", new_page_path(@page), :method => :get %>

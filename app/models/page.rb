@@ -65,6 +65,13 @@ class Page < ActiveRecord::Base
     end
   end
   
+  def restore
+    return unless deleted?
+    
+    self.deleted = false
+    self.send(:update_without_callbacks)
+  end
+  
   def rollback_to(revision)
     Revision.delete_all(["revision_number > ? AND page_id = ?", revision.revision_number, self.id])
   end

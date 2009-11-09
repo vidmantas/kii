@@ -66,6 +66,12 @@ class PagesController < ApplicationController
     end
   end
   
+  def restore
+    @page = Page.find_by_permalink!(params[:id])
+    @page.restore
+    redirect_to page_path(@page)
+  end
+  
   def confirm_destroy
     @page = Page.find_by_permalink!(params[:id])
     @revision = @page.revisions.current
