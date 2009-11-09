@@ -40,7 +40,10 @@ module ApplicationHelper
   end
   
   def grouped_record_log(records, columns, timestamp_column = :created_at, &block)
-    return if records.empty?
+    if records.empty?
+      concat content_tag(:p, "No entries", :class => "empty_grouped_record_log")
+      return
+    end
     
     first = records.first[timestamp_column]
     last = records.last[timestamp_column]
