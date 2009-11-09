@@ -1,40 +1,27 @@
-<% page_title "User &ldquo;#{h @user.login}&rdquo;" do %>
-  Member since <%= datestamp(@user.created_at) %>
+<% page_title h(@user.login) do %>
+  <% if @user == current_user %>
+    This is you!
+    <%= link_to "Edit profile", edit_profile_path %>
+  <% end %>
 <% end %>
+
+<% render :partial => "navigation" %>
+
+<p class="page_summary">Registered user</p>
 
 <% unless @user.profile_text.blank? %>
-  <div id="user_profile_text">
+  <div class="box_thingie">
     <%= render_body(@user.profile_text) %>
   </div>
-  <hr />
 <% end %>
 
-<div class="left_column">  
-  <h3>Created pages</h3>
+<dl>
+  <dt>Member since</dt>
+  <dd><%= datestamp(@user.created_at) %></dd>
   
-  <ul>
-    <% @created_pages.each do |page| %>
-      <li><%= page_link(page) %></li>
-    <% end %>
-  </ul>
-</div>
-
-<div class="right_column">
-  <h3>Talked in discussions</h3>
-  <ul>
-    <% @discussions.each do |discussion| %>
-      <li><%= link_to discussion.title, page_discussion_path(discussion.page, discussion) %></li>
-    <% end %>
-  </ul>
-</div>
-
-<div class="clear"></div>
-
-<h2>20 most recent revisions</h2>
-
-<% grouped_record_log(@revisions, ["#", "Date", "Page", ""]) do |revision, timestamp| %>
-  <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
-  <td><%= timestamp %></td>
-  <td><%= page_link(revision.page) %></td>
-  <td><%= link_to "Changes", changes_page_revision_path(revision.page, revision) %></td>
-<% end %>
+  <dt>Created pages</dt>
+  <dd><%= @created_pages_count %></dd>
+  
+  <dt>Revisions</dt>
+  <dd><%= @created_revisions_count %></dd>
+</dl>

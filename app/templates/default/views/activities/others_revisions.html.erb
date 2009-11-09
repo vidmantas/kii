@@ -1,5 +1,6 @@
 <% page_title "Others revisions activity log" %>
 <% render :partial => "navigation" %>
 
-<p>Last 50 revisions, excluding your own.</p>
-<%= render :partial => "revisions" %>
+<p class="page_summary">Last 50 revisions, excluding your own.</p>
+
+<%= render :partial => "revisions/list" %>

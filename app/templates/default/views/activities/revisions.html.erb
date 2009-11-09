@@ -1,5 +1,6 @@
 <% page_title "Revisions activity log" %>
 <% render :partial => "navigation" %>
 
-<p>Last 50 revisions.</p>
-<%= render :partial => "revisions" %>
+<p class="page_summary">Last 50 revisions.</p>
+
+<%= render :partial => "revisions/list" %>

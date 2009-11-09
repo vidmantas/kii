@@ -1,4 +1,6 @@
-<% page_title "Editing profile" %>
+<% page_title "Editing profile" do %>
+  <%= link_to "Back to public profile", user_path(@user) %>
+<% end %>
 
 <% form_for(@user, :url => profile_path) do |f| %>
   <p>

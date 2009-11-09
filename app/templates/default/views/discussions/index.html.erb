@@ -3,15 +3,4 @@
 <% end %>
 
 <% render :partial => "pages/navigation" %>
-
-<% grouped_record_log(@discussions, ["Title", "Updated", "Replies"], :updated_at) do |discussion, timestamp| %>
-  <td>
-    <%= link_to discussion.title, page_discussion_path(discussion.page, discussion) %>
-  </td>
-  <td>
-    <%= timestamp %>
-    by
-    <%= author_link(discussion.latest_discussion_entry) %>
-  </td>
-  <td><%= discussion.replies_count %></td>
-<% end %>
+<%= render :partial => "list" %>

@@ -1,0 +1,6 @@
+<% page_title link_to(h(@user.login), user_path(@user)), "Discussions" %>
+<% render :partial => "navigation" %>
+
+<p>Discussions this user has participated in.</p>
+
+<%= render :partial => "discussions/list" %>

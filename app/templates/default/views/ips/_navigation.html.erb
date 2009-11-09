@@ -1,0 +1,7 @@
+<% content_for(:sidebar) do %>
+  <ul id="tabs" class="simple">
+    <%= tab "Summary", ip_path(@ip) %>
+    <%= tab "Revisions", revisions_ip_path(@ip) %>
+    <%= tab "Discussions", discussions_ip_path(@ip) %>
+  </ul>
+<% end %>

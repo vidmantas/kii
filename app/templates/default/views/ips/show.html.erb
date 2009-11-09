@@ -1,29 +1,4 @@
-<% page_title "IP log for #{@ip}" %>
+<% page_title h(@ip) %>
+<% render :partial => "navigation" %>
 
-<div class="left_column">  
-  <h3>Created pages</h3>
-  
-  <ul>
-    <% @created_pages.each do |page| %>
-      <li><%= page_link(page) %></li>
-    <% end %>
-  </ul>
-</div>
-
-<div class="right_column">
-  <h3>Talked in discussions</h3>
-  <ul>
-    <% @discussions.each do |discussion| %>
-      <li><%= link_to discussion.title, page_discussion_path(discussion.page, discussion) %></li>
-    <% end %>
-  </ul>
-</div>
-
-<div class="clear"></div>
-
-<% grouped_record_log(@revisions, ["#", "Date", "Page", ""]) do |revision, timestamp| %>
-  <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
-  <td><%= timestamp %></td>
-  <td><%= page_link(revision.page) %></td>
-  <td><%= link_to "Changes", changes_page_revision_path(revision.page, revision) %></td>
-<% end %>
+<p class="page_summary">Unregistered user</p>

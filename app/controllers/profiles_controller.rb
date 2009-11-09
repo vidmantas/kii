@@ -8,6 +8,7 @@ class ProfilesController < ApplicationController
   def update
     @user = current_user
     @user.update_attributes!(params[:user])
+    flash[:success] = "Profile successfully updated"
     redirect_to edit_profile_path
   end
 end

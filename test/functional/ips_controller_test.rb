@@ -1,10 +1,24 @@
 require 'test_helper'
 
 class IpsControllerTest < ActionController::TestCase
+  def setup
+    @ip = "0.0.0.0"
+  end
+  
   test "show" do
-    get :show, :id => "0.0.0.0"
+    get :show, :id => @ip
     assert_response :success
-    assert !assigns(:revisions).blank?
-    assert_equal Revision.count(:conditions => {:remote_ip => "0.0.0.0", :user_id => nil}), assigns(:revisions).length
+  end
+  
+  test "revisions" do
+    get :revisions, :id => @ip
+    assert_response :success
+    assert !assigns(:revisions).blank? #testing fixtures ftl
+    assert_equal Revision.count(:conditions => {:remote_ip => @ip, :user_id => nil}), assigns(:revisions).length
+  end
+  
+  test "discussions" do
+    get :discussions, :id => @ip
+    assert_response :success
   end
 end

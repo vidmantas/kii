@@ -288,6 +288,47 @@ pre {
   padding:.5em 0;
 }
 
+/* Various elements */
+
+p.page_summary {
+  font-weight:bold;
+}
+
+.box_thingie {
+  border:1px solid #ccc;
+  padding:@base_margin;
+  background:#efefef;
+}
+
+/* Definition lists */
+
+#content dl {
+  dt, dd {
+    margin:0;
+    padding:0;
+    display:block;
+  }
+  
+  dt {
+    float:left;
+    width:150px;
+    font-weight:bold;
+    clear:left;
+    text-align:right;
+    padding-right:@base_margin;
+    .sans_serif_font;
+  }
+  
+  dd {
+    float:left;
+    width:400px;
+  }
+}
+
+#content.without_sidebar {
+  
+}
+
 /* Forms */
 
 form {
