@@ -1,5 +1,5 @@
 <%= link_to_unless_current "Plain", page_revision_path(@page, @revision) %>
 |
-<%= link_to_unless_current "Changes", page_revision_changes_path(@page, @revision) %>
+<%= link_to_unless_current "Changes", changes_page_revision_path(@page, @revision) %>
 |
-<%= link_to_unless_current "Rollback", page_confirm_rollback_revision_path(@page, @revision) %>
+<%= link_to_unless_current "Rollback", confirm_rollback_page_revision_path(@page, @revision) %>

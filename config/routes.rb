@@ -1,3 +1,5 @@
+# This file is a freaking mess because of pages being on / instead of the default /pages.
+# Will fix when 3.0 ships, when the routing code in Rails stops being poop.
 ActionController::Routing::Routes.draw do |map|
   map.root :controller => "pages", :action => "to_homepage", :conditions => {:method => :get}
   
@@ -30,33 +32,11 @@ ActionController::Routing::Routes.draw do |map|
 
   end
   
-  # Since we don't have a map.resources for pages (see above), we route page
-  # sub controllers manually as well.
   map.with_options :path_prefix => "_/:page_id", :name_prefix => "page_" do |page|
-    page.with_options :controller => "revisions" do |r|
-      r.with_options :conditions => {:method => :get} do |get|
-        get.revisions "revisions", :action => "index"
-        get.revision "revisions/:id", :action => "show"
-        get.revision_changes "revisions/:id/changes", :action => "changes"
-        get.confirm_rollback_revision "revisions/:id/confirm_rollback", :action => "confirm_rollback"
-      end
-      
-      r.rollback_revision "revisions/:id/rollback", :action => "rollback", :conditions => {:method => :post}
-    end
+    page.resources :revisions, :member => {:changes => :get, :confirm_rollback => :get, :rollback => :post}, :only => [:index, :show]
     
-    page.with_options :controller => "discussions" do |d|
-      d.with_options :conditions => {:method => :get} do |get|
-        get.discussions "discussions", :action => "index"
-        get.discussion "discussions/new", :action => "new", :name_prefix => "new_page_"
-        get.discussion "discussions/:id", :action => "show"
-      end
-      
-      d.connect "discussions", :action => "create", :conditions => {:method => :post}
-      d.connect "discussions/:id", :action => "update", :conditions => {:method => :put}
-    end
-    
-    page.with_options :controller => "discussion_entries" do |d|
-      d.discussion_discussion_entries "discussions/:id/discussion_entries", :conditions => {:method => :post}
+    page.resources :discussions do |discussion|
+      discussion.resources :discussion_entries, :only => [:create]
     end
   end
 

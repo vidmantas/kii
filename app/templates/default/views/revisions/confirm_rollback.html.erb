@@ -10,4 +10,4 @@
 
 <p>This is a one-way operation that will remove all revisions created after revision #<%= @revision.revision_number %></p>
 
-<%= button_to "Rollback!", page_rollback_revision_path(@page, @revision), :method => :post %>
+<%= button_to "Rollback!", rollback_page_revision_path(@page, @revision), :method => :post %>

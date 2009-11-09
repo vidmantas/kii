@@ -7,7 +7,7 @@
   <td><%= revision.message %></td>
   <td><%= author_link(revision) %></td>
   <td>
-    <%= link_to "Changes", page_revision_changes_path(@page, revision) %>
-    <%= link_to "Rollback", page_confirm_rollback_revision_path(@page, revision) %>
+    <%= link_to "Changes", changes_page_revision_path(@page.to_param, revision) %>
+    <%= link_to "Rollback", confirm_rollback_page_revision_path(@page, revision) %>
   </td>
 <% end %>

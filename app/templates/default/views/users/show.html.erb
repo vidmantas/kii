@@ -36,5 +36,5 @@
   <td><%= link_to "##{revision.revision_number}", page_revision_path(revision.page, revision) %></td>
   <td><%= timestamp %></td>
   <td><%= page_link(revision.page) %></td>
-  <td><%= link_to "Changes", page_revision_changes_path(revision.page, revision) %></td>
+  <td><%= link_to "Changes", changes_page_revision_path(revision.page, revision) %></td>
 <% end %>
