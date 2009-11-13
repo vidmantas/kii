@@ -1,7 +1,7 @@
 <% content_for(:sidebar) do %>
   <ul id="tabs" class="simple">
-    <%= tab "Page", page_path(@page) %>
-    <%= tab "Edit", edit_page_path(@page) %>
+    <%= tab "Page", page_path(@page), controller.action_name == "show" %>
+    <%= tab "Edit", edit_page_path(@page), current_page?(edit_page_path(@page)) || controller.action_name == "update" %>
     <%= tab "Delete", confirm_destroy_page_path(@page) if admin? && !@page.home_page? %>
     <%= tab "Discussions", page_discussions_path(@page), controller.controller_name == "discussions" %>
     <%= tab "Content age", content_age_page_path(@page) %>

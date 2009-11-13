@@ -17,6 +17,7 @@
 
   <div id="page_fields">
     <%= f.hidden_field :title %>
+    <%= f.hidden_field :lock_version %>
 
     <% f.fields_for "revision_attributes", @revision do |r| %>
       <%= r.text_area :body %>

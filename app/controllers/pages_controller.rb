@@ -130,11 +130,11 @@ class PagesController < ApplicationController
   end
   
   def handle_stale_page
+    @page.lock_version = Page.find(@page.id).lock_version
     @revision = Revision.new(:body => params[:page][:revision_attributes][:body])
-    @previous_revision = @page.revisions.find(@page.current_revision_id)
     @current_revision = @page.revisions.current
+    @previous_revision = @page.revisions.find_by_revision_number(@current_revision.revision_number - 1)
     
-    @page.current_revision_id = @page.revisions.current.id
     render :action => "stale"
   end
 end

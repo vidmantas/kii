@@ -258,6 +258,7 @@ Let's start with a [[home|Existing page]]. Now for a page that [[does not exist]
     3.times { Factory(:revision, :page => page) }
     
     post :update, :id => page.to_param, :page => {
+      :lock_version => 0,
       :revision_attributes => {:body => "A new body"}
     }
     
