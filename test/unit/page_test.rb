@@ -21,7 +21,6 @@ class PageTest < ActiveSupport::TestCase
     assert_equal 2, page.revisions.last.revision_number
     
     page.revision_attributes = {:body => "updated, again!", :remote_ip => "0.0.0.0", :referrer => "/"}
-    page.current_revision_id = page.revisions.last.id
     page.save
     assert_equal 3, page.revisions.last.revision_number
   end

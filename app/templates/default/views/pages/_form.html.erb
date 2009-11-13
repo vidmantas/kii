@@ -17,7 +17,6 @@
 
   <div id="page_fields">
     <%= f.hidden_field :title %>
-    <%= f.hidden_field :current_revision_id unless f.object.new_record? %>
 
     <% f.fields_for "revision_attributes", @revision do |r| %>
       <%= r.text_area :body %>
