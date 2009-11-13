@@ -19,14 +19,6 @@ class Revision < ActiveRecord::Base
     revision_number.to_s
   end
   
-  def first?
-    @_first ||= revision_number == 1
-  end
-  
-  def last?
-    @_last ||= revision_number == current.revision_number
-  end
-  
   private
   
   def increment_revision_number
