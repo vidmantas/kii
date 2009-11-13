@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   def setup
-    @user = users(:admin)
+    @user = Factory(:user)
   end
   
   test "visibility of profile text" do

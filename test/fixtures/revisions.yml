@@ -1,67 +1,6 @@
-home_a:
+home:
   page: home
   body: Hello, world.
   remote_ip: 0.0.0.0
   referrer: /
   revision_number: 1
-  
-sandbox_a:
-  page: sandbox
-  body: This is the sandbox.
-  revision_number: 1
-  remote_ip: 0.0.0.0
-  referrer: /
-  created_at: <%= 3.days.ago.to_s(:db) %>
-
-sandbox_b:
-  page: sandbox
-  body: This is the updated sandbox.
-  revision_number: 2
-  remote_ip: 0.0.0.0
-  referrer: /
-  created_at: <%= 2.days.ago.to_s(:db) %>
-  
-sandbox_c:
-  page: sandbox
-  body: One last update.
-  revision_number: 3
-  remote_ip: 0.0.0.0
-  referrer: /
-  created_at: <%= 1.day.ago.to_s(:db) %>
-  
-sandbox_d:
-  page: sandbox
-  body: Not the last one after all
-  revision_number: 4
-  remote_ip: 0.0.0.0
-  referrer: /
-  created_at: <%= 2.hours.ago.to_s(:db) %>
-  
-bloated_a:
-  page: bloated
-  remote_ip: 0.0.0.0
-  referrer: /
-  user: admin
-  revision_number: 1
-  body: |
-    This page has a lot of stuff in it. Its purpose is to cause a test to fail if there are any errors in `Kii::Markup`.
-    
-    Let's start with a [[home|Existing page]]. Now for a page that [[does not exist]].
-    
-    [[Sandbox]] and [[sandbox]].
-    
-    [[iPhone]], [[IPhone]] and [[IPHONE]].
-    
-iphone_a:
-  page: iphone
-  body: iPhone ftw.
-  remote_ip: 0.0.0.0
-  revision_number: 1
-  referrer: /
-  
-IPHONE_a:
-  page: IPHONE
-  body: What is this?
-  remote_ip: 0.0.0.0
-  revision_number: 1
-  referrer: /

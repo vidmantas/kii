@@ -1,6 +1,0 @@
-admin:
-  login: admin
-  admin: true
-  password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("12345" + salt) %>
-  persistence_token: <%= Authlogic::Random.hex_token %>

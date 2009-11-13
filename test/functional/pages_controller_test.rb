@@ -4,6 +4,7 @@ class PagesControllerTest < ActionController::TestCase
   def setup
     Kii::CONFIG[:public_write] = true
     activate_authlogic
+    @page = Factory(:page)
   end
   
   test "to_homepage" do
@@ -17,7 +18,7 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "showing existing page" do
-    get :show, :id => pages(:sandbox).to_param
+    get :show, :id => @page.to_param
     assert_response :success
     assert_template "pages/show"
   end
@@ -40,8 +41,8 @@ class PagesControllerTest < ActionController::TestCase
   
   
   test "showing deleted page" do
-    pages(:sandbox).soft_destroy
-    get :show, :id => pages(:sandbox).to_param
+    @page.soft_destroy
+    get :show, :id => @page.to_param
     assert_response :success
     assert_template "pages/deleted"
   end
@@ -70,7 +71,8 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "successful create when logged in" do
-    UserSession.create(users(:admin))
+    @user = Factory(:user, :admin => true)
+    UserSession.create(@user)
     
     assert_difference("Page.count") do
       post :create, :page => {
@@ -79,7 +81,7 @@ class PagesControllerTest < ActionController::TestCase
       }
     end
     
-    assert_equal users(:admin), assigns(:page).revisions.current.user
+    assert_equal @user, assigns(:page).revisions.current.user
   end
   
   test "preview on create" do
@@ -112,9 +114,9 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "edit" do
-    get :edit, :id => pages(:sandbox).to_param
+    get :edit, :id => @page.to_param
     assert_response :success
-    assert_equal pages(:sandbox).revisions.current.body, assigns(:revision).body
+    assert_equal @page.revisions.current.body, assigns(:revision).body
     assert assigns(:revision).message.blank?
   end
   
@@ -122,7 +124,7 @@ class PagesControllerTest < ActionController::TestCase
     ActionController::TestRequest.any_instance.expects(:remote_ip).returns("6.6.6.6").at_least_once
     ActionController::TestRequest.any_instance.expects(:referrer).returns("/foo").at_least_once
     
-    post :update, :id => pages(:sandbox).to_param, :page => {
+    post :update, :id => @page.to_param, :page => {
       :revision_attributes => {:body => "A new body"}
     }
     
@@ -132,19 +134,20 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "successful update when logged in" do
-    UserSession.create(users(:admin))
+    @user = Factory(:user, :admin => true)
+    UserSession.create(@user)
     
-    post :update, :id => pages(:sandbox).to_param, :page => {
+    post :update, :id => @page.to_param, :page => {
       :revision_attributes => {:body => "A new body"}
     }
     
-    assert_equal users(:admin), assigns(:page).revisions.current.user
+    assert_equal @user, assigns(:page).revisions.current.user
   end
   
   test "preview on update" do
     PagesController.any_instance.expects(:used_preview_button?).returns(true)
     
-    post :update, :id => pages(:sandbox).to_param, :page => {
+    post :update, :id => @page.to_param, :page => {
       :revision_attributes => {:body => "A new body"}
     }
     
@@ -156,7 +159,7 @@ class PagesControllerTest < ActionController::TestCase
   test "ajax preview on update" do
     PagesController.any_instance.expects(:used_preview_button?).returns(true)
     
-    xhr :put, :update, :id => pages(:sandbox).to_param, :page => {
+    xhr :put, :update, :id => @page.to_param, :page => {
       :revision_attributes => {:body => "A new body"}
     }
     
@@ -166,36 +169,36 @@ class PagesControllerTest < ActionController::TestCase
   
   test "updating with no changes" do
     assert_no_difference("Revision.count") do
-      post :update, :id => pages(:sandbox).to_param, :page => {
-        :revision_attributes => {:body => pages(:sandbox).revisions.current.body}
+      post :update, :id => @page.to_param, :page => {
+        :revision_attributes => {:body => @page.revisions.current.body}
       }
       
-      assert_redirected_to page_path(pages(:sandbox))
+      assert_redirected_to page_path(@page)
     end
   end
   
   test "restore" do
-    pages(:sandbox).soft_destroy
-    assert pages(:sandbox).deleted?
+    @page.soft_destroy
+    assert @page.deleted?
     
-    post :restore, :id => pages(:sandbox).to_param
-    assert_redirected_to page_path(pages(:sandbox))
-    pages(:sandbox).reload
-    assert !pages(:sandbox).deleted?
+    post :restore, :id => @page.to_param
+    assert_redirected_to page_path(@page)
+    @page.reload
+    assert !@page.deleted?
   end
   
   test "confirm destroy" do
-    UserSession.create(users(:admin))
+    UserSession.create(Factory(:user, :admin => true))
     
-    get :confirm_destroy, :id => pages(:sandbox).to_param
+    get :confirm_destroy, :id => @page.to_param
     assert_response :success
   end
   
   test "destroying" do
-    UserSession.create(users(:admin))
-    delete :destroy, :id => pages(:sandbox).to_param
-    assert_redirected_to page_path(pages(:sandbox))
-    assert pages(:sandbox).reload.deleted?
+    UserSession.create(Factory(:user, :admin => true))
+    delete :destroy, :id => @page.to_param
+    assert_redirected_to page_path(@page)
+    assert @page.reload.deleted?
   end
   
   test "pretty permalinks" do
@@ -207,7 +210,7 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "redirect to upcased version if downcased version does not exist" do
-    get :show, :id => pages(:iphone).to_param
+    get :show, :id => Factory(:page, :title => "iPhone").to_param
     assert_response :success, "Upcased artile does not exist, so no redirect here."
     
     get :show, :id => pages(:home).to_param.downcase
@@ -222,7 +225,21 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "a page full of stuff" do
-    get :show, :id => pages(:bloated).to_param
+    page_contents = <<-EOF
+This page has a lot of stuff in it. Its purpose is to cause a test to fail if there are any errors in `Kii::Markup`.
+
+Let's start with a [[home|Existing page]]. Now for a page that [[does not exist]].
+
+[[Sandbox]] and [[sandbox]].
+
+[[iPhone]], [[IPhone]] and [[IPHONE]].
+    EOF
+    
+    Factory(:page, :title => "Sandbox")
+    Factory(:page, :title => "iPhone")
+    Factory(:page, :title => "IPHONE")
+    
+    get :show, :id => Factory(:page, :title => "Bloated", :revision_attributes => {:body => page_contents}).to_param
     assert_response :success
     
     assert_select "a.pagelink.exists", "Existing page"
@@ -236,8 +253,12 @@ class PagesControllerTest < ActionController::TestCase
   end
 
   test "stale edits" do
-    post :update, :id => pages(:sandbox).to_param, :page => {
-      :current_revision_id => revisions(:sandbox_a).id,
+    page = Factory(:page, :title => "Mr. Stale")
+    revision = Factory(:revision, :page => page)
+    3.times { Factory(:revision, :page => page) }
+    
+    post :update, :id => page.to_param, :page => {
+      :current_revision_id => revision.id,
       :revision_attributes => {:body => "A new body"}
     }
     
@@ -246,7 +267,7 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "content age" do
-    get :content_age, :id => pages(:sandbox).to_param
+    get :content_age, :id => @page.to_param
     assert_response :success
     assert_template "pages/content_age"
   end

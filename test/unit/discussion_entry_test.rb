@@ -4,7 +4,7 @@ class DiscussionEntryTest < ActiveSupport::TestCase
   test "caching the revision number" do
     # TODO: Make this a sensible test.
     
-    page = pages(:sandbox)
+    page = Factory(:page)
     discussion = page.discussions.new(:title => "That", :discussion_entry_attributes => {:body => "Well, hello there.", :remote_ip => "0.0.0.0", :referrer => "/"})
     assert discussion.save
     assert_equal page.revisions.current.revision_number, discussion.discussion_entries.last.at_revision

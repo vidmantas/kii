@@ -11,9 +11,11 @@ class IpsControllerTest < ActionController::TestCase
   end
   
   test "revisions" do
+    @page = Factory(:page, :revision_attributes => {:remote_ip => @ip})
+    2.times { Factory(:revision, :remote_ip => @ip, :page => @page) }
+    
     get :revisions, :id => @ip
     assert_response :success
-    assert !assigns(:revisions).blank? #testing fixtures ftl
     assert_equal Revision.count(:conditions => {:remote_ip => @ip, :user_id => nil}), assigns(:revisions).length
   end
   

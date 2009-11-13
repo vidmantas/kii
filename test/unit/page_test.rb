@@ -1,23 +1,19 @@
 require 'test_helper'
 
 class PageTest < ActiveSupport::TestCase
-  test "validity of factory page" do
-    assert new_page.valid?
-  end
-  
   test "won't create without body" do
-    page = new_page(:revision_attributes => {:body => nil, :remote_ip => "0.0.0.0", :referrer => "/"})
+    page = Factory.build(:page, :revision_attributes => {:body => nil})
     assert !page.valid?
   end
   
   test "won't update without valid revision data" do
-    page = create_page
+    page = Factory(:page)
     page.revision_attributes = {:body => nil}
     assert !page.valid?
   end
   
   test "incrementing revision number" do
-    page = create_page
+    page = Factory(:page)
     assert_equal 1, page.revisions.last.revision_number
     
     page.revision_attributes = {:body => "updated", :remote_ip => "0.0.0.0", :referrer => "/"}
@@ -31,15 +27,15 @@ class PageTest < ActiveSupport::TestCase
   end
   
   test "revision numbers across pages" do
-    page_a = create_page(:title => "Page A")
+    page_a = Factory(:page, :title => "Page A")
     assert_equal 1, page_a.revisions.last.revision_number
     
-    page_b = create_page(:title => "Page B")
+    page_b = Factory(:page, :title => "Page B")
     assert_equal 1, page_b.revisions.last.revision_number
   end
   
   test "bumping updated at regardless of there being changes to the page itself" do
-    page = pages(:home)
+    page = Factory(:page)
     was_updated_at = page.updated_at
 
     page.revision_attributes = {:body => "Yep!", :remote_ip => "0.0.0.0", :referrer => "/"}
@@ -49,28 +45,30 @@ class PageTest < ActiveSupport::TestCase
   end
   
   test "restricted names" do
-    page = new_page(:title => "_")
+    page = Factory.build(:page, :title => "_")
     assert !page.valid?
     assert page.errors.on("title")
   end
   
   test "save without changes doesn't create revisions" do
-    
+    page = Factory(:page)
     assert_no_difference("Revision.count") do
-      page = pages(:sandbox)
-      page.revision_attributes = {:body => page.revisions.current.body, :remote_ip => "0.0.0.0", :referrer => "/"}
+      page.attributes = Factory.build(:page).attributes
       page.save
     end
   end
   
   test "soft destroy" do
-    page = pages(:sandbox)
-    # testing fixtures ftl.. Oh well.
-    assert page.revisions.count > 1
-    assert page.discussions.count > 0
-    old_discussion_count = page.discussions.count
+    page = Factory(:page)
     
-    assert_difference("Discussion.count", -old_discussion_count) do
+    Factory(:revision, :page => page, :body => "Changed.")
+    Factory(:revision, :page => page, :body => "Changed again!")
+    Factory(:revision, :page => page, :body => "One last change.")
+    
+    Factory(:discussion, :page => page)
+    Factory(:discussion, :page => page)
+    
+    assert_difference("Discussion.count", -2) do
       page.soft_destroy
     end
     
@@ -88,14 +86,14 @@ class PageTest < ActiveSupport::TestCase
   end
   
   test "creating content age diff" do
-    page = new_page
+    page = Factory.build(:page)
     assert_difference("PageContentAgeDiff.count") do
       page.save
     end
   end
   
   test "restoring" do
-    page = pages(:sandbox)
+    page = Factory(:page)
     page.soft_destroy
     page.reload
     
@@ -106,34 +104,28 @@ class PageTest < ActiveSupport::TestCase
   end
   
   test "restoring undeleted page" do
-    page = pages(:sandbox)
-    
+    page = Factory(:page)
     page.expects(:update_without_callbacks).never
     page.restore
   end
   
   test "updating content age diff" do
-    page = create_page
-    assert_equal ["ai"], page.page_content_age_diff.data_as_objects.map(&:text)
-    page.revision_attributes = {:body => "ai wtf", :remote_ip => "0.0.0.0", :referrer => "/"}
+    page = Factory(:page, :revision_attributes => {:body => "hello"})
+    assert_equal ["hello"], page.page_content_age_diff.data_as_objects.map(&:text)
+    page.revision_attributes = {:body => "hello world", :remote_ip => "0.0.0.0", :referrer => "/"}
     assert page.save
     page.page_content_age_diff.reload
-    assert_equal ["ai", " wtf"], page.page_content_age_diff.data_as_objects.map(&:text)
+    assert_equal ["hello", " world"], page.page_content_age_diff.data_as_objects.map(&:text)
   end
   
   test "rollback to" do
+    page = Factory(:page)
+    revision = Factory(:revision, :page => page)
+    Factory(:revision, :page => page)
+    Factory(:revision, :page => page)
+    
     assert_difference("Revision.count", -2) do
-      pages(:sandbox).rollback_to(revisions(:sandbox_b))
+      page.rollback_to(revision)
     end
-  end
-  
-  def new_page(attrs = {})
-    Page.new(attrs.reverse_merge!(:title => "A new page!", :revision_attributes => {:body => "ai", :remote_ip => "0.0.0.0", :referrer => "/"}))
-  end
-  
-  def create_page(attrs = {})
-    page = new_page(attrs)
-    page.save
-    return page
   end
 end

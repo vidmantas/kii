@@ -4,23 +4,3 @@ home:
   created_at: <%= 5.days.ago.to_s(:db) %>
   updated_at: <%= 3.days.ago.to_s(:db) %>
   page_content_age_diff: home
-  
-sandbox:
-  title: Sandbox
-  permalink: Sandbox
-  page_content_age_diff: sandbox
-  
-bloated:
-  title: Bloated
-  permalink: Bloated
-  page_content_age_diff: bloated
-  
-iphone:
-  title: iPhone
-  permalink: iPhone
-  page_content_age_diff: iphone
-
-IPHONE:
-  title: IPHONE
-  permalink: IPHONE
-  page_content_age_diff: IPHONE

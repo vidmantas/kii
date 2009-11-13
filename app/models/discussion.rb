@@ -1,5 +1,6 @@
 class Discussion < ActiveRecord::Base
   belongs_to :page
+  belongs_to :user
   has_many :discussion_entries, :dependent => :destroy
   
   # Using this instead of a named scope so that it can be refered to in find(:all, :include => ..).
