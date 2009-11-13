@@ -11,7 +11,8 @@ module Kii
         # Prepare page link parsing
         page_link_preprocessor = Kii::PageLinkPreprocessor.new(@markup, @helper)
 
-        buffer = @markup.split(/(\r\n){2,}|\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
+        @markup.gsub("\r\n", "\n") # Rails some times outputs \r\n instead of \n.
+        buffer = @markup.split(/\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
         @html = with_parseable_text(buffer) {|text|
           page_link_preprocessor.parse(text)
           parse_regular_links(text)
