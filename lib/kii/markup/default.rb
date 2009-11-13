@@ -11,8 +11,8 @@ module Kii
         # Prepare page link parsing
         page_link_preprocessor = Kii::PageLinkPreprocessor.new(@markup, @helper)
 
-        @markup.gsub("\r\n", "\n") # Rails some times outputs \r\n instead of \n.
-        buffer = @markup.split(/\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
+        @markup.gsub!("\r\n", "\n") # Rails some times outputs \r\n instead of \n.
+        buffer = @markup.split(/(?:\n(?= )){2,}|\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
         @html = with_parseable_text(buffer) {|text|
           page_link_preprocessor.parse(text)
           parse_regular_links(text)
@@ -76,11 +76,17 @@ module Kii
         LIST_TYPES = {"*" => "ul", "#" => "ol"}
         def initialize(paragraph)
           @p = paragraph
-          @p.strip!
+          @p.strip! unless @p.starts_with?(" ")
         end
 
         def to_html
           case @p
+          when /^ /
+            # Strip spaces from every line
+            number_of_spaces = @p[/^ +/].length
+            @p.gsub!(/^ {0,#{number_of_spaces}}/m, "")
+            
+            "<pre><code>#{@p}</code></pre>"
           when /^=/
             level = (@p.count("=") / 2) + 1 # Starting on h2
             @p.gsub!(/^[= ]+|[= ]+$/, "")

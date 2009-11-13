@@ -207,3 +207,20 @@
     Code snippets `should [[not be touched]] ''either''`.
   out: |
     <p>Code snippets <code>should [[not be touched]] ''either''</code>.</p>
+
+
+- title: Normal code block
+  in: |
+    Code block:
+
+     def a_code_block
+       puts "honey!"
+     end
+
+    Voila!
+  out: |
+    <p>Code block:</p>
+    <pre><code>def a_code_block
+      puts &quot;honey!&quot;
+    end</code></pre>
+    <p>Voila!</p>
