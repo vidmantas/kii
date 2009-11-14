@@ -6,4 +6,4 @@ The overall goal of Kii is to be a wiki with a modern user experience, and have 
 
 h2. More info
 
-You can find more information about Kii on it's homepage: http://kiiproject.org/
+You can find more information about Kii on it's homepage, "http://kiiproject.org/":http://kiiproject.org/.
