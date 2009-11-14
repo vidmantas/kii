@@ -12,6 +12,7 @@ module Kii
       
       def initialize(markup, helper)
         @markup, @helper = markup, helper
+        @references = []
 
         page_link_permalinks = @markup.scan(PAGE_LINK_REGEXP).map {|p| p[0].split("|")[0].to_permalink }
         page_link_permalinks += page_link_permalinks.map {|permalink| permalink.upcase_first_letter } # Look for capitalized as well
@@ -20,6 +21,27 @@ module Kii
       end
 
       def parse(text)
+        parse_page_links(text)
+        parse_references(text)
+        
+        return text
+      end
+      
+      def post_process(html)
+        if !@references.empty?
+          html << "\n<h2>References</h2>\n"
+          html << "<ol>"
+          
+          @references.each_with_index {|ref, i|
+            html << %{<li id="#{reference_key(i + 1)}">#{@helper.auto_link(ref)}</li>}
+          }
+          html << "</ol>"
+        end
+      end
+      
+      private
+      
+      def parse_page_links(text)
         text.gsub!(PAGE_LINK_REGEXP) {
           permalink, title = *$~[1].split("|")
           title = (title || permalink)
@@ -31,6 +53,19 @@ module Kii
 
           @helper.page_link(page, title)
         }
+      end
+        
+      def parse_references(text)
+        text.gsub!(/\[ref:(.*?)\]/) {
+          ref = $~[1]
+          @references << ref
+          index = @references.index(ref) + 1
+          %{<a href="##{reference_key(index)}" class="reference">&#91;#{index}&#93;</a>}
+        }
+      end
+      
+      def reference_key(index)
+        "ref-#{index}"
       end
     end
   end

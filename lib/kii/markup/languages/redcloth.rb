@@ -11,7 +11,10 @@ module Kii
       
         def to_html
           @preprocessor.parse(@markup)
-          ::RedCloth.new(@markup).to_html
+          html = ::RedCloth.new(@markup).to_html
+          @preprocessor.post_process(html)
+          
+          return html
         end
       end
     end

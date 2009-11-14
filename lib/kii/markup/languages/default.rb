@@ -8,9 +8,10 @@ module Kii
       
         def to_html
           return @html if defined?(@html)
-
+          
           preprocessor = Kii::Markup::Preprocessor.new(@markup, @helper)
-
+          @references = []
+          
           @markup.gsub!("\r\n", "\n") # Rails some times outputs \r\n instead of \n.
           buffer = @markup.split(/(?:\n(?= {2,})){2,}|\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
           @html = with_parseable_text(buffer) {|text|
@@ -21,6 +22,8 @@ module Kii
 
             text
           }
+          
+          preprocessor.post_process(@html)
 
           return @html
         end
