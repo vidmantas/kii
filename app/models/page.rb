@@ -64,7 +64,7 @@ class Page < ActiveRecord::Base
     return unless deleted?
     
     self.deleted = false
-    self.send(:update_without_callbacks)
+    update_without_callbacks
   end
   
   def rollback_to(revision)
@@ -107,7 +107,7 @@ class Page < ActiveRecord::Base
     visualizer.create_diff_from_revisions
     
     self.page_content_age_diff = PageContentAgeDiff.create!(:data_as_objects => visualizer.diff)
-    self.send(:update_without_callbacks)
+    update_without_callbacks
   end
   
   def update_page_content_age_diff
