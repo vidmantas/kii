@@ -30,7 +30,7 @@ module Kii
         # Yields all the text that is to be parsed. Returns the parsed string.
         def with_parseable_text(string)
           buffer = string.dup
-          result = ''
+          result = []
 
           # This will match everything we don't want to parse, which is <nowiki>
           # tags and `code snippets`.
@@ -53,7 +53,7 @@ module Kii
           # Everything after the last pass hasn't been parsed yet.
           result << yield(buffer)
 
-          return result
+          return result.join
         end
 
         # [http://google.com/ foo]
