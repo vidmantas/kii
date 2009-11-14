@@ -52,6 +52,8 @@ class Page < ActiveRecord::Base
       latest_revision.revision_number = 1
       latest_revision.instance_eval { create_without_callbacks } # private method
       
+      reprocess_page_content_age_diff
+      
       discussions.destroy_all
       
       self.deleted = true
@@ -68,7 +70,10 @@ class Page < ActiveRecord::Base
   end
   
   def rollback_to(revision)
-    Revision.delete_all(["revision_number > ? AND page_id = ?", revision.revision_number, self.id])
+    ActiveRecord::Base.transaction do
+      Revision.delete_all(["revision_number > ? AND page_id = ?", revision.revision_number, self.id])
+      reprocess_page_content_age_diff
+    end
   end
   
   def home_page?
@@ -116,5 +121,20 @@ class Page < ActiveRecord::Base
     visualizer.create_diff_manually(record.data_as_objects, Kii::Diff::AgeVisualization::Revision.new(@new_revision.body, @new_revision.created_at))
     
     record.update_attribute(:data_as_objects, visualizer.diff)
+  end
+  
+  def reprocess_page_content_age_diff
+    first_revision = revisions.find_by_revision_number(1)
+    newest_revision = revisions.current
+    
+    visualizer = Kii::Diff::AgeVisualization.new
+    visualizer.revisions = [
+      Kii::Diff::AgeVisualization::Revision.new(first_revision.body, first_revision.created_at),
+      Kii::Diff::AgeVisualization::Revision.new(newest_revision.body, newest_revision.created_at)
+    ]
+    visualizer.create_diff_from_revisions
+    
+    self.page_content_age_diff = PageContentAgeDiff.create!(:data_as_objects => visualizer.diff)
+    update_without_callbacks
   end
 end
