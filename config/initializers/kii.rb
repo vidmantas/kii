@@ -1,5 +1,6 @@
 # The template lystem
-CURRENT_TEMPLATE = Kii::Template.new(Configuration[:template])
+template = Configuration[:template] rescue "default"
+CURRENT_TEMPLATE = Kii::Template.new(template)
 CURRENT_TEMPLATE.run_template_init_file
 
 
