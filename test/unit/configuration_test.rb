@@ -26,4 +26,13 @@ class ConfigurationTest < ActiveSupport::TestCase
       assert_equal Configuration::DEFAULTS["site_name"], Configuration["site_name"]
     }
   end
+  
+  test "resetting key" do
+    Rails.cache.delete("config::site_name")
+    Configuration.create!(:key => "site_name", :value => "Testing")
+    assert_equal "Testing", Configuration[:site_name]
+    
+    Configuration.find_by_key("site_name").update_attributes(:value => "A new")
+    assert_equal "A new", Configuration[:site_name]
+  end
 end

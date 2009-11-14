@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   # conflicting page names and internal routes.
   map.with_options :path_prefix => "_" do |m|
     m.resource :search, :only => [:show]
+    m.resource :configuration
     m.resource :profile,
       :only => [:edit, :update]
     m.resource :session

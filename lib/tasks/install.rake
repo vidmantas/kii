@@ -2,7 +2,7 @@ rails_root = File.expand_path("#{File.dirname(__FILE__)}../../../")
 
 namespace :kii do
   desc "Prepares the environment so that the application can boot."
-  task :install => ["install:require_database_config", "install:prepare", :environment, "install:basic"] do
+  task :install => ["install:require_database_config", :environment, "install:basic"] do
   end
   
   namespace :install do
@@ -27,13 +27,6 @@ namespace :kii do
       })
       
       say "Finished!"
-    end
-    
-    task :prepare do
-      require 'fileutils'
-      
-      say "Creating config files"
-      FileUtils.cp("#{rails_root}/config/kii.sample.yml", "#{rails_root}/config/kii.yml")
     end
     
     task :require_database_config do

@@ -1,0 +1,44 @@
+<% page_title "Configuration" %>
+
+<p>Changes take effect immediatly.</p>
+<p>Some actions require administrative access. For example, only administrators can edit this page. The options below (public write, public registration, etc.) does not affect those actions.</p>
+
+<% form_for :configuration, :url =>  configuration_path, :html => {:method => :put} do |f| %>
+  <dl>
+    <dt><%= f.label "public_write" %></dt>
+    <dd>
+      <%= f.check_box "public_write" %>
+      Should everyone be able to create and edit pages?
+    </dd>
+    
+    <dt><%= f.label "public_registration" %></dt>
+    <dd>
+      <%= f.check_box "public_registration" %>
+      Should everyone be able to create new users?
+    </dd>
+  </dl>
+  
+  <dl>
+    <dt><%= f.label "site_name" %></dt>
+    <dd>
+      <%= f.text_field "site_name" %>
+      The title of the wiki
+    </dd>
+    
+    <dt><%= f.label "markup" %></dt>
+    <dd>
+      <%= f.select "markup", options_for_select(Configuration::MARKUPS.map {|m| [m.humanize, m]}, :selected => @configuration.markup) %>
+      Which markup language to use
+    </dd>
+    
+    <dt><%= f.label "template" %></dt>
+    <dd>
+      <%= f.select "template", options_for_select(Configuration::TEMPLATES.map {|m| [m.humanize, m]}, :selected => @configuration.template) %>
+      Which template to use
+    </dd>
+  </dl>
+  
+  <div class="clear"></div>
+  
+  <%= submit_tag "Save" %>
+<% end %>

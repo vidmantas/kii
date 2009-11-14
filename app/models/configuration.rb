@@ -12,7 +12,7 @@ class Configuration < ActiveRecord::Base
   TEMPLATES = Pathname.glob(Rails.root + "app/templates/*").select(&:directory?).map {|p| p.basename.to_s }
   MARKUPS = Pathname.glob(Rails.root + "lib/kii/markup/languages/*.rb").map {|p| p.basename(p.extname).to_s }
   
-  after_update :clear_cache
+  after_update :reset_cache
 
   # Reads config values. `Config["the_key"]`
   def self.[](key)
@@ -27,20 +27,19 @@ class Configuration < ActiveRecord::Base
   end
   
   def self.store_in_cache(key, value = nil)
-    # Checking for nil since we want to use value if it's false.
-    value = value.nil? ? find_by_key(key) || DEFAULTS[key] : value
-    
+    key = key.to_s
+    value = value.nil? ? find_by_key(key).try(:value) || DEFAULTS[key] : value
+
     if value.nil?
       raise KeyNotFound, "Configuration key `#{key}' was not found."
     else
       Rails.cache.write("config::#{key}", value)
-      return Rails.cache.read("config::#{key}")
     end
   end
   
   private
   
-  def clear_cache
-    Rails.cache.write("config:#{self.key}", nil)
+  def reset_cache
+    Rails.cache.write("config::#{self.key}", self.value)
   end
 end

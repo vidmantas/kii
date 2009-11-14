@@ -31,6 +31,9 @@
           <li class="first"><%= link_to "Home", page_path(Configuration[:home_page]) %></li>
           <li><%= link_to "Pages", all_pages_path %></li>
           <li><%= link_to "Activities", activities_path %></li>
+          <% if admin? %>
+            <li><%= link_to "Config", configuration_path %></li>
+          <% end %>
         </ul>
         
         <ul class="simple">
