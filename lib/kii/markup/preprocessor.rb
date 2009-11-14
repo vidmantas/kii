@@ -30,7 +30,7 @@ module Kii
       def post_process(html)
         if !@references.empty?
           html << "\n<h2>References</h2>\n"
-          html << "<ol>"
+          html << %{<ol id="references">}
           
           @references.each_with_index {|ref, i|
             html << %{<li id="#{reference_key(i + 1)}">#{@helper.auto_link(ref)}</li>}
