@@ -24,11 +24,11 @@ module Kii
 
         def realdiff(i, j)
           if i >= 0 and j >= 0 and el(@x[i]) == el(@y[j])
-            realdiff(i-1, j-1) + del('  ', @rx[i])
+            realdiff(i-1, j-1) + del(0, @rx[i])
           elsif j >= 0 && (i == -1 || @c[i+1][j] >= @c[i][j+1])
-            realdiff(i, j-1) + del('+ ', @ry[j])
+            realdiff(i, j-1) + del(1, @ry[j])
           elsif i >= 0 && (j == -1 || @c[i+1][j] < @c[i][j+1])
-            realdiff(i-1, j) + del('- ', @rx[i])
+            realdiff(i-1, j) + del(-1, @rx[i])
           else
             []
           end

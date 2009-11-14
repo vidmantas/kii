@@ -80,7 +80,7 @@ module Kii
           xy.text
         end
         def del(code, xy)
-          code == '- ' ? [] : [xy]
+          code == -1 ? [] : [xy]
         end
       end
     end
