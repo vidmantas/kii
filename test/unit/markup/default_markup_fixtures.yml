@@ -213,9 +213,9 @@
   in: |
     Code block:
 
-     def a_code_block
-       puts "honey!"
-     end
+      def a_code_block
+        puts "honey!"
+      end
 
     Voila!
   out: |
@@ -224,3 +224,39 @@
       puts &quot;honey!&quot;
     end</code></pre>
     <p>Voila!</p>
+
+
+
+- title: Two spaces required
+  in: |
+    No code block.
+    
+     Because two spaces
+     is required.
+  out: |
+    <p>No code block.</p>
+    <p> Because two spaces
+    <br/> is required.</p>
+
+
+
+- title: Borked code block
+  in: |
+    So now what.
+    
+      This one
+    Is completely borked.
+        I tell ya!
+      Yay.
+          
+      Hay!
+    
+    And then.
+  out: |
+    <p>So now what.</p>
+    <pre><code>This one
+    Is completely borked.
+      I tell ya!
+    Yay.</code></pre>
+    <pre><code>Hay!</code></pre>
+    <p>And then.</p>
