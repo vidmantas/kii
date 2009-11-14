@@ -11,7 +11,7 @@ class DefaultMarkupTest < ActiveSupport::TestCase
   
   FIXTURES.each do |fixture|
     test fixture["title"] do
-      assert_equal fixture["out"].strip, Kii::Markup::Default.new(fixture["in"].strip, MOCK_HELPER).to_html
+      assert_equal fixture["out"].strip, Kii::Markup::Languages::Default.new(fixture["in"].strip, MOCK_HELPER).to_html
     end
   end
 end

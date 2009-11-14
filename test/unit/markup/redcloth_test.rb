@@ -11,6 +11,6 @@ class RedclothTest < ActiveSupport::TestCase
       define_method(:page_link) {|page, title| "/#{title}/" }
     }
     
-    assert_equal expected, Kii::Markup::Redcloth.new("Here is *textile* and [[page links]]", @helper).to_html
+    assert_equal expected, Kii::Markup::Languages::Redcloth.new("Here is *textile* and [[page links]]", @helper).to_html
   end
 end
