@@ -1,5 +1,10 @@
 module Kii
   module Diff
+    # The reason we're not using diff/lcs is that I didn't write this code. It's from
+    # http://stackoverflow.com/questions/1459886/in-line-visualization-of-content-age.
+    #
+    # Since diff/lcs probably has better performance and reliability, changing to diff/lcs
+    # would make sense. Have at it!
     module Rdiff
       class Core
         attr_reader :c, :diff
