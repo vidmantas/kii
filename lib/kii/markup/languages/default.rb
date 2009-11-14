@@ -58,8 +58,10 @@ module Kii
 
         # [http://google.com/ foo]
         def parse_regular_links(text)
-          text.gsub!(/\[{1}([^ ]+) (.*?)\]{1}/) {
-            %{<a href="#{$~[1]}" class="ext">#{$~[2]}</a>}
+          text.gsub!(/\[{1}([^ ]+)(?: (.*?))?\]{1}/) {
+            href = $~[1]
+            title = $~[2] || href
+            %{<a href="#{href}" class="ext">#{title}</a>}
           }
         end
 
