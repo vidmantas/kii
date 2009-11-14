@@ -28,3 +28,8 @@ Factory.define(:user) do |u|
   u.password = "12345"
   u.password_confirmation = "12345"
 end
+
+Factory.define(:configuration) do |c|
+  c.key = "foo"
+  c.value "bar"
+end
