@@ -37,6 +37,6 @@ module ApplicationHelper
   end
   
   def template_script(script)
-    "/templates/#{Kii::CONFIG[:template]}/javascripts/#{script}"
+    "/templates/#{Configuration[:template]}/javascripts/#{script}"
   end
 end

@@ -17,7 +17,13 @@ class ConfigurationTest < ActiveSupport::TestCase
     assert_equal 5, Configuration["foo"]
   end
   
-  test "key not in db" do
+  test "key not in db or in defaults" do
     assert_raises(Configuration::KeyNotFound) { Configuration["foo"] }
+  end
+  
+  test "key not in db but in defaults" do
+    assert_nothing_raised {
+      assert_equal Configuration::DEFAULTS["site_name"], Configuration["site_name"]
+    }
   end
 end

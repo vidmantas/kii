@@ -3,7 +3,7 @@ module Kii
     attr_reader :path
     
     def initialize(template_name)
-      @path = "#{Rails.root}/app/templates/#{Kii::CONFIG[:template]}"
+      @path = "#{Rails.root}/app/templates/#{Configuration[:template]}"
       
       # Makes Rails look for views in app/templates/[template name]/views
       # instead of app/views.

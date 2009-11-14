@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   rescue_from ActiveRecord::StaleObjectError, :with => :handle_stale_page
   
   def to_homepage
-    redirect_to page_path(Kii::CONFIG[:home_page])
+    redirect_to page_path(Configuration[:home_page])
   end
   
   def index

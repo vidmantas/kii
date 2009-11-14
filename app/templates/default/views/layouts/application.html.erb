@@ -16,8 +16,8 @@
   <!--[if lt IE 8]>
   <%= stylesheet_link_tag "ie7_and_below" %>
   <![endif]-->
-  <%= stylesheet_link_tag Kii::CONFIG[:site_css] if Kii::CONFIG[:site_css] %>
-  <title><%= strip_tags(@page_title) %> - <%= Kii::CONFIG[:site_name] %></title>
+  <%# stylesheet_link_tag Configuration[:site_css] if Configuration[:site_css] %>
+  <title><%= strip_tags(@page_title) %> - <%= Configuration[:site_name] %></title>
 </head>
 <body>
   <%= content_tag(:div, "Development Mode", :id => "dev_mode_warning") if Rails.env == "development" %>
@@ -28,7 +28,7 @@
       
       <div id="main_menu">
         <ul class="simple first">
-          <li class="first"><%= link_to "Home", page_path(Kii::CONFIG[:home_page]) %></li>
+          <li class="first"><%= link_to "Home", page_path(Configuration[:home_page]) %></li>
           <li><%= link_to "Pages", all_pages_path %></li>
           <li><%= link_to "Activities", activities_path %></li>
         </ul>
@@ -39,7 +39,7 @@
             <li><%= link_to "Logout", logout_path %></li>
           <% else %>
             <li class="first"><%= link_to "Login", new_session_path %></li>
-            <% if Kii::CONFIG[:public_registration] %>
+            <% if Configuration[:public_registration] %>
               <li><%= link_to "Register", new_user_path %></li>
             <% end %>
           <% end %>

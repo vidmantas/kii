@@ -2,7 +2,6 @@ require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
   def setup
-    Kii::CONFIG[:public_write] = true
     activate_authlogic
     @page = Factory(:page)
   end
@@ -218,10 +217,11 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "without write access" do
-    Kii::CONFIG[:public_write] = false
+    Configuration[:public_write] = false
     assert_raises(ApplicationController::LacksWriteAccess) {
       get :new, :id => "New Page".to_permalink
     }
+    Configuration[:public_write] = true
   end
   
   test "a page full of stuff" do

@@ -96,6 +96,7 @@ module ApplicationHelper
   end
   
   def logo_image
-    Kii::CONFIG[:site_logo] || "logo.png"
+    # Configuration[:site_logo] || "logo.png"
+    "logo.png"
   end
 end

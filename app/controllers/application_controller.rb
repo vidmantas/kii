@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
   
   def write_access?
-    Kii::CONFIG[:public_write] || logged_in?
+    Configuration[:public_write] || logged_in?
   end
   
   def require_write_access

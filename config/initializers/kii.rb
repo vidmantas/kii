@@ -1,5 +1,5 @@
 # The template lystem
-CURRENT_TEMPLATE = Kii::Template.new(Kii::CONFIG[:template])
+CURRENT_TEMPLATE = Kii::Template.new(Configuration[:template])
 CURRENT_TEMPLATE.run_template_init_file
 
 

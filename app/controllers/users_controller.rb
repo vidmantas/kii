@@ -35,6 +35,6 @@ class UsersController < ApplicationController
   private
   
   def require_registration_enabled
-    redirect_to root_path unless Kii::CONFIG[:public_registration]
+    redirect_to root_path unless Configuration[:public_registration]
   end
 end
