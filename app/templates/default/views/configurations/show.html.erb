@@ -31,10 +31,10 @@
       Which markup language to use
     </dd>
     
-    <dt><%= f.label "template" %></dt>
+    <dt><%= f.label "template", "Template*" %></dt>
     <dd>
       <%= f.select "template", options_for_select(Configuration::TEMPLATES.map {|m| [m.humanize, m]}, :selected => @configuration.template) %>
-      Which template to use
+      Which template to use.
     </dd>
   </dl>
   
@@ -42,3 +42,5 @@
   
   <%= submit_tag "Save" %>
 <% end %>
+
+<p><small>* Restart required for this change to take effect</small></p>
