@@ -9,6 +9,4 @@
 <div class="clear"></div>
 
 <h2>Differences in yours and current</h2>
-<div id="conflicting_edit" class="diff">
-  <%= Kii::Diff::HTML.diff(render_body(@previous_revision.body), render_body(@current_revision.body)) %>
-</div>
+<div id="conflicting_edit" class="diff pre_block"><%= Kii::Diff::HTML.diff(@previous_revision.body, @current_revision.body) %></div>

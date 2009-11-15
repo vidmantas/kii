@@ -10,4 +10,4 @@
   <% end %>
 </style>
 
-<div class="content_age"><%= @nodes.map {|n| content_tag(:span, n.text, :class => "age_#{n.age}") } %></div>
+<div class="content_age pre_block"><%= @nodes.map {|n| content_tag(:span, n.text, :class => "age_#{n.age}") } %></div>

@@ -8,6 +8,4 @@
 
 <% render :partial => "pages/navigation" %>
 
-<div class="diff">
-  <%= Kii::Diff::HTML.diff(render_body(@previous_revision_body), render_body(@revision.body)) %>
-</div>
+<div class="diff pre_block"><%= Kii::Diff::HTML.diff(@previous_revision_body, @revision.body) %></div>
