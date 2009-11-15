@@ -79,10 +79,6 @@ pre {
 
 @base_margin: 10px;
 
-.spacing {
-  margin:@base_margin;
-}
-
 #dev_mode_warning {
   position:fixed;
   top:0px;
@@ -141,9 +137,11 @@ pre {
     float:left;
   }
   
-  #content_inner {
+  .content_box {
     background:#fff;
     border:1px solid #ccc;
+    padding:@base_margin;
+    margin-bottom:@base_margin;
   }
   
   #content.without_sidebar {

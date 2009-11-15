@@ -1,9 +1,11 @@
 module Kii
   class Markup
     PAGE_LINK_REGEXP = /\[\[(.*?)\]\]/
+    attr_reader :references
     
     def initialize(markup)
       @markup = CGI.escapeHTML(markup)
+      @references = []
     end
     
     def to_html(&block)
@@ -13,7 +15,16 @@ module Kii
       buffer = @markup.split(/(?:\n(?= {2,})){2,}|\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
       
       with_parseable_text(buffer) {|text|
+        parse_references(text)
         parse_page_links(text, block)
+        parse_regular_links(text)
+        parse_tokens(text)
+        text
+      }
+    end
+    
+    def to_html_without_paragraphs
+      with_parseable_text(@markup) {|text|
         parse_regular_links(text)
         parse_tokens(text)
         text

@@ -22,6 +22,13 @@ class PagesControllerTest < ActionController::TestCase
     assert_template "pages/show"
   end
   
+  test "showing existing page with references" do
+    @page = Factory(:page, :title => "With references", :revision_attributes => {:body => "Here's a [ref:reference]."})
+    get :show, :id => @page.to_param
+    assert_response :success
+    assert_select ".content_box ol#references"
+  end
+  
   test "showing none existing page" do
     get :show, :id => "Does Not Exist".to_permalink
     assert_response :success
