@@ -5,12 +5,10 @@ class Configuration < ActiveRecord::Base
     "public_registration" => true,
     "site_name" => "Go, Kii!",
     "template" => "default",
-    "markup" => "default",
     "home_page" => "Home"
   }.with_indifferent_access
   
   TEMPLATES = Pathname.glob(Rails.root + "app/templates/*").select(&:directory?).map {|p| p.basename.to_s }
-  MARKUPS = Pathname.glob(Rails.root + "lib/kii/markup/languages/*.rb").map {|p| p.basename(p.extname).to_s }
   
   after_update :reset_cache
 

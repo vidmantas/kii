@@ -1,8 +1,10 @@
 module ApplicationHelper
   include SidebarHelper
   
-  def render_body(body)
-    Kii::Markup.generate_html(body, self)
+  def render_body(markup)
+    parser = Kii::Markup.new(markup)
+    html = parser.to_html {|page, title| page_link(page, title) }
+    auto_link(html)
   end
 
   def page_title(*titles, &block)

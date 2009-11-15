@@ -25,12 +25,6 @@
       The title of the wiki
     </dd>
     
-    <dt><%= f.label "markup" %></dt>
-    <dd>
-      <%= f.select "markup", options_for_select(Configuration::MARKUPS.map {|m| [m.humanize, m]}, :selected => @configuration.markup) %>
-      Which markup language to use
-    </dd>
-    
     <dt><%= f.label "template", "Template*" %></dt>
     <dd>
       <%= f.select "template", options_for_select(Configuration::TEMPLATES.map {|m| [m.humanize, m]}, :selected => @configuration.template) %>

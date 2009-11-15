@@ -268,14 +268,3 @@
 
 
 
-- title: References
-  in: |
-    References [ref:http://references.com/] can be everywhere [ref:Name of book etc.].
-    
-    It's the truth [ref: Yep].
-  out: |
-    <p>References <a href="#ref-1" class="reference">&#91;1&#93;</a> can be everywhere <a href="#ref-2" class="reference">&#91;2&#93;</a>.</p>
-    <p>It's the truth <a href="#ref-3" class="reference">&#91;3&#93;</a>.</p>
-    <h2>References</h2>
-    <ol id="references"><li id="ref-1">http://references.com/</li><li id="ref-2">Name of book etc.</li><li id="ref-3"> Yep</li></ol>
-  
