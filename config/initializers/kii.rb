@@ -1,7 +1,6 @@
 # The template lystem
-template = Configuration[:template] rescue "default"
-CURRENT_TEMPLATE = Kii::Template.new(template)
-CURRENT_TEMPLATE.run_template_init_file
+template = Configuration[:template] rescue "default" # database isn't around when rake kii:install runs
+Kii::Template.new(template)
 
 
 

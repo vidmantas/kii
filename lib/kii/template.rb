@@ -11,15 +11,20 @@ module Kii
       
       # Handling template helpers
       helper_files = Dir["#{@path}/helpers/*.rb"]
-      if !helper_files.empty?
-        # TODO: Reload on every request in development mode.
-        helper_files.each {|h| require h }
-      end
+      helper_files.each {|h| load h }
+      
+      run_template_init_file
     end
     
     def run_template_init_file
       init_file = "#{@path}/init.rb"
-      require init_file if File.file?(init_file)
+      
+      # The init file is optional.
+      if File.file?(init_file)
+        code = File.read(init_file)
+        # So that `self` in the init file is this instance.
+        eval(code, binding, __FILE__, __LINE__)
+      end
     end
   end
 end

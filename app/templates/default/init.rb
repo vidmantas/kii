@@ -1,1 +1,1 @@
-Less::More.source_path = "#{CURRENT_TEMPLATE.path}/stylesheets"
+Less::More.source_path = "#{@path}/stylesheets"
