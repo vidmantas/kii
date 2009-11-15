@@ -16,10 +16,11 @@ class PagesControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "showing existing page" do
+  test "showing existing page without references" do
     get :show, :id => @page.to_param
     assert_response :success
     assert_template "pages/show"
+    assert_select ".content_box ol#references", false
   end
   
   test "showing existing page with references" do

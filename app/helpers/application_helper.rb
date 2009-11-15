@@ -11,7 +11,9 @@ module ApplicationHelper
     html = parser.to_html {|page, title| page_link(page, title)}
     
     references = parser.references.map {|r| auto_link(Kii::Markup.new(r).to_html_without_paragraphs) }
-    content_for(:content_bottom) { render :partial => "pages/references", :locals => {:references => references} }
+    if !references.empty?
+      content_for(:content_bottom) { render :partial => "pages/references", :locals => {:references => references} }
+    end
     
     return auto_link(html)
   end
