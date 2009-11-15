@@ -9,26 +9,40 @@ module Kii
         def to_html
           return @html if defined?(@html)
           
-          preprocessor = Kii::Markup::Preprocessor.new(@markup, @helper)
-          @references = []
+          @preprocessor = Kii::Markup::Preprocessor.new(@markup, @helper)
           
           @markup.gsub!("\r\n", "\n") # Rails some times outputs \r\n instead of \n.
           buffer = @markup.split(/(?:\n(?= {2,})){2,}|\n{2,}/).map {|p| Paragraph.new(p).to_html }.join("\n")
-          @html = with_parseable_text(buffer) {|text|
-            preprocessor.parse(text)
+          @html = nowiki_aware_parse(buffer)
+          
+          # Such a hack..
+          @preprocessor.post_process {|references|
+            @html << "\n"
+            @html << Paragraph.new("= References =").to_html
+            @html << "\n"
+            #@html << Paragraph.new(references.map {|r| nowiki_aware_parse("* #{r}") }.join("\n")).to_html
+            @html << %{<ol id="references">}
+            references.map {|r| nowiki_aware_parse(r) }.each_with_index {|html, index|
+              @html << %{<li id="ref-#{index + 1}">#{html}</li>}
+            }
+            @html << %{</ol>}
+          }
+
+          return @html
+        end
+      
+        private
+        
+        def nowiki_aware_parse(buffer)
+          with_parseable_text(buffer) {|text|
+            @preprocessor.parse(text)
             parse_regular_links(text)
             parse_tokens(text)
             text = @helper.auto_link(text)
 
             text
           }
-          
-          preprocessor.post_process(@html)
-
-          return @html
         end
-      
-        private
 
         # Yields all the text that is to be parsed. Returns the parsed string.
         def with_parseable_text(string)

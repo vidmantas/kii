@@ -27,16 +27,20 @@ module Kii
         return text
       end
       
-      def post_process(html)
+      def post_process
         if !@references.empty?
-          html << "\n<h2>References</h2>\n"
-          html << %{<ol id="references">}
-          
-          @references.each_with_index {|ref, i|
-            html << %{<li id="#{reference_key(i + 1)}">#{@helper.auto_link(ref)}</li>}
-          }
-          html << "</ol>"
+          yield(@references)
         end
+        
+        #if !@references.empty?
+        #  html << "\n<h2>References</h2>\n"
+        #  html << %{<ol id="references">}
+        #  
+        #  @references.each_with_index {|ref, i|
+        #    html << %{<li id="#{reference_key(i + 1)}">#{@helper.auto_link(ref)}</li>}
+        #  }
+        #  html << "</ol>"
+        #end
       end
       
       private
@@ -60,12 +64,8 @@ module Kii
           ref = $~[1]
           @references << ref
           index = @references.index(ref) + 1
-          %{<a href="##{reference_key(index)}" class="reference">&#91;#{index}&#93;</a>}
+          %{<a href="#ref-#{index}" class="reference">&#91;#{index}&#93;</a>}
         }
-      end
-      
-      def reference_key(index)
-        "ref-#{index}"
       end
     end
   end
