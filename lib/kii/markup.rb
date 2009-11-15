@@ -1,6 +1,6 @@
 module Kii
   class Markup
-    PAGE_LINK_REGEXP = /\[\[(.*?)\]\]/
+    PAGE_LINK_REGEXP = /\[\[(.*?)(?:\|(.*?))?\]\]/
     attr_reader :references
     
     def initialize(markup)
@@ -34,7 +34,7 @@ module Kii
     private
     
     def fetch_linked_pages_from_database
-      page_link_permalinks = @markup.scan(PAGE_LINK_REGEXP).map {|p| p[0].split("|")[0].to_permalink }
+      page_link_permalinks = @markup.scan(PAGE_LINK_REGEXP).map {|permalink, title| permalink.to_permalink }
       page_link_permalinks += page_link_permalinks.map {|permalink| permalink.upcase_first_letter } # Look for capitalized as well
       page_link_permalinks.uniq!
       @linked_pages = Page.all(:conditions => {:permalink => page_link_permalinks})
@@ -65,8 +65,9 @@ module Kii
     
     def parse_page_links(text, page_link_proc)
       text.gsub!(PAGE_LINK_REGEXP) {
-        permalink, title = *$~[1].split("|")
-        title = (title || permalink)
+        permalink = $~[1]
+        title = $~[2] || permalink
+        
 
         # Uncapitalized version, capitalized version, or does not exist (Page.new).
         page = @linked_pages.detect {|lp| lp.permalink == permalink.to_permalink } ||
