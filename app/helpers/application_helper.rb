@@ -1,6 +1,4 @@
 module ApplicationHelper
-  include SidebarHelper
-  
   def render_body(markup)
     html = Kii::Markup.new(markup).to_html {|page, title| page_link(page, title) }
     auto_link(html)
@@ -106,6 +104,10 @@ module ApplicationHelper
   
   def flashes
     flash.map {|type, msg| content_tag(:div, msg, :class => "flash", :id => "flash_#{type}")}
+  end
+  
+  def tab(title, url, current = nil)
+    content_tag(:li, link_to(title, url), :class => (current.nil? ? current_page?(url) : current) && "current")
   end
   
   def logo_image
