@@ -18,7 +18,7 @@ module Kii
           number_of_spaces = @p[/^ +/].length
           @p.gsub!(/^ {0,#{number_of_spaces}}/m, "")
         
-          "<pre><code>#{@p}</code></pre>"
+          "<pre>#{@p}</pre>"
         when HEADER
           level = (@p.count("=") / 2) + 1 # Starting on h2
           @p.gsub!(/^[= ]+|[= ]+$/, "")
