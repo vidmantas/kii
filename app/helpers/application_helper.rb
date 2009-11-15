@@ -111,7 +111,12 @@ module ApplicationHelper
   end
   
   def logo_image
-    # Configuration[:site_logo] || "logo.png"
-    "logo.png"
+    site_logo = Pathname.glob(Rails.root + "public/images/site_logo.*")[0]
+    
+    if site_logo
+      site_logo.basename.to_s
+    else
+      "logo.png"
+    end
   end
 end
