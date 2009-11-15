@@ -16,7 +16,7 @@
   <!--[if lt IE 8]>
   <%= stylesheet_link_tag "ie7_and_below" %>
   <![endif]-->
-  <%# stylesheet_link_tag Configuration[:site_css] if Configuration[:site_css] %>
+  <%= stylesheet_link_tag "site_css.css" if (Rails.root + "public/stylesheets/site_css.css").file? %>
   <title><%= strip_tags(@page_title) %> - <%= Configuration[:site_name] %></title>
 </head>
 <body>
