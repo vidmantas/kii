@@ -1,0 +1,40 @@
+= Kii
+
+A Rails powered wiki.
+
+The overall goal of Kii is to be a wiki with a modern user experience, and have a sensible code-base that's easy to work with for developers.
+
+== Installation
+
+Clone this project to your server: 
+
+  $ git clone git://github.com/vidmantas/kii.git
+
+Configure your database:
+  
+  $ cp config/database.sample.yml config/database.yml
+  
+Install missing gems:
+  
+  $ rake gems:install
+  
+Download submodules
+
+  $ git submodule init
+  $ git submodule update
+  
+Run the installation task
+  
+  $ rake kii:install
+  
+And you're ready to go!
+
+Tip: at the moment there's no way to mark a user as an admin browsing the application itself. But it can be done this way:
+
+  $ rake kii:admin LOGIN=user_login
+  
+== Troubleshooting
+  
+Make sure you pass RAILS_ENV variable to rake commands if you're on production environment
+  
+

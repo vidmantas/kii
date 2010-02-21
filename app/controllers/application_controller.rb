@@ -26,7 +26,11 @@ class ApplicationController < ActionController::Base
   end
   
   def write_access?
-    Configuration[:public_write] || logged_in?
+    if Configuration[:public_write].respond_to?(:to_i)
+      Configuration[:public_write].to_i == 1 || logged_in?
+    else
+      Configuration[:public_write] || logged_in?
+    end    
   end
   
   def require_write_access
@@ -53,4 +57,14 @@ class ApplicationController < ActionController::Base
       target.each {|k, v| convert_to_utf_8(v) }
     end
   end
+  
+  def rescue_action_in_public(exception)
+    if exception.is_a?(LacksWriteAccess)
+      path = "#{Rails.public_path}/403.html"
+      render :file => path, :status => :forbidden
+    else
+      super(expcetion)
+    end
+  end
+
 end

@@ -7,3 +7,4 @@ db/schema.rb
 public/stylesheets/*.css
 public/images/site_logo.*
 tmp/**/*
+rdoc

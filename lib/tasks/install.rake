@@ -34,6 +34,23 @@ namespace :kii do
     end
   end
   
+  desc "Convert user to admin"
+  task :admin => :environment do
+    if ENV['LOGIN'].strip.blank?
+      say "Please provide user login with LOGIN=user_login"
+      exit
+    end
+    
+    u = User.find_by_login(ENV['LOGIN'].strip)
+    if u
+      u.admin = true
+      u.save(false)
+      say "User #{ENV['LOGIN']} is now admin!"
+    else
+      say "Unable to find user with such login"
+    end
+  end
+  
   def say(this)
     puts ">> #{this}"
   end

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :require_write_access, :except => [:index, :show]
+  before_filter :require_write_access, :except => [:index, :show, :to_homepage]
   before_filter :require_admin, :only => [:confirm_destroy, :destroy]
   before_filter :ensure_pretty_permalink, :only => [:show, :new]
   

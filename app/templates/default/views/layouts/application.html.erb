@@ -20,7 +20,7 @@
   <title><%= strip_tags(@page_title) %> - <%= Configuration[:site_name] %></title>
 </head>
 <body>
-  <%= content_tag(:div, "Development Mode", :id => "dev_mode_warning") if Rails.env == "development" %>
+  <%= content_tag(:div, "Development Mode", :id => "dev_mode_warning") if Rails.env.development? %>
   <div id="wrapper">
   
     <div id="header">
@@ -69,7 +69,7 @@
         <% end %>
         
         <div id="footer">
-          Powered by <a href="http://kiiproject.org/">Kii</a> v<%= Kii::VERSION::STRING %>.
+          Powered by <a href="http://github.com/vidmantas/kii">Kii</a> v<%= Kii::VERSION::STRING %>.
         </div>
       </div>
     
